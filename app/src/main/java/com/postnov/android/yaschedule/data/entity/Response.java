@@ -2,25 +2,27 @@ package com.postnov.android.yaschedule.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by platon on 19.05.2016.
  */
 public class Response {
 
     @SerializedName("threads")
-    private Variants[] mVariants;
+    private List<Route> mRoutes;
 
     @SerializedName("pagination")
     private Pagination mPagination;
 
-    public Variants[] getVariants ()
+    public List<Route> getRoutes ()
     {
-        return mVariants;
+        return mRoutes;
     }
 
-    public void setVariants (Variants[] variants)
+    public void setRoutes (List<Route> routes)
     {
-        this.mVariants = variants;
+        mRoutes = routes;
     }
 
     public Pagination getPagination ()
@@ -30,6 +32,6 @@ public class Response {
 
     public void setPagination (Pagination pagination)
     {
-        this.mPagination = pagination;
+        mPagination = pagination;
     }
 }

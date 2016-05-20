@@ -1,37 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.postnov.android.yaschedule.MainActivity"
-    android:gravity="center_vertical|center_horizontal"
-    android:padding="@dimen/margin_medium">
+    tools:context="com.postnov.android.yaschedule.MainActivity">
 
-    <android.support.v7.widget.AppCompatEditText
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+    <EditText
+        android:id="@+id/from"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/from"
-        android:background="@android:drawable/edit_text" />
+        android:hint="@string/from"
+        android:background="@android:color/transparent"
+        android:textSize="28sp"
+        android:fontFamily="sans-serif-light"
+        android:padding="@dimen/margin_medium"
+        android:layout_above="@+id/to" />
 
-    <android.support.v7.widget.AppCompatEditText
+    <EditText
+        android:id="@+id/to"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/to"
-        android:background="@android:drawable/edit_text"
-        android:layout_marginTop="@dimen/margin_medium" />
+        android:hint="@string/to"
+        android:background="@android:color/transparent"
+        android:textSize="28sp"
+        android:fontFamily="sans-serif-light"
+        android:padding="@dimen/margin_medium"
+        android:layout_above="@+id/when"
+         />
 
-    <android.support.v7.widget.AppCompatEditText
+    <EditText
+        android:id="@+id/when"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Когда"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:background="@android:drawable/edit_text" />
+        android:hint="@string/whenHint"
+        android:background="@android:color/transparent"
+        android:textSize="28sp"
+        android:fontFamily="sans-serif-light"
+        android:padding="@dimen/margin_medium"
+        android:layout_centerVertical="true"
+         />
 
     <Button
+        android:id="@+id/findButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:text="@string/btn_find"
-        android:layout_marginTop="@dimen/margin_medium"
-        style="@style/Base.Widget.AppCompat.Button.Borderless" />
-</LinearLayout>
+        android:background="@drawable/button_find_selector"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

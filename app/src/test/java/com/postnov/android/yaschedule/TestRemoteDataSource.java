@@ -12,7 +12,7 @@ import java.util.Map;
 import rx.observers.TestSubscriber;
 
 /**
- * ToStation work on unit tests, switch the Test Artifact in the Build Variants view.
+ * ToStation work on unit tests, switch the Test Artifact in the Build Route view.
  */
 public class TestRemoteDataSource
 {

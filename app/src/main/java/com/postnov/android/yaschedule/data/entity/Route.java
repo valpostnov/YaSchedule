@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by platon on 19.05.2016.
  */
-public class Variants
+public class Route
 {
     @SerializedName("arrival")
     private String arrival;
@@ -23,7 +23,7 @@ public class Variants
     private Station fromStation;
 
     @SerializedName("thread")
-    private Variant variant;
+    private RouteOptions routeOptions;
 
     @SerializedName("departure_platform")
     private String departurePlatform;
@@ -80,12 +80,12 @@ public class Variants
         this.fromStation = fromStation;
     }
 
-    public Variant getVariant() {
-        return variant;
+    public RouteOptions getRouteOptions() {
+        return routeOptions;
     }
 
-    public void setVariant(Variant variant) {
-        this.variant = variant;
+    public void setRouteOptions(RouteOptions routeOptions) {
+        this.routeOptions = routeOptions;
     }
 
     public String getDeparturePlatform() {
