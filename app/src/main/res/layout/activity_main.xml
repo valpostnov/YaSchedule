@@ -33,6 +33,5 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_find"
         android:layout_marginTop="@dimen/margin_medium"
-        style="@style/Base.Widget.AppCompat.Button.Colored"
-        android:textColor="@color/button_selector" />
+        style="@style/Base.Widget.AppCompat.Button.Borderless" />
 </LinearLayout>
