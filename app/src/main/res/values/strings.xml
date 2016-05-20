@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ЯШедуль</string>
+
+    <string name="from">Откуда</string>
+    <string name="to">Куда</string>
+    <string name="btn_find">Найти</string>
+</resources>

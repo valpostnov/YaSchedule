@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.postnov.android.yaschedule.MainActivity"
+    android:gravity="center_vertical|center_horizontal"
+    android:padding="@dimen/margin_medium">
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/from"
+        android:background="@android:drawable/edit_text" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginTop="@dimen/margin_medium" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Когда"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:background="@android:drawable/edit_text" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_find"
+        android:layout_marginTop="@dimen/margin_medium"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:textColor="@color/button_selector" />
+</LinearLayout>
