@@ -1,13 +1,12 @@
-package com.postnov.android.yaschedule.twostation.interfaces;
+package com.postnov.android.yaschedule.schedule.interfaces;
 
 import com.postnov.android.yaschedule.data.entity.Response;
 
 /**
  * Created by platon on 20.05.2016.
  */
-public interface TwoStationView
+public interface ScheduleView
 {
-    void go();
     void showList(Response response);
     void showError();
 }

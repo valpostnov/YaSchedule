@@ -1,4 +1,4 @@
-package com.postnov.android.yaschedule.twostation;
+package com.postnov.android.yaschedule.schedule;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
