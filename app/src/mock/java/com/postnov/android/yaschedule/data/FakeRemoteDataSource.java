@@ -54,7 +54,7 @@ public class FakeRemoteDataSource implements DataSource
         RouteOptions options = new RouteOptions();
         options.setTitle("Симферополь - Москва");
 
-        return null;
+        return options;
     }
 
     private Station getFrom()

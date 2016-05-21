@@ -49,6 +49,7 @@
         android:layout_height="?attr/actionBarSize"
         android:text="@string/btn_find"
         android:background="@drawable/button_find_selector"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:onClick="showSchedule" />
 
 </RelativeLayout>

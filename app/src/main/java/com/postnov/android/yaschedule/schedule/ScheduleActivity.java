@@ -4,9 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.postnov.android.yaschedule.Injection;
+import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.Response;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
@@ -26,6 +28,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         setContentView(R.layout.activity_schedule);
         mPresenter = new SchedulePresenterImpl(Injection.provideDataSource());
         initViews();
+        initToolbar();
     }
 
     @Override
@@ -33,7 +36,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     {
         super.onResume();
         mPresenter.bind(this);
-        mPresenter.getSchedule(SearchQuery.builder().setApiKey(Const.API_KEY).build());
+        mPresenter.getSchedule(SearchQuery.builder().build());
     }
 
     @Override
@@ -53,6 +56,17 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
 
         mAdapter = new ScheduleAdapter();
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private void initToolbar()
+    {
+        String title = getIntent().getStringExtra(MainActivity.EXTRA_ROUTE);
+        String subtitle = getIntent().getStringExtra(MainActivity.EXTRA_DATE);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.scheduleToolbar);
+        toolbar.setTitle(title);
+        toolbar.setSubtitle(subtitle);
+        setSupportActionBar(toolbar);
     }
 
     @Override
