@@ -5,6 +5,7 @@ import com.postnov.android.yaschedule.data.entity.Route;
 import com.postnov.android.yaschedule.data.entity.RouteOptions;
 import com.postnov.android.yaschedule.data.entity.Station;
 import com.postnov.android.yaschedule.data.source.DataSource;
+import com.postnov.android.yaschedule.utils.TransportTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class FakeRemoteDataSource implements DataSource
         route1.setToStation(getTo());
 
         routes.add(route1);
+        routes.add(route1);
 
         return routes;
     }
@@ -53,6 +55,7 @@ public class FakeRemoteDataSource implements DataSource
     {
         RouteOptions options = new RouteOptions();
         options.setTitle("Симферополь - Москва");
+        options.setTransportType(TransportTypes.PLANE);
 
         return options;
     }

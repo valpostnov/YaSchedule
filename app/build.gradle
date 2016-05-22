@@ -32,6 +32,7 @@ dependencies {
     testCompile "org.mockito:mockito-core:2.0.53-beta"
 
     compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.android.support:gridlayout-v7:23.4.0'

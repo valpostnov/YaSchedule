@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">Schedule</string>
+    <string name="app_name">Я.Шедуль</string>
 
     <string name="from">Откуда</string>
     <string name="to">Куда</string>
     <string name="btn_find">Найти</string>
     <string name="whenHint">Когда</string>
+    <string name="loading_title">Поиск рейсов</string>
+    <string name="empty_view_text">Нет рейсов на указанную дату</string>
 </resources>

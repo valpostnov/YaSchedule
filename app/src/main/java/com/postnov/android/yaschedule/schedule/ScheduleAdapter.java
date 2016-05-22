@@ -10,6 +10,7 @@ import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.Route;
 import com.postnov.android.yaschedule.data.entity.RouteOptions;
 import com.postnov.android.yaschedule.data.entity.Station;
+import com.postnov.android.yaschedule.utils.TransportTypes;
 
 import java.util.List;
 
@@ -19,6 +20,11 @@ import java.util.List;
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder>
 {
     private List<Route> mRoutes;
+    private View mEmptyView;
+
+    private static final int TRAIN_DRAWABLE = R.drawable.ic_directions_railway;
+    private static final int PLANE_DRAWABLE = R.drawable.ic_flight;
+    private static final int BUS_DRAWABLE = R.drawable.ic_directions_bus;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -35,7 +41,22 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         Station from = route.getFromStation();
         Station to = route.getToStation();
 
+        int drawable = 0;
+        switch (routeOptions.getTransportType())
+        {
+            case TransportTypes.TRAIN:
+                drawable = TRAIN_DRAWABLE;
+                break;
+            case TransportTypes.BUS:
+                drawable = BUS_DRAWABLE;
+                break;
+            case TransportTypes.PLANE:
+                drawable = PLANE_DRAWABLE;
+                break;
+        }
+
         holder.mRoute.setText(routeOptions.getTitle());
+        holder.mRoute.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
         holder.mStartTime.setText(route.getDeparture());
         holder.mFinishTime.setText(route.getArrival());
         holder.mStationFrom.setText(from.getTitle());
@@ -53,11 +74,17 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     {
         mRoutes = variantsList;
         notifyDataSetChanged();
+        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     public List<Route> getList()
     {
         return mRoutes;
+    }
+
+    public void setEmptyView(View view)
+    {
+        mEmptyView = view;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder

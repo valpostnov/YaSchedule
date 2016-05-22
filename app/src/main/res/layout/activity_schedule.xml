@@ -7,12 +7,44 @@
 
     <include
         android:id="@+id/scheduleToolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar_main"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="?attr/colorPrimary"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:layout_marginStart="72dp"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:id="@+id/schedule_title" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subtitle"
+            android:layout_marginStart="72dp"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:id="@+id/schedule_subtitle" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/scheduleList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small"
         />
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 </LinearLayout>
 

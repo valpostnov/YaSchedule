@@ -51,8 +51,10 @@ public class MainActivity extends AppCompatActivity
         route.append(" - ");
         route.append(mTo.getText());
 
+        String date = mDate.getText().toString();
+
         intent.putExtra(EXTRA_ROUTE, route.toString());
-        intent.putExtra(EXTRA_DATE, mDate.getText());
+        intent.putExtra(EXTRA_DATE, date);
 
         startActivity(intent);
     }

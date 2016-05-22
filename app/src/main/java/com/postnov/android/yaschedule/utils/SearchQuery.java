@@ -8,14 +8,6 @@ import java.util.Map;
  */
 public class SearchQuery
 {
-    public static final String PLANE = "plane";
-    public static final String TRAIN = "train";
-    public static final String SUBURBAN = "suburban";
-    public static final String BUS = "bus";
-    public static final String SEA = "sea";
-    public static final String RIVER = "river";
-    public static final String HELICOPTER = "helicopter";
-
     public static final String LANG_RU = "ru";
     public static final String FORMAT_JSON = "json";
 

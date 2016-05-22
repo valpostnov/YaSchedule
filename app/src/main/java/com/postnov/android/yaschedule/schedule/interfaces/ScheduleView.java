@@ -8,5 +8,7 @@ import com.postnov.android.yaschedule.data.entity.Response;
 public interface ScheduleView
 {
     void showList(Response response);
-    void showError();
+    void showError(Throwable e);
+    void showProgressDialog();
+    void hideProgressDialog();
 }

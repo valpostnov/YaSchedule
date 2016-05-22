@@ -1,10 +1,12 @@
 package com.postnov.android.yaschedule.schedule;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.postnov.android.yaschedule.Injection;
@@ -20,6 +22,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
 {
     private ScheduleAdapter mAdapter;
     private SchedulePresenter mPresenter;
+    private ProgressDialog mProgressDialog;
+    private TextView mEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,8 +58,15 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
+        mEmptyView = (TextView) findViewById(R.id.empty_view);
+
         mAdapter = new ScheduleAdapter();
+        mAdapter.setEmptyView(mEmptyView);
         recyclerView.setAdapter(mAdapter);
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage(getString(R.string.loading_title));
     }
 
     private void initToolbar()
@@ -63,10 +74,16 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         String title = getIntent().getStringExtra(MainActivity.EXTRA_ROUTE);
         String subtitle = getIntent().getStringExtra(MainActivity.EXTRA_DATE);
 
+        TextView titleView = (TextView) findViewById(R.id.schedule_title);
+        TextView subtitleView = (TextView) findViewById(R.id.schedule_subtitle);
+
+        titleView.setText(title);
+        subtitleView.setText(subtitle);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.scheduleToolbar);
-        toolbar.setTitle(title);
-        toolbar.setSubtitle(subtitle);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -76,8 +93,18 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     }
 
     @Override
-    public void showError()
+    public void showError(Throwable e)
     {
-        Toast.makeText(ScheduleActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ScheduleActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgressDialog() {
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        mProgressDialog.hide();
     }
 }

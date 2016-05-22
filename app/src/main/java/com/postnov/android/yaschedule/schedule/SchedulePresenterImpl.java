@@ -31,23 +31,28 @@ public class SchedulePresenterImpl implements SchedulePresenter
     @Override
     public void getSchedule(Map<String, String> options)
     {
+        mView.showProgressDialog();
         Subscription subscription = mDataSource.search(options)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Response>()
                 {
                     @Override
-                    public void onCompleted() {
-
+                    public void onCompleted()
+                    {
+                        mView.hideProgressDialog();
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        mView.showError();
+                    public void onError(Throwable e)
+                    {
+                        mView.hideProgressDialog();
+                        mView.showError(e);
                     }
 
                     @Override
-                    public void onNext(Response response) {
+                    public void onNext(Response response)
+                    {
                         mView.showList(response);
                     }
                 });
