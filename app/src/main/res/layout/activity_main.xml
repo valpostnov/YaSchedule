@@ -37,7 +37,8 @@
             android:paddingTop="@dimen/margin_small"
             android:paddingBottom="@dimen/margin_small"
             android:paddingLeft="24dp"
-            android:paddingRight="24dp" />
+            android:paddingRight="24dp"
+            android:fontFamily="sans-serif-light" />
 
         <EditText
             android:id="@+id/to"
@@ -53,7 +54,8 @@
             android:paddingTop="@dimen/margin_small"
             android:paddingBottom="@dimen/margin_small"
             android:paddingLeft="24dp"
-            android:paddingRight="24dp" />
+            android:paddingRight="24dp"
+            android:fontFamily="sans-serif-light" />
 
         <TextView
             android:id="@+id/when"
@@ -69,7 +71,8 @@
             android:paddingBottom="@dimen/margin_small"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
-            android:clickable="true" />
+            android:clickable="true"
+            android:fontFamily="sans-serif-light" />
 
     </LinearLayout>
 
