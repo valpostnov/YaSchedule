@@ -13,9 +13,6 @@ import java.util.Map;
 
 import rx.observers.TestSubscriber;
 
-/**
- * ToStation work on unit tests, switch the Test Artifact in the Build Route view.
- */
 public class TestRemoteDataSource
 {
     private static final String FROM = "c23243"; //нино

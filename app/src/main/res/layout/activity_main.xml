@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/colorPrimary"
-    tools:context="com.postnov.android.yaschedule.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.postnov.android.yaschedule.MainActivity"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bg">
 
-    <include
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar"/>
-    <View
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?attr/dividerHorizontal"
-        android:layout_below="@+id/toolbar_main"
-        />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        app:titleTextAppearance="@style/AppTheme.Toolbar.Title"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-    <LinearLayout
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/hintFrom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true">
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/AppTheme.ErrorText"
+        android:layout_above="@+id/hintTo">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/from"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,15 +36,20 @@
             android:textSize="32sp"
             android:inputType="text"
             android:singleLine="true"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textColorHint="@color/abc_secondary_text_material_dark"
-            android:paddingTop="@dimen/margin_small"
-            android:paddingBottom="@dimen/margin_small"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
+            android:paddingLeft="@dimen/margin_large"
+            android:paddingRight="@dimen/margin_large"
             android:fontFamily="sans-serif-light" />
+    </android.support.design.widget.TextInputLayout>
 
-        <EditText
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/hintTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/AppTheme.ErrorText"
+        android:layout_centerVertical="true">
+
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/to"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,32 +58,33 @@
             android:textSize="32sp"
             android:inputType="text"
             android:singleLine="true"
-            android:textColor="@color/abc_primary_text_material_dark"
-            android:textColorHint="@color/abc_secondary_text_material_dark"
-            android:paddingTop="@dimen/margin_small"
-            android:paddingBottom="@dimen/margin_small"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
+            android:paddingLeft="@dimen/margin_large"
+            android:paddingRight="@dimen/margin_large"
             android:fontFamily="sans-serif-light" />
+    </android.support.design.widget.TextInputLayout>
 
-        <TextView
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/hintWhen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        app:errorTextAppearance="@style/AppTheme.ErrorText"
+        android:layout_below="@+id/hintTo">
+
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/when"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/whenHint"
-            android:background="?attr/selectableItemBackground"
+            android:hint="@string/whenHint"
             android:textSize="32sp"
             android:singleLine="true"
-            android:textColor="@color/abc_secondary_text_material_dark"
-            android:drawableEnd="@drawable/ic_calendar"
-            android:paddingTop="@dimen/margin_small"
-            android:paddingBottom="@dimen/margin_small"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
+            android:paddingLeft="@dimen/margin_large"
+            android:paddingRight="@dimen/margin_large"
             android:clickable="true"
-            android:fontFamily="sans-serif-light" />
-
-    </LinearLayout>
+            android:fontFamily="sans-serif-light"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:background="@android:color/transparent" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:layout_width="match_parent"
@@ -88,5 +98,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="24dp"
         android:id="@+id/button_find"
-        android:onClick="showSchedule" />
+        android:onClick="showSchedule"
+        />
 </RelativeLayout>

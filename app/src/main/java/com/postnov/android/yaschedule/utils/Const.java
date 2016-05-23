@@ -5,5 +5,5 @@ package com.postnov.android.yaschedule.utils;
  */
 public interface Const
 {
-    public static final String API_KEY = "000000000000";
+    String API_KEY = "000000000000";
 }

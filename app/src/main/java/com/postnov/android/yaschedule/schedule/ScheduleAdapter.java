@@ -25,6 +25,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     private static final int TRAIN_DRAWABLE = R.drawable.ic_directions_railway;
     private static final int PLANE_DRAWABLE = R.drawable.ic_flight;
     private static final int BUS_DRAWABLE = R.drawable.ic_directions_bus;
+    private static final int SUBURBAN_DRAWABLE = R.drawable.ic_suburban;
+    private static final int SEA_DRAWABLE = R.drawable.ic_boat;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -41,7 +43,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         Station from = route.getFromStation();
         Station to = route.getToStation();
 
-        int drawable = 0;
+        int drawable;
         switch (routeOptions.getTransportType())
         {
             case TransportTypes.TRAIN:
@@ -53,6 +55,17 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             case TransportTypes.PLANE:
                 drawable = PLANE_DRAWABLE;
                 break;
+            case TransportTypes.SEA:
+                drawable = SEA_DRAWABLE;
+                break;
+            case TransportTypes.SUBURBAN:
+                drawable = SUBURBAN_DRAWABLE;
+                break;
+            case TransportTypes.RIVER:
+                drawable = SEA_DRAWABLE;
+                break;
+            default:
+                drawable = 0;
         }
 
         holder.mRoute.setText(routeOptions.getTitle());

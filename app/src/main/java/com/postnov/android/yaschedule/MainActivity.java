@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity
 
     private EditText mFrom;
     private EditText mTo;
-    private TextView mDate;
+    private EditText mDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
     {
         mFrom = (EditText) findViewById(R.id.from);
         mTo = (EditText) findViewById(R.id.to);
-        mDate = (TextView) findViewById(R.id.when);
+        mDate = (EditText) findViewById(R.id.when);
     }
 
     private void initToolbar()
