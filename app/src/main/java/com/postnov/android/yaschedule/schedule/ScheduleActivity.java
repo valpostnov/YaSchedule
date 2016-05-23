@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.postnov.android.yaschedule.data.entity.Response;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.utils.Const;
+import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 import com.postnov.android.yaschedule.utils.SearchQuery;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView
@@ -58,6 +60,10 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
+        recyclerView.addItemDecoration(itemDecoration);
+
         mEmptyView = (TextView) findViewById(R.id.empty_view);
 
         mAdapter = new ScheduleAdapter();
@@ -84,6 +90,20 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int menuItemId = item.getItemId();
+        switch (menuItemId)
+        {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

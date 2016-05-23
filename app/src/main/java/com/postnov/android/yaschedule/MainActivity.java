@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity
 
     private EditText mFrom;
     private EditText mTo;
-    private EditText mDate;
+    private TextView mDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,12 +33,12 @@ public class MainActivity extends AppCompatActivity
     {
         mFrom = (EditText) findViewById(R.id.from);
         mTo = (EditText) findViewById(R.id.to);
-        mDate = (EditText) findViewById(R.id.when);
+        mDate = (TextView) findViewById(R.id.when);
     }
 
     private void initToolbar()
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
     }
@@ -57,5 +58,12 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(EXTRA_DATE, date);
 
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }
