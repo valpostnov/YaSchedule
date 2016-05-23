@@ -9,6 +9,6 @@
     <string name="empty_view_text">Нет рейсов на указанную дату</string>
 
     <string name="action_settings">Настройки</string>
-    <string name="action_filter">Фильтр</string>
+    <string name="action_sort">Сортировать</string>
     <string name="action_share">Поделиться</string>
 </resources>
