@@ -20,18 +20,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
-            android:layout_marginStart="72dp"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            style="@style/AppTheme.Toolbar.Title"
             android:layout_marginEnd="@dimen/margin_medium"
-            android:id="@+id/schedule_title" />
+            android:id="@+id/schedule_title"
+            android:layout_marginStart="56dp"
+            android:singleLine="true"
+            android:ellipsize="end" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Subtitle"
-            android:layout_marginStart="72dp"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+            style="@style/AppTheme.Toolbar.SubTitle"
             android:layout_marginEnd="@dimen/margin_medium"
-            android:id="@+id/schedule_subtitle" />
+            android:id="@+id/schedule_subtitle"
+            android:layout_marginStart="56dp" />
     </LinearLayout>
 
     <View

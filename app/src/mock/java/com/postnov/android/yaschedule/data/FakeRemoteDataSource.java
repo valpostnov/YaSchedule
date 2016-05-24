@@ -54,8 +54,8 @@ public class FakeRemoteDataSource implements DataSource
     private RouteOptions getRouteOptions()
     {
         RouteOptions options = new RouteOptions();
-        options.setTitle("Симферополь - Москва");
-        options.setTransportType(TransportTypes.PLANE);
+        options.setTitle("31UF Москва - Нижний Новгород");
+        options.setTransportType(TransportTypes.SEA);
 
         return options;
     }
@@ -63,7 +63,7 @@ public class FakeRemoteDataSource implements DataSource
     private Station getFrom()
     {
         Station station = new Station();
-        station.setTitle("Симферополь");
+        station.setTitle("Ярославский вокзал");
 
         return station;
     }
@@ -71,7 +71,7 @@ public class FakeRemoteDataSource implements DataSource
     private Station getTo()
     {
         Station station = new Station();
-        station.setTitle("Москва");
+        station.setTitle("Нижний Новгород (Московский вокзал)");
 
         return station;
     }
