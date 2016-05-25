@@ -30,7 +30,8 @@
             android:id="@+id/schedule_title"
             android:layout_marginStart="56dp"
             android:singleLine="true"
-            android:ellipsize="end" />
+            android:ellipsize="end"
+            android:textStyle="bold|italic" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +39,8 @@
             style="@style/AppTheme.Toolbar.SubTitle"
             android:layout_marginEnd="@dimen/margin_medium"
             android:id="@+id/schedule_subtitle"
-            android:layout_marginStart="56dp" />
+            android:layout_marginStart="56dp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <View

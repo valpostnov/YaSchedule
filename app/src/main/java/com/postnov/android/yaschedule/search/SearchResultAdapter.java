@@ -8,11 +8,6 @@ import android.widget.TextView;
 
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.codes.Suggest;
-import com.postnov.android.yaschedule.data.entity.schedule.Route;
-import com.postnov.android.yaschedule.data.entity.schedule.RouteOptions;
-import com.postnov.android.yaschedule.data.entity.schedule.Station;
-import com.postnov.android.yaschedule.utils.TransportTypes;
-import com.postnov.android.yaschedule.utils.Utils;
 
 import java.util.List;
 

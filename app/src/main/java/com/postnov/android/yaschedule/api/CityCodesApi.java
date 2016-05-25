@@ -2,8 +2,6 @@ package com.postnov.android.yaschedule.api;
 
 import com.postnov.android.yaschedule.data.entity.codes.CityCodes;
 
-import java.util.List;
-
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

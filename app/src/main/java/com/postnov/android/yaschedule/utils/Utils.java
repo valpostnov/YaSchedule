@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -24,13 +23,38 @@ public class Utils
         showToast(context, message, Toast.LENGTH_SHORT);
     }
 
-    public static String formatTime(String date)
+    /**
+     *
+     * @param date yyyy-mm-dd HH:mm:ss
+     * @return HH:mm
+     */
+    public static String cutDate(String date)
     {
         int startIndex = date.lastIndexOf(" ");
         int endIndex = date.lastIndexOf(":");
         return date.substring(startIndex, endIndex).trim();
     }
 
+    /**
+     *
+     * @param date example yyyy-mm-dd HH:mm:ss
+     * @return 'day month', example '25 may'
+     */
+    public static String toShortDate(String date)
+    {
+        int month = Integer.valueOf(date.substring(date.indexOf("-") + 1, date.lastIndexOf("-")));
+        int day = Integer.valueOf(date.substring(date.lastIndexOf("-") + 1, date.lastIndexOf(" ")));
+
+        return toShortDate(day, month - 1, getYear());
+    }
+
+    /**
+     *
+     * @param day dd
+     * @param month mm
+     * @param year yyyy
+     * @return yyyy-mm-dd
+     */
     public static String formatDateReverse(int day, int month, int year)
     {
         StringBuilder date = new StringBuilder();
@@ -43,16 +67,54 @@ public class Utils
         return date.toString();
     }
 
-    public static String formatDateNorm(int day, int month, int year)
+    /**
+     *
+     * @param day dd
+     * @param month mm
+     * @param year yyyy
+     * @return 'day month', example '25 may'
+     */
+    public static String toShortDate(int day, int month, int year)
     {
-        StringBuilder date = new StringBuilder();
-        date.append(day);
-        date.append(".");
-        date.append(month);
-        date.append(".");
-        date.append(year);
+        return day + " " + getFullNameMonth(month);
+    }
 
-        return date.toString();
+    /**
+     *
+     * @param month mm
+     * @return full name month, example 'may'
+     */
+    public static String getFullNameMonth(int month)
+    {
+        switch (month)
+        {
+            case Const.JAN:
+                return "января";
+            case Const.FEB:
+                return "февраля";
+            case Const.MAR:
+                return "марта";
+            case Const.APR:
+                return "апреля";
+            case Const.MAY:
+                return "мая";
+            case Const.JUN:
+                return "июня";
+            case Const.JUL:
+                return "июля";
+            case Const.AUG:
+                return "августа";
+            case Const.SEP:
+                return "сентября";
+            case Const.OCT:
+                return "октября";
+            case Const.NOV:
+                return "ноября";
+            case Const.DEC:
+                return "декабря";
+            default:
+                return null;
+        }
     }
 
     public static int getYear()
@@ -69,7 +131,7 @@ public class Utils
         return Integer.parseInt(sdf.format(c.getTime()));
     }
 
-    public static int getDayOfYear()
+    public static int getDayOfMonth()
     {
         Calendar c = Calendar.getInstance(TimeZone.getDefault());
         SimpleDateFormat sdf = new SimpleDateFormat("dd", Locale.getDefault());
@@ -95,4 +157,6 @@ public class Utils
 
         return cal.getTimeInMillis();
     }
+
+
 }

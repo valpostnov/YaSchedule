@@ -7,7 +7,6 @@ import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import rx.observers.TestSubscriber;
 
 public class TestCodesRemoteDataSource

@@ -2,8 +2,6 @@ package com.postnov.android.yaschedule.data.source.codes;
 
 import com.postnov.android.yaschedule.data.entity.codes.CityCodes;
 
-import java.util.List;
-
 import rx.Observable;
 
 /**

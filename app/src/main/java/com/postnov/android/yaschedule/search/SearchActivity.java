@@ -25,7 +25,6 @@ import com.postnov.android.yaschedule.utils.Utils;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.subscriptions.CompositeSubscription;

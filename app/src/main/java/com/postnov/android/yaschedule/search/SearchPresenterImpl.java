@@ -2,8 +2,8 @@ package com.postnov.android.yaschedule.search;
 
 import com.postnov.android.yaschedule.data.entity.codes.CityCodes;
 import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
-import com.postnov.android.yaschedule.search.interfaces.ISearchView;
 import com.postnov.android.yaschedule.search.interfaces.ISearchPresenter;
+import com.postnov.android.yaschedule.search.interfaces.ISearchView;
 
 import rx.Subscriber;
 import rx.Subscription;

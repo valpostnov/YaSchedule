@@ -3,8 +3,6 @@ package com.postnov.android.yaschedule.data.source.codes;
 import com.postnov.android.yaschedule.api.CityCodesApi;
 import com.postnov.android.yaschedule.data.entity.codes.CityCodes;
 
-import java.util.concurrent.TimeUnit;
-
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

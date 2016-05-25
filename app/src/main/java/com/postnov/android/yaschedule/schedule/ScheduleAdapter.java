@@ -71,8 +71,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
         holder.mRoute.setText(String.format("%s %s", routeOptions.getNumber(), routeOptions.getTitle()).trim());
         holder.mRoute.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
-        holder.mStartTime.setText(Utils.formatTime(route.getDeparture()));
-        holder.mFinishTime.setText(Utils.formatTime(route.getArrival()));
+        holder.mStartTime.setText(Utils.cutDate(route.getDeparture()));
+        holder.mFinishTime.setText(Utils.cutDate(route.getArrival()));
+        holder.mStartDate.setText(Utils.toShortDate(route.getDeparture()));
+        holder.mFinishDate.setText(Utils.toShortDate(route.getArrival()));
         holder.mStationFrom.setText(from.getTitle());
         holder.mStationTo.setText(to.getTitle());
     }
@@ -106,6 +108,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         public TextView mRoute;
         public TextView mStartTime;
         public TextView mFinishTime;
+        public TextView mStartDate;
+        public TextView mFinishDate;
         public TextView mStationFrom;
         public TextView mStationTo;
 
@@ -115,6 +119,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             mRoute = (TextView) view.findViewById(R.id.route);
             mStartTime = (TextView) view.findViewById(R.id.startTime);
             mFinishTime = (TextView) view.findViewById(R.id.finishTime);
+            mStartDate = (TextView) view.findViewById(R.id.startDate);
+            mFinishDate = (TextView) view.findViewById(R.id.finishDate);
             mStationFrom = (TextView) view.findViewById(R.id.stationFrom);
             mStationTo = (TextView) view.findViewById(R.id.stationTo);
         }

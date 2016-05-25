@@ -23,7 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true"
-        app:errorTextAppearance="@style/AppTheme.ErrorText"
         android:layout_above="@+id/hintTo">
 
         <android.support.design.widget.TextInputEditText
@@ -47,7 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true"
-        app:errorTextAppearance="@style/AppTheme.ErrorText"
         android:layout_centerVertical="true">
 
         <android.support.design.widget.TextInputEditText
@@ -71,7 +69,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true"
-        app:errorTextAppearance="@style/AppTheme.ErrorText"
         android:layout_below="@+id/hintTo">
 
         <android.support.design.widget.TextInputEditText
