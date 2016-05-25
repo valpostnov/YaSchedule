@@ -2,6 +2,7 @@ package com.postnov.android.yaschedule;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -28,9 +29,9 @@ public class MainActivity extends AppCompatActivity
     private String mCityFromCode;
     private String mCityToCode;
 
-    private EditText mFrom;
-    private EditText mTo;
-    private EditText mDate;
+    private TextInputEditText mFrom;
+    private TextInputEditText mTo;
+    private TextInputEditText mDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initViews()
     {
-        mFrom = (EditText) findViewById(R.id.from);
+        mFrom = (TextInputEditText) findViewById(R.id.from);
         mFrom.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        mTo = (EditText) findViewById(R.id.to);
+        mTo = (TextInputEditText) findViewById(R.id.to);
         mTo.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        mDate = (EditText) findViewById(R.id.when);
+        mDate = (TextInputEditText) findViewById(R.id.when);
     }
 
     private void initToolbar()

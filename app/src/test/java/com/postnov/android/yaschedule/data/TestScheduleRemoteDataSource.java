@@ -1,5 +1,6 @@
-package com.postnov.android.yaschedule;
+package com.postnov.android.yaschedule.data;
 
+import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
 import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.utils.Const;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 import rx.observers.TestSubscriber;
 
-public class TestRemoteDataSource
+public class TestScheduleRemoteDataSource
 {
     private static final String FROM = "c23243"; //нино
     private static final String TO = "c213";     //москва

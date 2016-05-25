@@ -6,7 +6,7 @@
     <string name="btn_find">Найти</string>
     <string name="whenHint">Когда</string>
     <string name="loading_title">Поиск рейсов</string>
-    <string name="empty_view_text">Нет рейсов на указанную дату</string>
+    <string name="empty_view_text">Нет подходящих рейсов</string>
 
     <string name="action_settings">Настройки</string>
     <string name="action_sort">Сортировать</string>

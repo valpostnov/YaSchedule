@@ -32,6 +32,7 @@ public class SchedulePresenterImpl implements SchedulePresenter
     public void getSchedule(Map<String, String> options)
     {
         mView.showProgressDialog();
+
         Subscription subscription = mDataSource.search(options)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -56,6 +57,7 @@ public class SchedulePresenterImpl implements SchedulePresenter
                         mView.showList(response);
                     }
                 });
+
         mSubscriptions.add(subscription);
     }
 

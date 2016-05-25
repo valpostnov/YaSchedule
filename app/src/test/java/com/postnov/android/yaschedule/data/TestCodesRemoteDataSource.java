@@ -1,5 +1,6 @@
-package com.postnov.android.yaschedule;
+package com.postnov.android.yaschedule.data;
 
+import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.data.entity.codes.CityCodes;
 import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
 

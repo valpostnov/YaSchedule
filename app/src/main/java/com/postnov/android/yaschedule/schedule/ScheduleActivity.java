@@ -47,7 +47,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     {
         super.onResume();
         mPresenter.bind(this);
-
         mPresenter.getSchedule(
                 SearchQueryBuilder.builder()
                     .setApiKey(Const.API_KEY)

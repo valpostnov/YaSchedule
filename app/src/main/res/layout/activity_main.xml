@@ -33,14 +33,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/from"
-            android:background="@android:color/transparent"
+            android:background="?attr/selectableItemBackground"
             android:textSize="32sp"
             android:inputType="text"
             android:singleLine="true"
             android:paddingLeft="@dimen/margin_large"
             android:paddingRight="@dimen/margin_large"
             android:fontFamily="sans-serif-light"
-            android:focusableInTouchMode="false" />
+            android:focusableInTouchMode="false"
+            android:clickable="true" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -56,14 +57,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/to"
-            android:background="@android:color/transparent"
+            android:background="?attr/selectableItemBackground"
             android:textSize="32sp"
             android:inputType="text"
             android:singleLine="true"
             android:paddingLeft="@dimen/margin_large"
             android:paddingRight="@dimen/margin_large"
             android:fontFamily="sans-serif-light"
-            android:focusableInTouchMode="false" />
+            android:focusableInTouchMode="false"
+            android:clickable="true" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -86,8 +88,9 @@
             android:clickable="true"
             android:fontFamily="sans-serif-light"
             android:drawableEnd="@drawable/ic_calendar"
-            android:background="@android:color/transparent"
-            android:focusableInTouchMode="true" />
+            android:background="?attr/selectableItemBackground"
+            android:focusableInTouchMode="false"
+            />
     </android.support.design.widget.TextInputLayout>
 
     <Button
