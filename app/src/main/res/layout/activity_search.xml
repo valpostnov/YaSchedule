@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:titleTextAppearance="@style/AppTheme.Toolbar.Title"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        app:titleTextAppearance="@style/AppTheme.Toolbar.Title.Light"
+        android:theme="@style/AppTheme.AppBarOverlay.Light"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
         <EditText
@@ -25,7 +25,8 @@
             android:paddingBottom="@dimen/margin_small"
             android:paddingEnd="@dimen/margin_medium"
             android:singleLine="true"
-            android:inputType="text" />
+            android:inputType="text"
+            style="@style/TextAppearance.AppCompat.Medium" />
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView

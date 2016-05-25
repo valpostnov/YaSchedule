@@ -29,6 +29,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     private TextView mEmptyView;
     private String mCityFromCode;
     private String mCityToCode;
+    private String mDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,6 +41,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         initToolbar();
         mCityFromCode = getIntent().getStringExtra(MainActivity.EXTRA_FROM_CODE);
         mCityToCode = getIntent().getStringExtra(MainActivity.EXTRA_TO_CODE);
+        mDate = getIntent().getStringExtra(MainActivity.EXTRA_QUERY_DATE);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
                     .setFrom(mCityFromCode)
                     .setTo(mCityToCode)
                     .setPage(1)
-                    .setDate("2016-05-26")
+                    .setDate(mDate)
                     .build());
     }
 

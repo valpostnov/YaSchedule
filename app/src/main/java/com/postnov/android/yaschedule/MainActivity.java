@@ -1,23 +1,25 @@
 package com.postnov.android.yaschedule;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.DatePicker;
 
 import com.postnov.android.yaschedule.schedule.ScheduleActivity;
 import com.postnov.android.yaschedule.search.SearchActivity;
+import com.postnov.android.yaschedule.utils.Utils;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener
 {
     public static final String EXTRA_ROUTE = "route";
-    public static final String EXTRA_DATE = "date";
+    public static final String EXTRA_DATE = "normDate";
+    public static final String EXTRA_QUERY_DATE = "queryDate";
     public static final int REQUEST_CODE_FROM = 0;
     public static final int REQUEST_CODE_TO = 1;
     public static final String EXTRA_CITY = "city";
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity
 
     private String mCityFromCode;
     private String mCityToCode;
+    private String mReversedDate;
+    private String mNormalDate;
 
     private TextInputEditText mFrom;
     private TextInputEditText mTo;
@@ -45,26 +49,13 @@ public class MainActivity extends AppCompatActivity
     private void initViews()
     {
         mFrom = (TextInputEditText) findViewById(R.id.from);
-        mFrom.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                showSearchActivity(REQUEST_CODE_FROM);
-            }
-        });
+        mFrom.setOnClickListener(this);
 
         mTo = (TextInputEditText) findViewById(R.id.to);
-        mTo.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                showSearchActivity(REQUEST_CODE_TO);
-            }
-        });
+        mTo.setOnClickListener(this);
 
         mDate = (TextInputEditText) findViewById(R.id.when);
+        mDate.setOnClickListener(this);
     }
 
     private void initToolbar()
@@ -78,14 +69,13 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, ScheduleActivity.class);
 
         StringBuilder route = new StringBuilder();
-        String date = mDate.getText().toString();
-
         route.append(mFrom.getText());
         route.append(" - ");
         route.append(mTo.getText());
 
         intent.putExtra(EXTRA_ROUTE, route.toString());
-        intent.putExtra(EXTRA_DATE, date);
+        intent.putExtra(EXTRA_QUERY_DATE, mReversedDate);
+        intent.putExtra(EXTRA_DATE, mNormalDate);
         intent.putExtra(EXTRA_FROM_CODE, mCityFromCode);
         intent.putExtra(EXTRA_TO_CODE, mCityToCode);
 
@@ -135,5 +125,40 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.from:
+                showSearchActivity(REQUEST_CODE_FROM);
+                break;
+            case R.id.to:
+                showSearchActivity(REQUEST_CODE_TO);
+                break;
+            case R.id.when:
+                showDatePickerDialog();
+                break;
+        }
+    }
+
+    private void showDatePickerDialog()
+    {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this,
+                Utils.getYear(), Utils.getMonthOfYear() - 1, Utils.getDayOfYear());
+        datePickerDialog.getDatePicker().setMinDate(Utils.getMinDayInYear());
+        datePickerDialog.getDatePicker().setMaxDate(Utils.getMaxDayInYear());
+
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+    {
+        mReversedDate = Utils.formatDateReverse(dayOfMonth, monthOfYear + 1, year);
+        mNormalDate = Utils.formatDateNorm(dayOfMonth, monthOfYear + 1, year);
+        mDate.setText(mNormalDate);
     }
 }

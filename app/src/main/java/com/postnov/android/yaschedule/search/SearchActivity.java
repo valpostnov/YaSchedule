@@ -25,6 +25,7 @@ import com.postnov.android.yaschedule.utils.Utils;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.subscriptions.CompositeSubscription;
@@ -118,6 +119,14 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
         subscriptions.add(RxTextView
                 .textChanges(mSearchView)
                 .delay(500, TimeUnit.MILLISECONDS)
+                .map(new Func1<CharSequence, String>()
+                {
+                    @Override
+                    public String call(CharSequence query)
+                    {
+                        return query.toString().trim();
+                    }
+                })
                 .filter(new Func1<CharSequence, Boolean>()
                 {
                     @Override
