@@ -6,16 +6,13 @@ import java.util.Map;
 /**
  * Created by platon on 20.05.2016.
  */
-public class SearchQuery
+public class SearchQueryBuilder
 {
-    public static final String LANG_RU = "ru";
-    public static final String FORMAT_JSON = "json";
-
     private Map<String, String> mQuery = new HashMap<>();
 
     public static Builder builder()
     {
-        return new SearchQuery().new Builder();
+        return new SearchQueryBuilder().new Builder();
     }
 
     public class Builder

@@ -1,4 +1,4 @@
-package com.postnov.android.yaschedule.data.entity;
+package com.postnov.android.yaschedule.data.entity.schedule;
 
 import com.google.gson.annotations.SerializedName;
 

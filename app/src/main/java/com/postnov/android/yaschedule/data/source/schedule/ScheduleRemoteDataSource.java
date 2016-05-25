@@ -1,7 +1,7 @@
-package com.postnov.android.yaschedule.data.source;
+package com.postnov.android.yaschedule.data.source.schedule;
 
 import com.postnov.android.yaschedule.api.ScheduleApi;
-import com.postnov.android.yaschedule.data.entity.Response;
+import com.postnov.android.yaschedule.data.entity.schedule.Response;
 
 import java.util.Map;
 
@@ -13,12 +13,12 @@ import rx.Observable;
 /**
  * Created by platon on 20.05.2016.
  */
-public class RemoteDataSource implements DataSource
+public class ScheduleRemoteDataSource implements IScheduleDataSource
 {
     private static final String ENDPOINT = "https://api.rasp.yandex.net/v1.0/";
     private ScheduleApi mApi;
 
-    public RemoteDataSource()
+    public ScheduleRemoteDataSource()
     {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ENDPOINT)

@@ -1,10 +1,10 @@
 package com.postnov.android.yaschedule.data;
 
-import com.postnov.android.yaschedule.data.entity.Response;
-import com.postnov.android.yaschedule.data.entity.Route;
-import com.postnov.android.yaschedule.data.entity.RouteOptions;
-import com.postnov.android.yaschedule.data.entity.Station;
-import com.postnov.android.yaschedule.data.source.DataSource;
+import com.postnov.android.yaschedule.data.entity.schedule.Response;
+import com.postnov.android.yaschedule.data.entity.schedule.Route;
+import com.postnov.android.yaschedule.data.entity.schedule.RouteOptions;
+import com.postnov.android.yaschedule.data.entity.schedule.Station;
+import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.utils.TransportTypes;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import rx.Observable;
 /**
  * Created by platon on 21.05.2016.
  */
-public class FakeRemoteDataSource implements DataSource
+public class FakeRemoteDataSource implements IScheduleDataSource
 {
     @Override
     public Observable<Response> search(Map<String, String> options)

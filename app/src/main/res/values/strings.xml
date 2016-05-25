@@ -11,4 +11,6 @@
     <string name="action_settings">Настройки</string>
     <string name="action_sort">Сортировать</string>
     <string name="action_share">Поделиться</string>
+    <string name="search_title">Поиск</string>
+    <string name="search_hint">Введите место отправления</string>
 </resources>

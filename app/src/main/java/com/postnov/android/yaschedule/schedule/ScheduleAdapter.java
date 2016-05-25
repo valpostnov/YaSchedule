@@ -4,14 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.postnov.android.yaschedule.R;
-import com.postnov.android.yaschedule.data.entity.Route;
-import com.postnov.android.yaschedule.data.entity.RouteOptions;
-import com.postnov.android.yaschedule.data.entity.Station;
+import com.postnov.android.yaschedule.data.entity.schedule.Route;
+import com.postnov.android.yaschedule.data.entity.schedule.RouteOptions;
+import com.postnov.android.yaschedule.data.entity.schedule.Station;
 import com.postnov.android.yaschedule.utils.TransportTypes;
+import com.postnov.android.yaschedule.utils.Utils;
 
 import java.util.List;
 
@@ -69,10 +69,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                 drawable = 0;
         }
 
-        holder.mRoute.setText(routeOptions.getTitle());
+        holder.mRoute.setText(String.format("%s %s", routeOptions.getNumber(), routeOptions.getTitle()).trim());
         holder.mRoute.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
-        holder.mStartTime.setText(route.getDeparture());
-        holder.mFinishTime.setText(route.getArrival());
+        holder.mStartTime.setText(Utils.formatTime(route.getDeparture()));
+        holder.mFinishTime.setText(Utils.formatTime(route.getArrival()));
         holder.mStationFrom.setText(from.getTitle());
         holder.mStationTo.setText(to.getTitle());
     }

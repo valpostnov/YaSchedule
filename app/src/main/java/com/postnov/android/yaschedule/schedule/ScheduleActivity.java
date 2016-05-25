@@ -9,17 +9,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
-import com.postnov.android.yaschedule.data.entity.Response;
+import com.postnov.android.yaschedule.data.entity.schedule.Response;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
-import com.postnov.android.yaschedule.utils.SearchQuery;
+import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
+import com.postnov.android.yaschedule.utils.Utils;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView
 {
@@ -27,15 +27,19 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     private SchedulePresenter mPresenter;
     private ProgressDialog mProgressDialog;
     private TextView mEmptyView;
+    private String mCityFromCode;
+    private String mCityToCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-        mPresenter = new SchedulePresenterImpl(Injection.provideDataSource());
+        mPresenter = new SchedulePresenterImpl(Injection.provideScheduleDataSource());
         initViews();
         initToolbar();
+        mCityFromCode = getIntent().getStringExtra(MainActivity.EXTRA_FROM_CODE);
+        mCityToCode = getIntent().getStringExtra(MainActivity.EXTRA_TO_CODE);
     }
 
     @Override
@@ -43,7 +47,16 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     {
         super.onResume();
         mPresenter.bind(this);
-        mPresenter.getSchedule(SearchQuery.builder().build());
+
+        mPresenter.getSchedule(
+                SearchQueryBuilder.builder()
+                    .setApiKey(Const.API_KEY)
+                    .setFormat(Const.FORMAT_JSON)
+                    .setFrom(mCityFromCode)
+                    .setTo(mCityToCode)
+                    .setPage(1)
+                    .setDate("2016-05-26")
+                    .build());
     }
 
     @Override
@@ -123,16 +136,18 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     @Override
     public void showError(Throwable e)
     {
-        Toast.makeText(ScheduleActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        Utils.showToast(this, e.getMessage());
     }
 
     @Override
-    public void showProgressDialog() {
+    public void showProgressDialog()
+    {
         mProgressDialog.show();
     }
 
     @Override
-    public void hideProgressDialog() {
-        mProgressDialog.hide();
+    public void hideProgressDialog()
+    {
+        mProgressDialog.dismiss();
     }
 }

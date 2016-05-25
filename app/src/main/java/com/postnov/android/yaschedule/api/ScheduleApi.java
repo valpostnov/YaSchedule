@@ -1,6 +1,6 @@
 package com.postnov.android.yaschedule.api;
 
-import com.postnov.android.yaschedule.data.entity.Response;
+import com.postnov.android.yaschedule.data.entity.schedule.Response;
 
 import java.util.Map;
 
@@ -13,6 +13,6 @@ import rx.Observable;
  */
 public interface ScheduleApi
 {
-    @GET("/search")
+    @GET("search/")
     Observable<Response> search(@QueryMap Map<String, String> options);
 }

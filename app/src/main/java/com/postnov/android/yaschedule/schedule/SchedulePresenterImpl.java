@@ -1,7 +1,7 @@
 package com.postnov.android.yaschedule.schedule;
 
-import com.postnov.android.yaschedule.data.entity.Response;
-import com.postnov.android.yaschedule.data.source.DataSource;
+import com.postnov.android.yaschedule.data.entity.schedule.Response;
+import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 
@@ -18,11 +18,11 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class SchedulePresenterImpl implements SchedulePresenter
 {
-    private DataSource mDataSource;
+    private IScheduleDataSource mDataSource;
     private ScheduleView mView;
     private CompositeSubscription mSubscriptions;
 
-    public SchedulePresenterImpl(DataSource dataSource)
+    public SchedulePresenterImpl(IScheduleDataSource dataSource)
     {
         mDataSource = dataSource;
         mSubscriptions = new CompositeSubscription();

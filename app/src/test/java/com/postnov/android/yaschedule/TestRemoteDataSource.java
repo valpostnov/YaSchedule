@@ -1,10 +1,9 @@
 package com.postnov.android.yaschedule;
 
-import com.postnov.android.yaschedule.data.entity.Response;
-import com.postnov.android.yaschedule.data.source.DataSource;
-import com.postnov.android.yaschedule.data.source.RemoteDataSource;
+import com.postnov.android.yaschedule.data.entity.schedule.Response;
+import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.utils.Const;
-import com.postnov.android.yaschedule.utils.SearchQuery;
+import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,22 +18,23 @@ public class TestRemoteDataSource
     private static final String TO = "c213";     //москва
     private static final String DATE = "2016-05-26";
 
-    private DataSource mRemoteDataSource;
-    private Response mResponse;
+    private IScheduleDataSource mRemoteDataSource;
     private Map<String, String> mOptions;
 
     @Before
     public void setupDataSource()
     {
-        mOptions = SearchQuery.builder()
+        mOptions = SearchQueryBuilder.builder()
                 .setApiKey(Const.API_KEY)
-                .setFormat(SearchQuery.FORMAT_JSON)
+                .setFormat(Const.FORMAT_JSON)
                 .setFrom(FROM)
                 .setTo(TO)
+                .setLang(Const.LANG_RU)
+                .setPage(1)
                 .setDate(DATE)
                 .build();
 
-        mRemoteDataSource = Injection.provideDataSource();
+        mRemoteDataSource = Injection.provideScheduleDataSource();
     }
 
     @Test
