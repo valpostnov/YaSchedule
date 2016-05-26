@@ -17,16 +17,15 @@
         app:layout_columnSpan="2"
         app:layout_gravity="fill_horizontal"
         android:drawablePadding="@dimen/margin_small"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorAccentYellow"
         android:id="@+id/route"
-        android:drawableStart="@drawable/ic_boat"
         android:gravity="center_vertical"
         android:layout_marginBottom="@dimen/margin_small"
         android:singleLine="true"
         android:ellipsize="end" />
     <TextView
         android:text="6:00"
-        android:textSize="28sp"
+        android:textSize="@dimen/startTimeTextSize"
         app:layout_columnWeight="1"
         app:layout_gravity="fill_horizontal"
         android:textColor="@color/abc_primary_text_material_dark"
@@ -34,7 +33,7 @@
         />
     <TextView
         android:text="18:00"
-        android:textSize="28sp"
+        android:textSize="@dimen/finishTimeTextSize"
         android:gravity="end"
         app:layout_columnWeight="1"
         app:layout_gravity="fill_horizontal"

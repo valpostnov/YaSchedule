@@ -2,12 +2,14 @@ package com.postnov.android.yaschedule.schedule;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.postnov.android.yaschedule.Injection;
@@ -92,17 +94,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
 
     private void initToolbar()
     {
-        String title = getIntent().getStringExtra(MainActivity.EXTRA_ROUTE);
-        String subtitle = getIntent().getStringExtra(MainActivity.EXTRA_DATE);
-
-        TextView titleView = (TextView) findViewById(R.id.schedule_title);
-        TextView subtitleView = (TextView) findViewById(R.id.schedule_subtitle);
-
-        titleView.setText(title);
-        subtitleView.setText(subtitle);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.scheduleToolbar);
-        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -150,5 +142,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     public void hideProgressDialog()
     {
         mProgressDialog.dismiss();
+    }
+
+    public void showBottomSheetFilter(View view)
+    {
+        // TODO: 26.05.2016 bottomsheet
+        Snackbar snackbar = Snackbar.make(view, "Здесь будет фильтр", Snackbar.LENGTH_SHORT);
+        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGrey800));
+        snackbar.show();
     }
 }

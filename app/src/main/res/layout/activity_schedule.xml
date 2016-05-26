@@ -10,59 +10,52 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:titleTextAppearance="@style/AppTheme.Toolbar.Title.Light"
+        app:subtitleTextAppearance="@style/AppTheme.Toolbar.SubTitle"
         android:theme="@style/AppTheme.AppBarOverlay.Light"
         app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-    <LinearLayout
+    <FrameLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:background="?attr/colorPrimary"
+        android:layout_height="48dp"
         android:layout_marginTop="?attr/actionBarSize"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@color/colorGrey800">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            style="@style/AppTheme.Toolbar.Title.Light"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:id="@+id/schedule_title"
-            android:layout_marginStart="56dp"
+            android:layout_height="match_parent"
+            android:text="Все"
+            android:id="@+id/schedule_filter"
             android:singleLine="true"
-            android:ellipsize="end"
-            android:textStyle="bold|italic" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Subtitle"
-            style="@style/AppTheme.Toolbar.SubTitle"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:id="@+id/schedule_subtitle"
-            android:layout_marginStart="56dp"
-            android:textStyle="italic" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:background="@drawable/toolbar_shadow"
-        android:layout_marginTop="128dp" />
+            android:drawableEnd="@drawable/ic_arrow_drop_down"
+            android:gravity="center_vertical"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:paddingEnd="@dimen/margin_medium"
+            android:paddingStart="@dimen/margin_medium"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:onClick="showBottomSheetFilter" />
+    </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/scheduleList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="128dp"
-        />
+        android:layout_marginTop="104dp" />
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="104dp"
         android:text="@string/empty_view_text"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/toolbar_shadow"
+        android:layout_marginTop="104dp" />
 </FrameLayout>
 
