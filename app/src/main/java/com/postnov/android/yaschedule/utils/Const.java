@@ -5,8 +5,21 @@ package com.postnov.android.yaschedule.utils;
  */
 public interface Const
 {
-    String API_KEY = "00000000";
+    String API_KEY = "1111111";
     String RESULT_LIMIT = "6";
     String LANG_RU = "ru";
     String FORMAT_JSON = "json";
+
+    int DEC = 11;
+    int JAN = 0;
+    int FEB = 1;
+    int MAR = 2;
+    int APR = 3;
+    int MAY = 4;
+    int JUN = 5;
+    int JUL = 6;
+    int AUG = 7;
+    int SEP = 8;
+    int OCT = 9;
+    int NOV = 10;
 }
