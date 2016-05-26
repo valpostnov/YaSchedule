@@ -23,10 +23,10 @@
         android:background="@color/colorGrey800">
 
         <TextView
+            android:id="@+id/schedule_filter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Все"
-            android:id="@+id/schedule_filter"
             android:singleLine="true"
             android:drawableEnd="@drawable/ic_arrow_drop_down"
             android:gravity="center_vertical"
@@ -42,20 +42,21 @@
         android:id="@+id/scheduleList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="104dp" />
+        android:layout_marginTop="@dimen/schedule_activity_custom_margin"
+        android:scrollbars="vertical"/>
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="@dimen/schedule_activity_custom_margin"
         android:text="@string/empty_view_text"
         />
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:background="@drawable/toolbar_shadow"
-        android:layout_marginTop="104dp" />
+        android:layout_marginTop="@dimen/schedule_activity_custom_margin" />
 </FrameLayout>
 

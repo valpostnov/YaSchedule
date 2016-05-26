@@ -1,5 +1,7 @@
 package com.postnov.android.yaschedule.search;
 
+import android.util.Log;
+
 import com.postnov.android.yaschedule.data.entity.codes.CityCodes;
 import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
 import com.postnov.android.yaschedule.search.interfaces.ISearchPresenter;
@@ -29,6 +31,7 @@ public class SearchPresenterImpl implements ISearchPresenter
     @Override
     public void search(String city, String limit)
     {
+        Log.d("SEARCH", city);
         Subscription subscription = mDataSource.getList(city, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

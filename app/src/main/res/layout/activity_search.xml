@@ -25,7 +25,7 @@
             android:paddingBottom="@dimen/margin_small"
             android:paddingEnd="@dimen/margin_medium"
             android:singleLine="true"
-            android:inputType="text"
+            android:inputType="textCapSentences|text"
             style="@style/TextAppearance.AppCompat.Medium" />
     </android.support.v7.widget.Toolbar>
 

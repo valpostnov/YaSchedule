@@ -5,9 +5,7 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="margin_large">24dp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="startTimeTextSize">28sp</dimen>
     <dimen name="finishTimeTextSize">28sp</dimen>
+    <dimen name="schedule_activity_custom_margin">104dp</dimen>
 </resources>
