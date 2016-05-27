@@ -4,13 +4,17 @@
     <string name="from">Откуда</string>
     <string name="to">Куда</string>
     <string name="btn_find">Найти</string>
-    <string name="whenHint">Когда</string>
+    <string name="hint_when">Когда</string>
     <string name="loading_title">Поиск рейсов</string>
     <string name="empty_view_text">Нет подходящих рейсов</string>
 
     <string name="action_settings">Настройки</string>
     <string name="action_sort">Сортировать</string>
     <string name="action_share">Поделиться</string>
+
     <string name="search_title">Поиск</string>
-    <string name="search_hint">Введите место отправления</string>
+
+    <string name="hint_from">Введите место отправления</string>
+    <string name="hint_to">Введите место прибытия</string>
+    <string name="hint_error_text">Обязательное поле</string>
 </resources>

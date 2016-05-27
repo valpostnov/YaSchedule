@@ -102,8 +102,9 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
         mAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(mAdapter);
 
+        String searchHint = getIntent().getStringExtra(MainActivity.EXTRA_HINT);
         mSearchView = (EditText) findViewById(R.id.search_view);
-
+        mSearchView.setHint(searchHint);
     }
 
     private void initToolbar()
@@ -117,7 +118,6 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     {
         subscriptions.add(RxTextView
                 .textChanges(mSearchView)
-                .delay(500, TimeUnit.MILLISECONDS)
                 .map(new Func1<CharSequence, String>()
                 {
                     @Override
@@ -126,12 +126,12 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
                         return query.toString().trim();
                     }
                 })
-                .filter(new Func1<CharSequence, Boolean>()
+                .doOnNext(new Action1<String>()
                 {
                     @Override
-                    public Boolean call(CharSequence query)
+                    public void call(String query)
                     {
-                        return query.length() != 0;
+                        if (query.isEmpty()) mAdapter.swapList(null);
                     }
                 })
                 .subscribe(new Action1<CharSequence>()
@@ -139,7 +139,8 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
                     @Override
                     public void call(CharSequence query)
                     {
-                        mPresenter.search(query.toString(), Const.RESULT_LIMIT);
+                        if (query.length() != 0)
+                            mPresenter.search(query.toString(), Const.RESULT_LIMIT);
                     }
                 }));
     }

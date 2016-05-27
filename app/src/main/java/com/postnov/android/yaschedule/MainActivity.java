@@ -21,8 +21,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String EXTRA_ROUTE = "route";
     public static final String EXTRA_DATE = "normDate";
     public static final String EXTRA_QUERY_DATE = "queryDate";
+    public static final String EXTRA_HINT = "hint";
+
     public static final int REQUEST_CODE_FROM = 0;
     public static final int REQUEST_CODE_TO = 1;
+
     public static final String EXTRA_CITY = "city";
     public static final String EXTRA_CODE = "cityCode";
 
@@ -75,9 +78,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void showSearchActivity(int requestCode)
+    public void showSearchActivity(String hint, int requestCode)
     {
-        startActivityForResult(new Intent(this, SearchActivity.class), requestCode);
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(EXTRA_HINT, hint);
+        startActivityForResult(intent, requestCode);
     }
 
     @Override
@@ -126,10 +131,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.from:
-                showSearchActivity(REQUEST_CODE_FROM);
+                showSearchActivity(getString(R.string.hint_from), REQUEST_CODE_FROM);
                 break;
             case R.id.to:
-                showSearchActivity(REQUEST_CODE_TO);
+                showSearchActivity(getString(R.string.hint_to), REQUEST_CODE_TO);
                 break;
             case R.id.when:
                 showDatePickerDialog();
@@ -184,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             for (TextInputLayout l:layouts)
             {
-                l.setError("Обязательное поле");
+                l.setError(getString(R.string.hint_error_text));
             }
         }
         else
