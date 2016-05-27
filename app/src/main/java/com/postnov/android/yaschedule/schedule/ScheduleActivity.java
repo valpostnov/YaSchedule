@@ -228,13 +228,11 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     {
         mPresenter.search(SearchQueryBuilder
                 .builder()
-                .setApiKey(Const.API_KEY)
-                .setFormat(Const.FORMAT_JSON)
                 .setTransport(transport)
                 .setFrom(mCityFromCode)
                 .setTo(mCityToCode)
-                .setPage(page)
                 .setDate(mDate)
+                .setPage(page)
                 .build());
     }
 }

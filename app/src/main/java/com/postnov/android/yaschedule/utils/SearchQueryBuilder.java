@@ -10,6 +10,12 @@ public class SearchQueryBuilder
 {
     private Map<String, String> mQuery = new HashMap<>();
 
+    private SearchQueryBuilder()
+    {
+        mQuery.put("apikey", Const.API_KEY);
+        mQuery.put("format", Const.FORMAT_JSON);
+    }
+
     public static Builder builder()
     {
         return new SearchQueryBuilder().new Builder();
