@@ -2,14 +2,17 @@ package com.postnov.android.yaschedule.schedule;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.postnov.android.yaschedule.Injection;
@@ -21,6 +24,7 @@ import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
+import com.postnov.android.yaschedule.utils.TransportTypes;
 import com.postnov.android.yaschedule.utils.Utils;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView
@@ -28,7 +32,17 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     private ScheduleAdapter mAdapter;
     private SchedulePresenter mPresenter;
     private ProgressDialog mProgressDialog;
+    private BottomSheetBehavior mBottomSheetBehavior;
     private TextView mEmptyView;
+    private TextView mScheduleSubHeaderText;
+
+    private AppCompatRadioButton mAllFilter;
+    private AppCompatRadioButton mBusFilter;
+    private AppCompatRadioButton mTrainFilter;
+    private AppCompatRadioButton mPlaneFilter;
+    private AppCompatRadioButton mSuburbanFilter;
+    private AppCompatRadioButton mSeaFilter;
+
     private String mCityFromCode;
     private String mCityToCode;
     private String mDate;
@@ -90,6 +104,18 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setMessage(getString(R.string.loading_title));
+
+        View bottomSheet = findViewById(R.id.bottom_sheet);
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
+        mScheduleSubHeaderText = (TextView) findViewById(R.id.schedule_subheader_text);
+
+        mAllFilter = (AppCompatRadioButton) findViewById(R.id.all_filter);
+        mBusFilter = (AppCompatRadioButton) findViewById(R.id.bus_filter);
+        mTrainFilter = (AppCompatRadioButton) findViewById(R.id.train_filter);
+        mPlaneFilter = (AppCompatRadioButton) findViewById(R.id.plane_filter);
+        mSuburbanFilter = (AppCompatRadioButton) findViewById(R.id.suburban_filter);
+        mSeaFilter = (AppCompatRadioButton) findViewById(R.id.sea_filter);
     }
 
     private void initToolbar()
@@ -121,6 +147,17 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     }
 
     @Override
+    public void onBackPressed()
+    {
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+        {
+            collapseBottomSheet();
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     public void showList(Response response)
     {
         mAdapter.swapList(response.getRoutes());
@@ -146,9 +183,71 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
 
     public void showBottomSheetFilter(View view)
     {
-        // TODO: 26.05.2016 bottomsheet
-        Snackbar snackbar = Snackbar.make(view, "Здесь будет фильтр", Snackbar.LENGTH_SHORT);
-        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGrey800));
-        snackbar.show();
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
+        {
+            expandBottomSheet();
+            return;
+        }
+        collapseBottomSheet();
+    }
+
+    private void expandBottomSheet()
+    {
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    private void collapseBottomSheet()
+    {
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    public void applyFilter(View view)
+    {
+        String transport = "";
+        String transportTitle = "";
+
+        if (mAllFilter.isChecked())
+        {
+            transportTitle = getString(R.string.filter_all);
+        }
+        else if (mBusFilter.isChecked())
+        {
+            transport = TransportTypes.BUS;
+            transportTitle = getString(R.string.bus);
+        }
+        else if (mTrainFilter.isChecked())
+        {
+            transport = TransportTypes.TRAIN;
+            transportTitle = getString(R.string.train);
+        }
+        else if (mPlaneFilter.isChecked())
+        {
+            transport = TransportTypes.PLANE;
+            transportTitle = getString(R.string.plane);
+        }
+        else if (mSuburbanFilter.isChecked())
+        {
+            transport = TransportTypes.SUBURBAN;
+            transportTitle = getString(R.string.suburban);
+        }
+        else if (mSeaFilter.isChecked())
+        {
+            transport = TransportTypes.SEA;
+            transportTitle = getString(R.string.sea);
+        }
+
+        mPresenter.getSchedule(SearchQueryBuilder
+                .builder()
+                .setApiKey(Const.API_KEY)
+                .setFormat(Const.FORMAT_JSON)
+                .setTransport(transport)
+                .setFrom(mCityFromCode)
+                .setTo(mCityToCode)
+                .setPage(1)
+                .setDate(mDate)
+                .build());
+
+        mScheduleSubHeaderText.setText(transportTitle);
+        collapseBottomSheet();
     }
 }

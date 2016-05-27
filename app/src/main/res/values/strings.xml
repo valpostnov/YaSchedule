@@ -17,4 +17,12 @@
     <string name="hint_from">Введите место отправления</string>
     <string name="hint_to">Введите место прибытия</string>
     <string name="hint_error_text">Обязательное поле</string>
+    <string name="bus">Автобусы</string>
+    <string name="plane">Самолеты</string>
+    <string name="train">Поезда</string>
+    <string name="suburban">Электрички</string>
+    <string name="sea">Водный транспорт</string>
+    <string name="action_filter_apply">Применить</string>
+    <string name="filter_all">Все</string>
+    <string name="filter_title">Фильтр по типам транспорта</string>
 </resources>

@@ -157,6 +157,4 @@ public class Utils
 
         return cal.getTimeInMillis();
     }
-
-
 }

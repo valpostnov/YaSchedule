@@ -5,6 +5,7 @@ import com.postnov.android.yaschedule.data.entity.schedule.Response;
 import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
+import com.postnov.android.yaschedule.utils.TransportTypes;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class TestScheduleRemoteDataSource
 {
     private static final String FROM = "c23243"; //нино
     private static final String TO = "c213";     //москва
-    private static final String DATE = "2016-05-26";
+    private static final String DATE = "2016-05-28";
 
     private IScheduleDataSource mRemoteDataSource;
     private Map<String, String> mOptions;

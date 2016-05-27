@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/schedule_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -23,7 +24,7 @@
         android:background="@color/colorGrey800">
 
         <TextView
-            android:id="@+id/schedule_filter"
+            android:id="@+id/schedule_subheader_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Все"
@@ -57,6 +58,8 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:background="@drawable/toolbar_shadow"
-        android:layout_marginTop="@dimen/schedule_activity_custom_margin" />
-</FrameLayout>
+        android:layout_marginTop="@dimen/schedule_activity_custom_margin"
+        />
+    <include layout="@layout/item_bottom_sheet"/>
+</android.support.design.widget.CoordinatorLayout>
 
