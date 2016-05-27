@@ -1,6 +1,5 @@
 package com.postnov.android.yaschedule.utils;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 

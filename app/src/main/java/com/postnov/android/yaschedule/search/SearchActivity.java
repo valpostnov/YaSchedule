@@ -23,7 +23,6 @@ import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.Utils;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -68,9 +67,9 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     }
 
     @Override
-    protected void onStop()
+    protected void onPause()
     {
-        super.onStop();
+        super.onPause();
         subscriptions.clear();
         mPresenter.unsubscribe();
         mPresenter.unbind();

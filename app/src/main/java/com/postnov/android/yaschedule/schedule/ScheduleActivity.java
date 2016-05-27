@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.postnov.android.yaschedule.Injection;
@@ -29,6 +27,7 @@ import com.postnov.android.yaschedule.utils.Utils;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView
 {
+    private static final String DEFAULT_TT = "";
     private ScheduleAdapter mAdapter;
     private SchedulePresenter mPresenter;
     private ProgressDialog mProgressDialog;
@@ -41,7 +40,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     private AppCompatRadioButton mTrainFilter;
     private AppCompatRadioButton mPlaneFilter;
     private AppCompatRadioButton mSuburbanFilter;
-    private AppCompatRadioButton mSeaFilter;
 
     private String mCityFromCode;
     private String mCityToCode;
@@ -65,64 +63,15 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     {
         super.onResume();
         mPresenter.bind(this);
-        mPresenter.getSchedule(
-                SearchQueryBuilder.builder()
-                    .setApiKey(Const.API_KEY)
-                    .setFormat(Const.FORMAT_JSON)
-                    .setFrom(mCityFromCode)
-                    .setTo(mCityToCode)
-                    .setPage(1)
-                    .setDate(mDate)
-                    .build());
+        search(DEFAULT_TT, 1);
     }
 
     @Override
-    protected void onStop()
+    protected void onPause()
     {
-        super.onStop();
+        super.onPause();
         mPresenter.unsubscribe();
         mPresenter.unbind();
-    }
-
-    private void initViews()
-    {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.scheduleList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-
-        RecyclerView.ItemDecoration itemDecoration = new
-                DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
-        recyclerView.addItemDecoration(itemDecoration);
-
-        mEmptyView = (TextView) findViewById(R.id.empty_view);
-
-        mAdapter = new ScheduleAdapter();
-        mAdapter.setEmptyView(mEmptyView);
-        recyclerView.setAdapter(mAdapter);
-
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage(getString(R.string.loading_title));
-
-        View bottomSheet = findViewById(R.id.bottom_sheet);
-        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-
-        mScheduleSubHeaderText = (TextView) findViewById(R.id.schedule_subheader_text);
-
-        mAllFilter = (AppCompatRadioButton) findViewById(R.id.all_filter);
-        mBusFilter = (AppCompatRadioButton) findViewById(R.id.bus_filter);
-        mTrainFilter = (AppCompatRadioButton) findViewById(R.id.train_filter);
-        mPlaneFilter = (AppCompatRadioButton) findViewById(R.id.plane_filter);
-        mSuburbanFilter = (AppCompatRadioButton) findViewById(R.id.suburban_filter);
-        mSeaFilter = (AppCompatRadioButton) findViewById(R.id.sea_filter);
-    }
-
-    private void initToolbar()
-    {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.scheduleToolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -181,24 +130,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         mProgressDialog.dismiss();
     }
 
-    public void showBottomSheetFilter(View view)
-    {
-        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
-        {
+    public void showBottomSheetFilter(View view) {
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             expandBottomSheet();
             return;
         }
         collapseBottomSheet();
-    }
-
-    private void expandBottomSheet()
-    {
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-    }
-
-    private void collapseBottomSheet()
-    {
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     public void applyFilter(View view)
@@ -230,24 +167,74 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
             transport = TransportTypes.SUBURBAN;
             transportTitle = getString(R.string.suburban);
         }
-        else if (mSeaFilter.isChecked())
-        {
-            transport = TransportTypes.SEA;
-            transportTitle = getString(R.string.sea);
-        }
 
-        mPresenter.getSchedule(SearchQueryBuilder
+        search(transport, 1);
+
+        mScheduleSubHeaderText.setText(transportTitle);
+        collapseBottomSheet();
+    }
+
+    private void initViews()
+    {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.scheduleList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
+        recyclerView.addItemDecoration(itemDecoration);
+
+        mEmptyView = (TextView) findViewById(R.id.empty_view);
+
+        mAdapter = new ScheduleAdapter();
+        mAdapter.setEmptyView(mEmptyView);
+        recyclerView.setAdapter(mAdapter);
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage(getString(R.string.loading_title));
+
+        View bottomSheet = findViewById(R.id.bottom_sheet);
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
+        mScheduleSubHeaderText = (TextView) findViewById(R.id.schedule_subheader_text);
+
+        mAllFilter = (AppCompatRadioButton) findViewById(R.id.all_filter);
+        mBusFilter = (AppCompatRadioButton) findViewById(R.id.bus_filter);
+        mTrainFilter = (AppCompatRadioButton) findViewById(R.id.train_filter);
+        mPlaneFilter = (AppCompatRadioButton) findViewById(R.id.plane_filter);
+        mSuburbanFilter = (AppCompatRadioButton) findViewById(R.id.suburban_filter);
+    }
+
+    private void initToolbar()
+    {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.scheduleToolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void expandBottomSheet()
+    {
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    private void collapseBottomSheet()
+    {
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    private void search(String transport, int page)
+    {
+        mPresenter.search(SearchQueryBuilder
                 .builder()
                 .setApiKey(Const.API_KEY)
                 .setFormat(Const.FORMAT_JSON)
                 .setTransport(transport)
                 .setFrom(mCityFromCode)
                 .setTo(mCityToCode)
-                .setPage(1)
+                .setPage(page)
                 .setDate(mDate)
                 .build());
-
-        mScheduleSubHeaderText.setText(transportTitle);
-        collapseBottomSheet();
     }
 }

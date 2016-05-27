@@ -21,8 +21,9 @@
     <string name="plane">Самолеты</string>
     <string name="train">Поезда</string>
     <string name="suburban">Электрички</string>
-    <string name="sea">Водный транспорт</string>
+    <string name="sea">Морской транспорт</string>
     <string name="action_filter_apply">Применить</string>
     <string name="filter_all">Все</string>
     <string name="filter_title">Фильтр по типам транспорта</string>
+    <string name="river">Речной транспорт</string>
 </resources>

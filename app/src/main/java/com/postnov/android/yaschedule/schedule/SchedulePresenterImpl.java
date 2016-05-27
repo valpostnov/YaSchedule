@@ -29,7 +29,7 @@ public class SchedulePresenterImpl implements SchedulePresenter
     }
 
     @Override
-    public void getSchedule(Map<String, String> options)
+    public void search(Map<String, String> options)
     {
         mView.showProgressDialog();
 
@@ -62,7 +62,8 @@ public class SchedulePresenterImpl implements SchedulePresenter
     }
 
     @Override
-    public void bind(ScheduleView view) {
+    public void bind(ScheduleView view)
+    {
         mView = view;
     }
 

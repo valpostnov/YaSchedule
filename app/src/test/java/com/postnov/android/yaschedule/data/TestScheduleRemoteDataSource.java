@@ -5,7 +5,6 @@ import com.postnov.android.yaschedule.data.entity.schedule.Response;
 import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
-import com.postnov.android.yaschedule.utils.TransportTypes;
 
 import org.junit.Before;
 import org.junit.Test;

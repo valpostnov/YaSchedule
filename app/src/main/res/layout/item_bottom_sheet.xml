@@ -70,16 +70,6 @@
             android:checked="false"
             android:id="@+id/suburban_filter"
             />
-        <android.support.v7.widget.AppCompatRadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sea"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:layout_marginBottom="@dimen/margin_medium"
-            android:checked="false"
-            android:id="@+id/sea_filter"
-            />
     </RadioGroup>
 
     <Button
@@ -92,5 +82,5 @@
         android:layout_gravity="end"
         android:id="@+id/apply_filter_button"
         android:onClick="applyFilter"
-        />
+        style="@style/Widget.AppCompat.Button.Colored" />
 </LinearLayout>
