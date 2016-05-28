@@ -23,18 +23,6 @@ public class SearchQueryBuilder
 
     public class Builder
     {
-        public Builder setApiKey(String key)
-        {
-            mQuery.put("apikey", key);
-            return this;
-        }
-
-        public Builder setFormat(String format)
-        {
-            mQuery.put("format", format);
-            return this;
-        }
-
         public Builder setFrom(String from)
         {
             mQuery.put("from", from);
