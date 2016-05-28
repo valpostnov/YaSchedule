@@ -17,7 +17,7 @@
         app:layout_columnSpan="2"
         app:layout_gravity="fill_horizontal"
         android:drawablePadding="@dimen/margin_small"
-        android:textColor="@color/colorAccentGreen"
+        android:textColor="@color/colorPrimaryYellow"
         android:id="@+id/route"
         android:gravity="center_vertical"
         android:layout_marginBottom="@dimen/margin_small"
