@@ -3,6 +3,8 @@ package com.postnov.android.yaschedule.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.postnov.android.yaschedule.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -38,7 +40,7 @@ public class Utils
     /**
      *
      * @param date example yyyy-mm-dd HH:mm:ss
-     * @return 'day month', example '25 may'
+     * @return 'dd M', example '25 may'
      */
     public static String toShortDate(String date)
     {
@@ -72,7 +74,7 @@ public class Utils
      * @param day dd
      * @param month mm
      * @param year yyyy
-     * @return 'day month', example '25 may'
+     * @return 'dd M', example '25 may'
      */
     public static String toShortDate(int day, int month, int year)
     {
@@ -156,5 +158,52 @@ public class Utils
         cal.set(Calendar.YEAR, getYear());
 
         return cal.getTimeInMillis();
+    }
+
+    public static int getTransportImage(String tt, boolean white)
+    {
+        final int TRAIN_DRAWABLE = white ? R.drawable.ic_railway_white : R.drawable.ic_railway_green;
+        final int PLANE_DRAWABLE = white ? R.drawable.ic_flight_white : R.drawable.ic_flight_green;
+        final int BUS_DRAWABLE = white ? R.drawable.ic_bus_white : R.drawable.ic_bus_green;
+        final int SUBURBAN_DRAWABLE = white ? R.drawable.ic_suburban_white: R.drawable.ic_suburban_green;
+
+        switch (tt)
+        {
+            case TransportTypes.TRAIN:
+                return TRAIN_DRAWABLE;
+
+            case TransportTypes.BUS:
+                return BUS_DRAWABLE;
+
+            case TransportTypes.PLANE:
+                return PLANE_DRAWABLE;
+
+            case TransportTypes.SUBURBAN:
+                return SUBURBAN_DRAWABLE;
+
+            default:
+                return 0;
+        }
+    }
+
+    public static String getTransportTitleRu(String rawString)
+    {
+        switch (rawString)
+        {
+            case TransportTypes.TRAIN:
+                return "Поезд";
+
+            case TransportTypes.BUS:
+                return "Автобус";
+
+            case TransportTypes.PLANE:
+                return "Самолет";
+
+            case TransportTypes.SUBURBAN:
+                return "Электричка";
+
+            default:
+                return "Ваз 21 пешком";
+        }
     }
 }

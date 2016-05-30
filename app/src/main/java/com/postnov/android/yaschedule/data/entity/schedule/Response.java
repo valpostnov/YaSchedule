@@ -7,13 +7,16 @@ import java.util.List;
 /**
  * Created by platon on 19.05.2016.
  */
-public class Response {
-
+public class Response
+{
     @SerializedName("threads")
     private List<Route> mRoutes;
 
     @SerializedName("pagination")
     private Pagination mPagination;
+
+    @SerializedName("search")
+    private Search mSearch;
 
     public List<Route> getRoutes ()
     {
@@ -33,5 +36,15 @@ public class Response {
     public void setPagination (Pagination pagination)
     {
         mPagination = pagination;
+    }
+
+    public Search getSearch()
+    {
+        return mSearch;
+    }
+
+    public void setSearch(Search search)
+    {
+        this.mSearch = search;
     }
 }
