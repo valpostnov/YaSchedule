@@ -1,4 +1,4 @@
-package com.postnov.android.yaschedule.schedule;
+package com.postnov.android.yaschedule.fave;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,24 +10,24 @@ import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Route;
 import com.postnov.android.yaschedule.data.entity.schedule.RouteOptions;
 import com.postnov.android.yaschedule.data.entity.schedule.Station;
+import com.postnov.android.yaschedule.utils.TransportTypes;
 import com.postnov.android.yaschedule.utils.Utils;
 
 import java.util.List;
 
 /**
- * Created by platon on 20.05.2016.
+ * Created by platon on 29.05.2016.
  */
-public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder>
+public class FaveAdapter extends RecyclerView.Adapter<FaveAdapter.ViewHolder>
 {
     private List<Route> mRoutes;
     private View mEmptyView;
 
-    private OnItemClickListener onItemClickListener;
-
-    public interface OnItemClickListener
-    {
-        void onItemClick(View view, int position);
-    }
+    private static final int TRAIN_DRAWABLE = R.drawable.ic_railway_green;
+    private static final int PLANE_DRAWABLE = R.drawable.ic_flight_green;
+    private static final int BUS_DRAWABLE = R.drawable.ic_bus_green;
+    private static final int SUBURBAN_DRAWABLE = R.drawable.ic_suburban_green;
+    private static final int SEA_DRAWABLE = R.drawable.ic_boat;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -44,7 +44,30 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         Station from = route.getFromStation();
         Station to = route.getToStation();
 
-        int drawable = Utils.getTransportImage(routeOptions.getTransportType(), false);
+        int drawable;
+        switch (routeOptions.getTransportType())
+        {
+            case TransportTypes.TRAIN:
+                drawable = TRAIN_DRAWABLE;
+                break;
+            case TransportTypes.BUS:
+                drawable = BUS_DRAWABLE;
+                break;
+            case TransportTypes.PLANE:
+                drawable = PLANE_DRAWABLE;
+                break;
+            case TransportTypes.SEA:
+                drawable = SEA_DRAWABLE;
+                break;
+            case TransportTypes.SUBURBAN:
+                drawable = SUBURBAN_DRAWABLE;
+                break;
+            case TransportTypes.RIVER:
+                drawable = SEA_DRAWABLE;
+                break;
+            default:
+                drawable = 0;
+        }
 
         holder.mRoute.setText(String.format("%s %s", routeOptions.getNumber(), routeOptions.getTitle()).trim());
         holder.mRoute.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
@@ -70,13 +93,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
-    public void insertRows(List<Route> routeList)
-    {
-        int positionStart = mRoutes.size();
-        int itemCount = routeList.size();
-        notifyItemRangeInserted(positionStart, itemCount);
-    }
-
     public List<Route> getList()
     {
         return mRoutes;
@@ -87,7 +103,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         mEmptyView = view;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    public class ViewHolder extends RecyclerView.ViewHolder
     {
         public TextView mRoute;
         public TextView mStartTime;
@@ -107,19 +123,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             mFinishDate = (TextView) view.findViewById(R.id.finishDate);
             mStationFrom = (TextView) view.findViewById(R.id.stationFrom);
             mStationTo = (TextView) view.findViewById(R.id.stationTo);
-            view.setOnClickListener(this);
         }
-
-        @Override
-        public void onClick(View v)
-        {
-            int adapterPosition = getAdapterPosition();
-            onItemClickListener.onItemClick(v, adapterPosition);
-        }
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener)
-    {
-        onItemClickListener = listener;
     }
 }

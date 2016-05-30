@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
+import com.postnov.android.yaschedule.fave.FaveActivity;
 import com.postnov.android.yaschedule.schedule.ScheduleActivity;
 import com.postnov.android.yaschedule.search.SearchActivity;
 import com.postnov.android.yaschedule.utils.Utils;
@@ -83,6 +84,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this, SearchActivity.class);
         intent.putExtra(EXTRA_HINT, hint);
         startActivityForResult(intent, requestCode);
+    }
+
+    public void showFaveActivity(MenuItem item)
+    {
+        Intent intent = new Intent(this, FaveActivity.class);
+        startActivity(intent);
     }
 
     @Override

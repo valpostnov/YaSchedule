@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/scheduleToolbar"
+        android:id="@+id/schedule_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -40,19 +40,19 @@
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/scheduleList"
+        android:id="@+id/schedule_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/schedule_activity_custom_margin"
         android:scrollbars="vertical"/>
     <TextView
-        android:id="@+id/empty_view"
+        android:id="@+id/schedule_emptyview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_marginTop="@dimen/schedule_activity_custom_margin"
-        android:text="@string/empty_view_text"
+        android:text="@string/schedule_emptyview_text"
         />
     <View
         android:layout_width="match_parent"

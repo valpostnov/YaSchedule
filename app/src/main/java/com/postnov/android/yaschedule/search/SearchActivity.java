@@ -24,9 +24,9 @@ import com.postnov.android.yaschedule.utils.Utils;
 
 import java.util.List;
 
+import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.subscriptions.CompositeSubscription;
 
 public class SearchActivity extends AppCompatActivity implements ISearchView, OnItemClickListener
 {
@@ -34,7 +34,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     private ISearchPresenter mPresenter;
     private TextView mEmptyView;
     private EditText mSearchView;
-    private CompositeSubscription subscriptions;
+    private Subscription subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,7 +42,6 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         mPresenter = new SearchPresenterImpl(Injection.provideCodesDataSource());
-        subscriptions = new CompositeSubscription();
         initViews();
         initToolbar();
     }
@@ -59,6 +58,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     protected void onResume()
     {
         super.onResume();
@@ -69,10 +69,10 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     @Override
     protected void onPause()
     {
-        super.onPause();
-        subscriptions.clear();
+        subscription.unsubscribe();
         mPresenter.unsubscribe();
         mPresenter.unbind();
+        super.onPause();
     }
 
     @Override
@@ -115,7 +115,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
 
     private void subscribeOnTextChange()
     {
-        subscriptions.add(RxTextView
+        subscription = RxTextView
                 .textChanges(mSearchView)
                 .map(new Func1<CharSequence, String>()
                 {
@@ -141,7 +141,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
                         if (query.length() != 0)
                             mPresenter.search(query.toString(), Const.RESULT_LIMIT);
                     }
-                }));
+                });
     }
 
     @Override

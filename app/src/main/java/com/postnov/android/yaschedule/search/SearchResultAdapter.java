@@ -18,7 +18,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 {
     private List<Suggest> mSuggests;
     private View mEmptyView;
-    private static OnItemClickListener sOnItemClickListener;
+    private OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener
     {
@@ -63,7 +63,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         mEmptyView = view;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         public TextView mResult;
         public ViewHolder(View view)
@@ -77,12 +77,12 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         public void onClick(View v)
         {
             int adapterPosition = getAdapterPosition();
-            sOnItemClickListener.onItemClick(v, adapterPosition);
+            onItemClickListener.onItemClick(v, adapterPosition);
         }
     }
 
     public void setOnItemClickListener(OnItemClickListener listener)
     {
-        sOnItemClickListener = listener;
+        onItemClickListener = listener;
     }
 }

@@ -1,6 +1,7 @@
 package com.postnov.android.yaschedule.schedule;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
@@ -17,17 +18,21 @@ import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
+import com.postnov.android.yaschedule.detailschedule.DetailScheduleActivity;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
-import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
 import com.postnov.android.yaschedule.utils.TransportTypes;
 import com.postnov.android.yaschedule.utils.Utils;
 
-public class ScheduleActivity extends AppCompatActivity implements ScheduleView
+public class ScheduleActivity extends AppCompatActivity implements ScheduleView, ScheduleAdapter.OnItemClickListener
 {
-    private static final String DEFAULT_TT = "";
+    public static final String EXTRA_POSITION = "position";
+    public static final String EXTRA_FROM_CITY = "fromCity";
+    public static final String EXTRA_TO_CITY = "toCity";
+    private static String DEFAULT_TT = "";
+
     private ScheduleAdapter mAdapter;
     private SchedulePresenter mPresenter;
     private ProgressDialog mProgressDialog;
@@ -44,6 +49,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     private String mCityFromCode;
     private String mCityToCode;
     private String mDate;
+
+    private Response mResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -109,6 +116,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
     @Override
     public void showList(Response response)
     {
+        mResponse = response;
         mAdapter.swapList(response.getRoutes());
     }
 
@@ -130,12 +138,24 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         mProgressDialog.dismiss();
     }
 
-    public void showBottomSheetFilter(View view) {
-        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+    public void showBottomSheetFilter(View view)
+    {
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
+        {
             expandBottomSheet();
             return;
         }
         collapseBottomSheet();
+    }
+
+    @Override
+    public void onItemClick(View view, int position)
+    {
+        Intent intent = new Intent(this, DetailScheduleActivity.class);
+        intent.putExtra(EXTRA_POSITION, position);
+        intent.putExtra(EXTRA_FROM_CITY, mResponse.getSearch().getFrom().getTitle());
+        intent.putExtra(EXTRA_TO_CITY, mResponse.getSearch().getTo().getTitle());
+        startActivity(intent);
     }
 
     public void applyFilter(View view)
@@ -169,6 +189,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
         }
 
         search(transport, 1);
+        DEFAULT_TT = transport;
 
         mScheduleSubHeaderText.setText(transportTitle);
         collapseBottomSheet();
@@ -176,7 +197,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
 
     private void initViews()
     {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.scheduleList);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.schedule_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -185,10 +206,11 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
                 DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
         recyclerView.addItemDecoration(itemDecoration);
 
-        mEmptyView = (TextView) findViewById(R.id.empty_view);
+        mEmptyView = (TextView) findViewById(R.id.schedule_emptyview);
 
         mAdapter = new ScheduleAdapter();
         mAdapter.setEmptyView(mEmptyView);
+        mAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(mAdapter);
 
         mProgressDialog = new ProgressDialog(this);
@@ -209,7 +231,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView
 
     private void initToolbar()
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.scheduleToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.schedule_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

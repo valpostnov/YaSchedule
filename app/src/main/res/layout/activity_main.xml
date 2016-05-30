@@ -88,7 +88,7 @@
             android:paddingRight="@dimen/margin_large"
             android:clickable="true"
             android:fontFamily="sans-serif-light"
-            android:drawableEnd="@drawable/ic_calendar"
+            android:drawableEnd="@drawable/ic_calendar_white"
             android:background="?attr/selectableItemBackground"
             android:focusableInTouchMode="false"
             android:inputType="text"

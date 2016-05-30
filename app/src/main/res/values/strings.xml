@@ -6,7 +6,7 @@
     <string name="btn_find">Найти</string>
     <string name="hint_when">Когда</string>
     <string name="loading_title">Поиск рейсов</string>
-    <string name="empty_view_text">Нет подходящих рейсов</string>
+    <string name="schedule_emptyview_text">Нет подходящих рейсов</string>
 
     <string name="action_settings">Настройки</string>
     <string name="action_sort">Сортировать</string>
@@ -26,4 +26,6 @@
     <string name="filter_all">Все</string>
     <string name="filter_title">Фильтр по типам транспорта</string>
     <string name="river">Речной транспорт</string>
+    <string name="action_fave">Избранные рейсы</string>
+    <string name="fave_emptyview_text">Список избранного пуст</string>
 </resources>
