@@ -9,7 +9,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/detailschedule_toolbar"
@@ -18,7 +18,6 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/AppTheme.AppBarOverlay.Light"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@null"
             />
         <TextView
             android:id="@+id/detail_schedule_from"
@@ -29,9 +28,9 @@
             android:paddingStart="72dp"
             android:background="@color/colorPrimary"
             android:textColor="@color/abc_primary_text_material_light"
-            android:textSize="24sp"
             android:paddingTop="@dimen/margin_medium"
-            />
+            android:textSize="30sp"
+            android:singleLine="true" />
         <TextView
             android:id="@+id/detail_schedule_to"
             android:layout_width="match_parent"
@@ -41,9 +40,9 @@
             android:paddingStart="72dp"
             android:background="@color/colorPrimary"
             android:textColor="@color/abc_primary_text_material_light"
-            android:textSize="24sp"
             android:paddingBottom="28dp"
-            />
+            android:textSize="30sp"
+            android:singleLine="true" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -164,7 +163,7 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_star_border"
+        android:src="@drawable/ic_fave_grey"
         app:fabSize="mini"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
@@ -173,5 +172,6 @@
         app:layout_anchorGravity="bottom|end"
         app:backgroundTint="@android:color/white"
         android:layout_margin="@dimen/fab_margin"
-        android:clickable="true" />
+        android:clickable="true"
+        android:onClick="onClickSave" />
 </android.support.design.widget.CoordinatorLayout>

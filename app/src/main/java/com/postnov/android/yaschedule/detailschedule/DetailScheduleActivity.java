@@ -1,6 +1,7 @@
 package com.postnov.android.yaschedule.detailschedule;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -106,8 +107,11 @@ public class DetailScheduleActivity extends AppCompatActivity implements DetailS
 
     public void onClickSave(View view)
     {
-        Route route = null;
-        mPresenter.save(route);
+        Snackbar snackbar = Snackbar.make(view, "Добавлено в закладки", Snackbar.LENGTH_SHORT);
+        snackbar.getView().setBackgroundResource(R.color.colorGrey800);
+        snackbar.show();
+        /*Route route = null;
+        mPresenter.save(route);*/
     }
 
     private void initToolbar()
