@@ -29,6 +29,9 @@ import com.postnov.android.yaschedule.utils.Utils;
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView, ScheduleAdapter.OnItemClickListener
 {
     public static final String EXTRA_UID = "uid";
+    public static final String EXTRA_CODE_FROM = "fromCode";
+    public static final String EXTRA_CODE_TO = "toCode";
+
     private String defaultTt = "";
 
     private ScheduleAdapter mAdapter;
@@ -150,9 +153,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     public void onItemClick(View view, int position)
     {
         String uid = mResponse.getRoutes().get(position).getRouteOptions().getUid();
+        String from = mResponse.getRoutes().get(position).getFromStation().getCode();
+        String to = mResponse.getRoutes().get(position).getToStation().getCode();
 
         Intent intent = new Intent(this, StationsActivity.class);
         intent.putExtra(EXTRA_UID, uid);
+        intent.putExtra(EXTRA_CODE_FROM, from);
+        intent.putExtra(EXTRA_CODE_TO, to);
 
         startActivity(intent);
     }

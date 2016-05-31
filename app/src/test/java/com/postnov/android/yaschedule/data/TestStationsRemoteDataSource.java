@@ -22,7 +22,7 @@ public class TestStationsRemoteDataSource
     {
         mOptions = StationsQueryBuilder
                 .builder()
-                .setUID("empty_2_f9654609t9633000_413")
+                .setUID("6502_0_2006004_g16_4")
                 .setLang("ru")
                 .build();
 

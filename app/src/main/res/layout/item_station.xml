@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_small"
-    android:layout_marginBottom="@dimen/margin_small">
+    android:layout_marginTop="@dimen/margin_medium"
+    android:layout_marginBottom="@dimen/margin_medium">
 
+    <ImageView
+        android:id="@+id/station_image"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_dot"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:scaleType="center" />
     <TextView
         android:id="@+id/station_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Станция"
         style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:drawableStart="@drawable/ic_dot"
-        android:drawablePadding="@dimen/margin_small"
+        android:layout_marginStart="56dp"
         android:gravity="center_vertical"
-        android:singleLine="true"
-        />
+        android:singleLine="false"
+        android:layout_marginEnd="@dimen/margin_medium" />
     <TextView
         android:id="@+id/station_stop_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Продолжительность"
+        android:text="Остановка"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:layout_marginStart="48dp"
-        />
+        android:layout_alignParentEnd="false"
+        android:layout_marginStart="56dp"
+        android:layout_below="@+id/station_title"
+        android:textColor="@color/abc_primary_text_material_dark" />
     <TextView
         android:id="@+id/station_departure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Отправление"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:layout_marginStart="48dp"
-        />
+        android:layout_alignParentEnd="false"
+        android:layout_marginStart="56dp"
+        android:layout_below="@+id/station_stop_time" />
 
-</LinearLayout>
+</RelativeLayout>

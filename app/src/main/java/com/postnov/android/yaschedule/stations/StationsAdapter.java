@@ -4,9 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.postnov.android.yaschedule.R;
+import com.postnov.android.yaschedule.data.entity.schedule.Station;
 import com.postnov.android.yaschedule.data.entity.stations.Stop;
 import com.postnov.android.yaschedule.utils.Utils;
 
@@ -19,9 +21,17 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
 {
     private List<Stop> mStops;
     private View mEmptyView;
+    private String mFromCode;
+    private String mToCode;
 
     private static final int MAIN_STATION_DRAWABLE = R.drawable.ic_dot;
     private static final int SUB_STATION_DRAWABLE = R.drawable.ic_dot_border;
+
+    public StationsAdapter(String fromCode, String toCode)
+    {
+        mFromCode = fromCode;
+        mToCode = toCode;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -34,43 +44,40 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position)
     {
         Stop stop = getList().get(position);
+        Station station = stop.getStation();
 
-        int drawable = SUB_STATION_DRAWABLE;
-        if (position == getItemCount() - 1 || position == 0) drawable = MAIN_STATION_DRAWABLE;
-
-        holder.mTitle.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
-        holder.mTitle.setText(stop.getStation().getTitle());
-
-        if (stop.getDeparture() == null)
+        if (station.getCode().equals(mFromCode) || station.getCode().equals(mToCode))
         {
-            holder.mDeparture.setVisibility(View.GONE);
+            holder.mImageView.setImageResource(MAIN_STATION_DRAWABLE);
         }
         else
         {
-            holder.mDeparture.setVisibility(View.VISIBLE);
+            holder.mImageView.setImageResource(SUB_STATION_DRAWABLE);
+        }
 
+        holder.mTitle.setText(stop.getStation().getTitle());
+
+        if (stop.getDeparture() == null) holder.mDeparture.setVisibility(View.GONE);
+        else
+        {
             StringBuilder date = new StringBuilder();
-
-            date.append("Время отправления: ");
+            date.append("Отправление: ");
             date.append(Utils.getTime(stop.getDeparture()));
             date.append(", ");
             date.append(Utils.toShortDate(stop.getDeparture()));
 
+            holder.mDeparture.setVisibility(View.VISIBLE);
             holder.mDeparture.setText(date);
         }
 
-        if (stop.getStopTime() == null)
-        {
-            holder.mStopTime.setVisibility(View.GONE);
-        }
+        if (stop.getStopTime() == null) holder.mStopTime.setVisibility(View.GONE);
         else
         {
-            holder.mStopTime.setVisibility(View.VISIBLE);
-
             StringBuilder stopTime = new StringBuilder();
-            stopTime.append("Продолжительность остановки: ");
+            stopTime.append("Стоянка: ");
             stopTime.append(Utils.convertSecToMinutes(stop.getStopTime()));
 
+            holder.mStopTime.setVisibility(View.VISIBLE);
             holder.mStopTime.setText(stopTime);
         }
     }
@@ -101,12 +108,14 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
+        public ImageView mImageView;
         public TextView mTitle;
         public TextView mDeparture;
         public TextView mStopTime;
         public ViewHolder(View view)
         {
             super(view);
+            mImageView = (ImageView) view.findViewById(R.id.station_image);
             mTitle = (TextView) view.findViewById(R.id.station_title);
             mDeparture = (TextView) view.findViewById(R.id.station_departure);
             mStopTime = (TextView) view.findViewById(R.id.station_stop_time);

@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.stations.Stop;
 import com.postnov.android.yaschedule.schedule.ScheduleActivity;
-import com.postnov.android.yaschedule.schedule.ScheduleAdapter;
 import com.postnov.android.yaschedule.stations.interfaces.StationsPresenter;
 import com.postnov.android.yaschedule.stations.interfaces.StationsView;
 import com.postnov.android.yaschedule.utils.Const;
@@ -28,6 +29,8 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     private StationsAdapter mAdapter;
     private TextView mEmptyView;
     private String mUID;
+    private String mFromCode;
+    private String mToCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,9 +38,11 @@ public class StationsActivity extends AppCompatActivity implements StationsView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stations);
         mPresenter = new StationsPresenterImpl(Injection.provideStationsDataSource());
+        mUID = getIntent().getStringExtra(ScheduleActivity.EXTRA_UID);
+        mFromCode = getIntent().getStringExtra(ScheduleActivity.EXTRA_CODE_FROM);
+        mToCode = getIntent().getStringExtra(ScheduleActivity.EXTRA_CODE_TO);
         iniToolbar();
         initViews();
-        mUID = getIntent().getStringExtra(ScheduleActivity.EXTRA_UID);
     }
 
     @Override
@@ -54,6 +59,26 @@ public class StationsActivity extends AppCompatActivity implements StationsView
         super.onPause();
         mPresenter.unsubscribe();
         mPresenter.unbind();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int menuItemId = item.getItemId();
+        switch (menuItemId)
+        {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -81,7 +106,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
 
         mEmptyView = (TextView) findViewById(R.id.stations_empty_view);
 
-        mAdapter = new StationsAdapter();
+        mAdapter = new StationsAdapter(mFromCode, mToCode);
         mAdapter.setEmptyView(mEmptyView);
         recyclerView.setAdapter(mAdapter);
     }
@@ -90,6 +115,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_stations);
         toolbar.setNavigationIcon(R.drawable.ic_close);
+        toolbar.setTitle(R.string.station_activity_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
