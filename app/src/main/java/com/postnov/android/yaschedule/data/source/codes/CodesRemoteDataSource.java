@@ -1,7 +1,7 @@
 package com.postnov.android.yaschedule.data.source.codes;
 
-import com.postnov.android.yaschedule.api.CityCodesApi;
-import com.postnov.android.yaschedule.data.entity.codes.CityCodes;
+import com.postnov.android.yaschedule.api.CitiesApi;
+import com.postnov.android.yaschedule.data.entity.codes.Cities;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -14,7 +14,7 @@ import rx.Observable;
 public class CodesRemoteDataSource implements ICodesDataSource
 {
     private static final String ENDPOINT = "https://suggests.rasp.yandex.net/";
-    private CityCodesApi mApi;
+    private CitiesApi mApi;
 
     public CodesRemoteDataSource()
     {
@@ -24,12 +24,12 @@ public class CodesRemoteDataSource implements ICodesDataSource
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
-        mApi = retrofit.create(CityCodesApi.class);
+        mApi = retrofit.create(CitiesApi.class);
     }
 
     @Override
-    public Observable<CityCodes> getList(String city, String limit)
+    public Observable<Cities> getList(String city, String limit)
     {
-        return mApi.fetchCodes(city, limit);
+        return mApi.cityList(city, limit);
     }
 }

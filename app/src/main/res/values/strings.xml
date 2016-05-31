@@ -28,4 +28,5 @@
     <string name="river">Речной транспорт</string>
     <string name="action_fave">Избранные рейсы</string>
     <string name="fave_emptyview_text">Список избранного пуст</string>
+    <string name="fave_activity_title">Избранные рейсы</string>
 </resources>

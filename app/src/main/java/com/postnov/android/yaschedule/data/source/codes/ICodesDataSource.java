@@ -1,6 +1,6 @@
 package com.postnov.android.yaschedule.data.source.codes;
 
-import com.postnov.android.yaschedule.data.entity.codes.CityCodes;
+import com.postnov.android.yaschedule.data.entity.codes.Cities;
 
 import rx.Observable;
 
@@ -9,5 +9,5 @@ import rx.Observable;
  */
 public interface ICodesDataSource
 {
-    Observable<CityCodes> getList(String city, String limit);
+    Observable<Cities> getList(String city, String limit);
 }

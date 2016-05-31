@@ -13,7 +13,4 @@ import rx.Observable;
 public interface IScheduleDataSource
 {
     Observable<Response> search(Map<String, String> options);
-    Observable<Route> getRoute(int id);
-    void save(Route route);
-    void delete(String routeId);
 }

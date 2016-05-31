@@ -1,9 +1,8 @@
-package com.postnov.android.yaschedule.data.source.schedule.remote;
+package com.postnov.android.yaschedule.data.source.schedule;
 
 import com.postnov.android.yaschedule.api.ScheduleApi;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
-import com.postnov.android.yaschedule.data.entity.schedule.Route;
-import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
+import com.postnov.android.yaschedule.utils.Const;
 
 import java.util.Map;
 
@@ -12,7 +11,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by platon on 20.05.2016.
@@ -21,7 +19,6 @@ public class ScheduleRemoteDataSource implements IScheduleDataSource
 {
     private static ScheduleRemoteDataSource sDataSource;
 
-    private static final String ENDPOINT = "https://api.rasp.yandex.net/v1.0/";
     private ScheduleApi mApi;
     private Response mResponse;
     private Map<String, String> mCachedOptions;
@@ -40,7 +37,7 @@ public class ScheduleRemoteDataSource implements IScheduleDataSource
     private ScheduleRemoteDataSource()
     {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ENDPOINT)
+                .baseUrl(Const.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
@@ -64,27 +61,4 @@ public class ScheduleRemoteDataSource implements IScheduleDataSource
             }
         });
     }
-
-    @Override
-    public Observable<Route> getRoute(final int id)
-    {
-        if (mResponse != null)
-        {
-            return Observable.just(mResponse).flatMap(new Func1<Response, Observable<Route>>()
-            {
-                @Override
-                public Observable<Route> call(Response response)
-                {
-                    return Observable.just(response.getRoutes().get(id));
-                }
-            });
-        }
-        return Observable.empty();
-    }
-
-    @Override
-    public void save(Route route) {}
-
-    @Override
-    public void delete(String routeId) {}
 }

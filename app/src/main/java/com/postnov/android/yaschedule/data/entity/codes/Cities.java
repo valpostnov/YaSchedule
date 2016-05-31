@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by platon on 24.05.2016.
  */
-public class CityCodes
+public class Cities
 {
     @SerializedName("suggests")
     private List<Suggest> suggests;

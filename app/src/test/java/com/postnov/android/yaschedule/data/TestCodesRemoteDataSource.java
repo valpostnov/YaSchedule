@@ -1,7 +1,7 @@
 package com.postnov.android.yaschedule.data;
 
 import com.postnov.android.yaschedule.Injection;
-import com.postnov.android.yaschedule.data.entity.codes.CityCodes;
+import com.postnov.android.yaschedule.data.entity.codes.Cities;
 import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
 
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class TestCodesRemoteDataSource
     @Test
     public void testFetchCodes() throws Exception
     {
-        TestSubscriber<CityCodes> subscriber = new TestSubscriber<>();
+        TestSubscriber<Cities> subscriber = new TestSubscriber<>();
         mRemoteDataSource.getList(CITY, LIMIT).subscribe(subscriber);
         subscriber.assertNoErrors();
     }
