@@ -16,3 +16,5 @@
 - RxAndroid
 - RxBinding
 - SQLBrite
+
+###### «API предоставлен сервисом Яндекс.Расписания» 
