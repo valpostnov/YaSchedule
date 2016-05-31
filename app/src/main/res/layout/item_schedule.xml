@@ -21,8 +21,9 @@
         android:id="@+id/route"
         android:gravity="center_vertical"
         android:layout_marginBottom="@dimen/margin_small"
-        android:singleLine="true"
-        android:ellipsize="end" />
+        android:singleLine="false"
+        android:ellipsize="end"
+        android:maxLines="2" />
     <TextView
         android:text="6:00"
         android:textSize="@dimen/startTimeTextSize"

@@ -160,12 +160,12 @@ public class Utils
         return cal.getTimeInMillis();
     }
 
-    public static int getTransportImage(String tt, boolean white)
+    public static int getTransportImage(String tt)
     {
-        final int TRAIN_DRAWABLE = white ? R.drawable.ic_railway_white : R.drawable.ic_railway_green;
-        final int PLANE_DRAWABLE = white ? R.drawable.ic_flight_white : R.drawable.ic_flight_green;
-        final int BUS_DRAWABLE = white ? R.drawable.ic_bus_white : R.drawable.ic_bus_green;
-        final int SUBURBAN_DRAWABLE = white ? R.drawable.ic_suburban_white: R.drawable.ic_suburban_green;
+        final int TRAIN_DRAWABLE =  R.drawable.ic_railway_white;
+        final int PLANE_DRAWABLE = R.drawable.ic_flight_white;
+        final int BUS_DRAWABLE = R.drawable.ic_bus_white;
+        final int SUBURBAN_DRAWABLE = R.drawable.ic_suburban_white;
 
         switch (tt)
         {

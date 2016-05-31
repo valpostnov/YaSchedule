@@ -44,7 +44,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         Station from = route.getFromStation();
         Station to = route.getToStation();
 
-        int drawable = Utils.getTransportImage(routeOptions.getTransportType(), false);
+        int drawable = Utils.getTransportImage(routeOptions.getTransportType());
 
         holder.mRoute.setText(String.format("%s %s", routeOptions.getNumber(), routeOptions.getTitle()).trim());
         holder.mRoute.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);

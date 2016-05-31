@@ -31,7 +31,6 @@
             android:name=".fave.FaveActivity"
             android:screenOrientation="sensorPortrait"
             />
-        <activity android:name=".detailschedule.DetailScheduleActivity"/>
     </application>
 
 </manifest>

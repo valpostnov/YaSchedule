@@ -1,7 +1,6 @@
 package com.postnov.android.yaschedule.schedule;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
-import com.postnov.android.yaschedule.detailschedule.DetailScheduleActivity;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
@@ -28,10 +26,7 @@ import com.postnov.android.yaschedule.utils.Utils;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView, ScheduleAdapter.OnItemClickListener
 {
-    public static final String EXTRA_POSITION = "position";
-    public static final String EXTRA_FROM_CITY = "fromCity";
-    public static final String EXTRA_TO_CITY = "toCity";
-    private static String DEFAULT_TT = "";
+    private String defaultTt = "";
 
     private ScheduleAdapter mAdapter;
     private SchedulePresenter mPresenter;
@@ -49,8 +44,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     private String mCityFromCode;
     private String mCityToCode;
     private String mDate;
-
-    private Response mResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -70,7 +63,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     {
         super.onResume();
         mPresenter.bind(this);
-        search(DEFAULT_TT, 1);
+        search(defaultTt, 1);
     }
 
     @Override
@@ -116,7 +109,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     @Override
     public void showList(Response response)
     {
-        mResponse = response;
         mAdapter.swapList(response.getRoutes());
     }
 
@@ -151,11 +143,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     @Override
     public void onItemClick(View view, int position)
     {
-        Intent intent = new Intent(this, DetailScheduleActivity.class);
-        intent.putExtra(EXTRA_POSITION, position);
-        intent.putExtra(EXTRA_FROM_CITY, mResponse.getSearch().getFrom().getTitle());
-        intent.putExtra(EXTRA_TO_CITY, mResponse.getSearch().getTo().getTitle());
-        startActivity(intent);
+
     }
 
     public void applyFilter(View view)
@@ -189,7 +177,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         }
 
         search(transport, 1);
-        DEFAULT_TT = transport;
+        defaultTt = transport;
 
         mScheduleSubHeaderText.setText(transportTitle);
         collapseBottomSheet();
