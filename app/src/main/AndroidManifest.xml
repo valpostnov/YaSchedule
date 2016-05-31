@@ -29,8 +29,8 @@
             android:screenOrientation="sensorPortrait" />
         <activity
             android:name=".fave.FaveActivity"
-            android:screenOrientation="sensorPortrait"
-            />
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".stations.StationsActivity"></activity>
     </application>
 
 </manifest>

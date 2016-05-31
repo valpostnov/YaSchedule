@@ -16,7 +16,7 @@ public class Thread
     private String mDays;
 
     @SerializedName("stops")
-    private List<Stops> mStops;
+    private List<Stop> mStops;
 
     public String getUid() {
         return mUid;
@@ -34,11 +34,11 @@ public class Thread
         this.mDays = days;
     }
 
-    public List<Stops> getStops() {
+    public List<Stop> getStops() {
         return mStops;
     }
 
-    public void setStops(List<Stops> stops) {
+    public void setStops(List<Stop> stops) {
         this.mStops = stops;
     }
 }

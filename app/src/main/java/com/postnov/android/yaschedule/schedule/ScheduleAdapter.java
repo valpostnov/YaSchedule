@@ -46,10 +46,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
         int drawable = Utils.getTransportImage(routeOptions.getTransportType());
 
-        holder.mRoute.setText(String.format("%s %s", routeOptions.getNumber(), routeOptions.getTitle()).trim());
+        String title = String.format("%s %s", routeOptions.getNumber(), routeOptions.getTitle()).trim();
+        holder.mRoute.setText(title);
         holder.mRoute.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
-        holder.mStartTime.setText(Utils.cutDate(route.getDeparture()));
-        holder.mFinishTime.setText(Utils.cutDate(route.getArrival()));
+        holder.mStartTime.setText(Utils.getTime(route.getDeparture()));
+        holder.mFinishTime.setText(Utils.getTime(route.getArrival()));
         holder.mStartDate.setText(Utils.toShortDate(route.getDeparture()));
         holder.mFinishDate.setText(Utils.toShortDate(route.getArrival()));
         holder.mStationFrom.setText(from.getTitle());

@@ -40,11 +40,12 @@
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/schedule_list"
+        android:id="@+id/schedule_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/schedule_activity_custom_margin"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        />
     <TextView
         android:id="@+id/schedule_emptyview"
         android:layout_width="match_parent"

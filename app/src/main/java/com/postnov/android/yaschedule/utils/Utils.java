@@ -1,6 +1,7 @@
 package com.postnov.android.yaschedule.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.postnov.android.yaschedule.R;
@@ -30,7 +31,7 @@ public class Utils
      * @param date yyyy-mm-dd HH:mm:ss
      * @return HH:mm
      */
-    public static String cutDate(String date)
+    public static String getTime(String date)
     {
         int startIndex = date.lastIndexOf(" ");
         int endIndex = date.lastIndexOf(":");
@@ -117,6 +118,19 @@ public class Utils
             default:
                 return null;
         }
+    }
+
+    public static String convertSecToMinutes(String seconds)
+    {
+        if (seconds != null)
+        {
+            int sec = Integer.valueOf(seconds);
+            int min = sec / 60;
+
+            return min + " мин.";
+        }
+
+        return "";
     }
 
     public static int getYear()

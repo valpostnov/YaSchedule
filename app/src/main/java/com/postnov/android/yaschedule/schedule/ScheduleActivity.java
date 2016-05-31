@@ -1,6 +1,7 @@
 package com.postnov.android.yaschedule.schedule;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
+import com.postnov.android.yaschedule.stations.StationsActivity;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
 import com.postnov.android.yaschedule.utils.TransportTypes;
@@ -26,6 +28,7 @@ import com.postnov.android.yaschedule.utils.Utils;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView, ScheduleAdapter.OnItemClickListener
 {
+    public static final String EXTRA_UID = "uid";
     private String defaultTt = "";
 
     private ScheduleAdapter mAdapter;
@@ -44,6 +47,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     private String mCityFromCode;
     private String mCityToCode;
     private String mDate;
+
+    private Response mResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -109,6 +114,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     @Override
     public void showList(Response response)
     {
+        mResponse = response;
         mAdapter.swapList(response.getRoutes());
     }
 
@@ -143,7 +149,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     @Override
     public void onItemClick(View view, int position)
     {
+        String uid = mResponse.getRoutes().get(position).getRouteOptions().getUid();
 
+        Intent intent = new Intent(this, StationsActivity.class);
+        intent.putExtra(EXTRA_UID, uid);
+
+        startActivity(intent);
     }
 
     public void applyFilter(View view)
@@ -185,7 +196,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
 
     private void initViews()
     {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.schedule_list);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.schedule_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
