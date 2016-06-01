@@ -26,7 +26,8 @@
             android:paddingEnd="@dimen/margin_medium"
             android:singleLine="true"
             android:inputType="textCapSentences|text"
-            style="@style/TextAppearance.AppCompat.Medium" />
+            style="@style/TextAppearance.AppCompat.Medium"
+            />
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
@@ -42,5 +43,13 @@
         android:text="Город или станция не найдены"
         android:gravity="center_vertical|center_horizontal"
         android:layout_marginTop="?attr/actionBarSize"
-        style="@style/TextAppearance.AppCompat.Medium" />
+        style="@style/TextAppearance.AppCompat.Medium"
+        />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:id="@+id/search_progressview"
+        android:visibility="gone" />
 </FrameLayout>

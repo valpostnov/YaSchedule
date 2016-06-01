@@ -5,6 +5,8 @@ import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
 import com.postnov.android.yaschedule.search.interfaces.ISearchPresenter;
 import com.postnov.android.yaschedule.search.interfaces.ISearchView;
 
+import java.util.concurrent.TimeUnit;
+
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,17 +31,25 @@ public class SearchPresenterImpl implements ISearchPresenter
     @Override
     public void search(String city, String limit)
     {
-        Subscription subscription = mDataSource.getList(city, limit)
+        mSearchView.showProgressView();
+
+        Subscription subscription = mDataSource
+                .getList(city, limit)
+                .delay(700, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Cities>()
                 {
                     @Override
-                    public void onCompleted() {}
+                    public void onCompleted()
+                    {
+                        mSearchView.hideProgressView();
+                    }
 
                     @Override
                     public void onError(Throwable e)
                     {
+                        mSearchView.hideProgressView();
                         mSearchView.showError(e);
                     }
 
@@ -49,6 +59,7 @@ public class SearchPresenterImpl implements ISearchPresenter
                         mSearchView.showCities(cityCodes.getSuggests());
                     }
                 });
+
         mSubscriptions.add(subscription);
     }
 

@@ -11,4 +11,6 @@ import java.util.List;
 public interface ISearchView extends BaseView
 {
     void showCities(List<Suggest> cities);
+    void showProgressView();
+    void hideProgressView();
 }

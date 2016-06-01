@@ -1,10 +1,12 @@
 package com.postnov.android.yaschedule.stations;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -24,11 +26,14 @@ import java.util.List;
 
 public class StationsActivity extends AppCompatActivity implements StationsView
 {
+    private static final String TAG = "StationsActivity";
     private StationsPresenter mPresenter;
 
     private StationsAdapter mAdapter;
+    private ProgressDialog mProgressDialog;
     private TextView mEmptyView;
     private String mUID;
+    private String mDate;
     private String mFromCode;
     private String mToCode;
 
@@ -39,6 +44,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
         setContentView(R.layout.activity_stations);
         mPresenter = new StationsPresenterImpl(Injection.provideStationsDataSource());
         mUID = getIntent().getStringExtra(ScheduleActivity.EXTRA_UID);
+        mDate = getIntent().getStringExtra(ScheduleActivity.EXTRA_DATE);
         mFromCode = getIntent().getStringExtra(ScheduleActivity.EXTRA_CODE_FROM);
         mToCode = getIntent().getStringExtra(ScheduleActivity.EXTRA_CODE_TO);
         iniToolbar();
@@ -50,7 +56,12 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     {
         super.onResume();
         mPresenter.bind(this);
-        mPresenter.fetchStations(StationsQueryBuilder.builder().setLang(Const.LANG_RU).setUID(mUID).build());
+        mPresenter.fetchStations(StationsQueryBuilder
+                .builder()
+                .setDate(mDate)
+                .setLang(Const.LANG_RU)
+                .setUID(mUID)
+                .build());
     }
 
     @Override
@@ -88,9 +99,21 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     }
 
     @Override
+    public void showProgressDialog()
+    {
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog()
+    {
+        mProgressDialog.dismiss();
+    }
+
+    @Override
     public void showError(Throwable e)
     {
-        Utils.showToast(this, e.getMessage());
+        Log.e(TAG, e.getMessage());
     }
 
     private void initViews()
@@ -109,6 +132,10 @@ public class StationsActivity extends AppCompatActivity implements StationsView
         mAdapter = new StationsAdapter(mFromCode, mToCode);
         mAdapter.setEmptyView(mEmptyView);
         recyclerView.setAdapter(mAdapter);
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage(getString(R.string.loading_title));
     }
 
     private void iniToolbar()

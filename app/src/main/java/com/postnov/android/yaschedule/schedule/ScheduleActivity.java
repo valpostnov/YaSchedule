@@ -9,6 +9,7 @@ import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,9 +27,13 @@ import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
 import com.postnov.android.yaschedule.utils.TransportTypes;
 import com.postnov.android.yaschedule.utils.Utils;
 
+import retrofit2.adapter.rxjava.HttpException;
+
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView, ScheduleAdapter.OnItemClickListener
 {
+    private static final String TAG = "ScheduleActivity";
     public static final String EXTRA_UID = "uid";
+    public static final String EXTRA_DATE = "selectedDate";
     public static final String EXTRA_CODE_FROM = "fromCode";
     public static final String EXTRA_CODE_TO = "toCode";
 
@@ -124,7 +129,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     @Override
     public void showError(Throwable e)
     {
-        Utils.showToast(this, e.getMessage());
+        Log.e(TAG, e.getMessage());
     }
 
     @Override
@@ -160,6 +165,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         intent.putExtra(EXTRA_UID, uid);
         intent.putExtra(EXTRA_CODE_FROM, from);
         intent.putExtra(EXTRA_CODE_TO, to);
+        intent.putExtra(EXTRA_DATE, mDate);
 
         startActivity(intent);
     }

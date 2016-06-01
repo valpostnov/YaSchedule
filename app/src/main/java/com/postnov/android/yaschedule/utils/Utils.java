@@ -1,7 +1,6 @@
 package com.postnov.android.yaschedule.utils;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.postnov.android.yaschedule.R;
@@ -48,7 +47,7 @@ public class Utils
         int month = Integer.valueOf(date.substring(date.indexOf("-") + 1, date.lastIndexOf("-")));
         int day = Integer.valueOf(date.substring(date.lastIndexOf("-") + 1, date.lastIndexOf(" ")));
 
-        return toShortDate(day, month - 1, getYear());
+        return toShortDate(day, month - 1);
     }
 
     /**
@@ -72,52 +71,18 @@ public class Utils
 
     /**
      *
-     * @param day dd
-     * @param month mm
-     * @param year yyyy
-     * @return 'dd M', example '25 may'
+     * @param day dd, example 01
+     * @param month mm, example 06
+     * @return d MMMM, example 1 June
      */
-    public static String toShortDate(int day, int month, int year)
+    public static String toShortDate(int day, int month)
     {
-        return day + " " + getFullNameMonth(month);
-    }
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
+        SimpleDateFormat sdf = new SimpleDateFormat("d MMMM", Locale.getDefault());
 
-    /**
-     *
-     * @param month mm
-     * @return full name month, example 'may'
-     */
-    public static String getFullNameMonth(int month)
-    {
-        switch (month)
-        {
-            case Const.JAN:
-                return "января";
-            case Const.FEB:
-                return "февраля";
-            case Const.MAR:
-                return "марта";
-            case Const.APR:
-                return "апреля";
-            case Const.MAY:
-                return "мая";
-            case Const.JUN:
-                return "июня";
-            case Const.JUL:
-                return "июля";
-            case Const.AUG:
-                return "августа";
-            case Const.SEP:
-                return "сентября";
-            case Const.OCT:
-                return "октября";
-            case Const.NOV:
-                return "ноября";
-            case Const.DEC:
-                return "декабря";
-            default:
-                return null;
-        }
+        return sdf.format(c.getTime());
     }
 
     public static String convertSecToMinutes(String seconds)
@@ -197,27 +162,6 @@ public class Utils
 
             default:
                 return 0;
-        }
-    }
-
-    public static String getTransportTitleRu(String rawString)
-    {
-        switch (rawString)
-        {
-            case TransportTypes.TRAIN:
-                return "Поезд";
-
-            case TransportTypes.BUS:
-                return "Автобус";
-
-            case TransportTypes.PLANE:
-                return "Самолет";
-
-            case TransportTypes.SUBURBAN:
-                return "Электричка";
-
-            default:
-                return "Ваз 21 пешком";
         }
     }
 }

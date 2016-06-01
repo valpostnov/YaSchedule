@@ -11,4 +11,6 @@ import java.util.List;
 public interface StationsView extends BaseView
 {
     void loadStations(List<Stop> stopList);
+    void showProgressDialog();
+    void hideProgressDialog();
 }

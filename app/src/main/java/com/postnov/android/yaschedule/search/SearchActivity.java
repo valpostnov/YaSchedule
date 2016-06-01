@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -30,9 +32,11 @@ import rx.functions.Func1;
 
 public class SearchActivity extends AppCompatActivity implements ISearchView, OnItemClickListener
 {
+    private static final String TAG = "SearchActivity";
     private SearchResultAdapter mAdapter;
     private ISearchPresenter mPresenter;
     private TextView mEmptyView;
+    private ProgressBar mProgressView;
     private EditText mSearchView;
     private Subscription subscription;
 
@@ -82,9 +86,22 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     }
 
     @Override
+    public void showProgressView()
+    {
+        mEmptyView.setVisibility(View.GONE);
+        mProgressView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressView()
+    {
+        mProgressView.setVisibility(View.GONE);
+    }
+
+    @Override
     public void showError(Throwable e)
     {
-        Utils.showToast(this, e.getMessage());
+        Log.e(TAG, e.getMessage());
     }
 
     private void initViews()
@@ -104,6 +121,8 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
         String searchHint = getIntent().getStringExtra(MainActivity.EXTRA_HINT);
         mSearchView = (EditText) findViewById(R.id.search_view);
         mSearchView.setHint(searchHint);
+
+        mProgressView = (ProgressBar) findViewById(R.id.search_progressview);
     }
 
     private void initToolbar()

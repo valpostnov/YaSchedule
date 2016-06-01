@@ -9,7 +9,8 @@
         android:title="@string/action_fave"
         android:icon="@drawable/ic_fave"
         android:onClick="showFaveActivity"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="200"

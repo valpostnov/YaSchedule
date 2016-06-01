@@ -16,4 +16,12 @@ public class TestUtils
 
         assertEquals(formattedDate, Utils.toShortDate(date));
     }
+
+    @Test
+    public void testGetStringMonth() throws Exception
+    {
+        int month = 7;
+
+        assertEquals("Авг.", Utils.getStringMonth(month));
+    }
 }

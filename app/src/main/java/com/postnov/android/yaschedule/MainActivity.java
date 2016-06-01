@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
     {
         mReversedDate = Utils.formatDateReverse(dayOfMonth, monthOfYear + 1, year);
-        mNormalDate = Utils.toShortDate(dayOfMonth, monthOfYear, year);
+        mNormalDate = Utils.toShortDate(dayOfMonth, monthOfYear);
         mDate.setText(mNormalDate);
     }
 

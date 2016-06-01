@@ -29,6 +29,7 @@ public class StationsPresenterImpl implements StationsPresenter
     @Override
     public void fetchStations(Map<String, String> query)
     {
+        mView.showProgressDialog();
         mSubscription = mDataSource
                 .stationList(query)
                 .subscribeOn(Schedulers.io())
@@ -36,11 +37,15 @@ public class StationsPresenterImpl implements StationsPresenter
                 .subscribe(new Subscriber<Thread>()
                 {
                     @Override
-                    public void onCompleted() {}
+                    public void onCompleted()
+                    {
+                        mView.hideProgressDialog();
+                    }
 
                     @Override
                     public void onError(Throwable e)
                     {
+                        mView.hideProgressDialog();
                         mView.showError(e);
                     }
 
