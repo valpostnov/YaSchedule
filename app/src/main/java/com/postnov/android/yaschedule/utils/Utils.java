@@ -85,6 +85,11 @@ public class Utils
         return sdf.format(c.getTime());
     }
 
+    /**
+     *
+     * @param seconds, like this 120s
+     * @return minutes, like this 2 min.
+     */
     public static String convertSecToMinutes(String seconds)
     {
         if (seconds != null)

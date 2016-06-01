@@ -35,7 +35,6 @@ public class SearchPresenterImpl implements ISearchPresenter
 
         Subscription subscription = mDataSource
                 .getList(city, limit)
-                .delay(700, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Cities>()

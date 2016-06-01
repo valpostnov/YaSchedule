@@ -35,12 +35,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String mCityFromCode;
     private String mCityToCode;
+
     private String mReversedDate;
     private String mNormalDate;
 
-    private TextInputEditText mFrom;
-    private TextInputEditText mTo;
-    private TextInputEditText mDate;
+    private TextInputEditText mFromView;
+    private TextInputEditText mToView;
+    private TextInputEditText mDateView;
 
     private TextInputLayout mFromInputLayout;
     private TextInputLayout mToInputLayout;
@@ -57,15 +58,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void showSchedule(View view)
     {
-        if (mFrom.length() == 0) showHintError(true, mFromInputLayout);
-        else if (mTo.length() == 0) showHintError(true, mToInputLayout);
-        else if (mDate.length() == 0) showHintError(true, mDateInputLayout);
+        if (mFromView.length() == 0) showHintError(true, mFromInputLayout);
+        else if (mToView.length() == 0) showHintError(true, mToInputLayout);
+        else if (mDateView.length() == 0) showHintError(true, mDateInputLayout);
         else
         {
             StringBuilder route = new StringBuilder();
-            route.append(mFrom.getText());
+            route.append(mFromView.getText());
             route.append(" - ");
-            route.append(mTo.getText());
+            route.append(mToView.getText());
 
             Intent intent = new Intent(this, ScheduleActivity.class);
             intent.putExtra(EXTRA_ROUTE, route.toString());
@@ -100,17 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int itemId = item.getItemId();
-        switch (itemId)
-        {
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (data != null)
@@ -120,13 +110,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (requestCode)
             {
                 case REQUEST_CODE_FROM:
-                    mFrom.setText(city);
+                    mFromView.setText(city);
                     mCityFromCode = data.getStringExtra(EXTRA_CODE);
                     break;
 
                 case REQUEST_CODE_TO:
-                    mTo.setText(city);
-                    mCityToCode = data.getStringExtra(EXTRA_CODE);;
+                    mToView.setText(city);
+                    mCityToCode = data.getStringExtra(EXTRA_CODE);
                     break;
             }
         }
@@ -155,19 +145,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         mReversedDate = Utils.formatDateReverse(dayOfMonth, monthOfYear + 1, year);
         mNormalDate = Utils.toShortDate(dayOfMonth, monthOfYear);
-        mDate.setText(mNormalDate);
+        mDateView.setText(mNormalDate);
+    }
+
+    public void swapCities(MenuItem item)
+    {
+        if (mFromView.length() != 0 && mToView.length() != 0)
+        {
+            String fromTmp = mFromView.getText().toString();
+            String toTmp = mToView.getText().toString();
+            String codeFromTmp = mCityFromCode;
+
+            mCityFromCode = mCityToCode;
+            mCityToCode = codeFromTmp;
+
+            mFromView.setText(toTmp);
+            mToView.setText(fromTmp);
+        }
     }
 
     private void initViews()
     {
-        mFrom = (TextInputEditText) findViewById(R.id.from);
-        mFrom.setOnClickListener(this);
+        mFromView = (TextInputEditText) findViewById(R.id.from);
+        mFromView.setOnClickListener(this);
 
-        mTo = (TextInputEditText) findViewById(R.id.to);
-        mTo.setOnClickListener(this);
+        mToView = (TextInputEditText) findViewById(R.id.to);
+        mToView.setOnClickListener(this);
 
-        mDate = (TextInputEditText) findViewById(R.id.when);
-        mDate.setOnClickListener(this);
+        mDateView = (TextInputEditText) findViewById(R.id.when);
+        mDateView.setOnClickListener(this);
 
         mFromInputLayout = (TextInputLayout) findViewById(R.id.hintFrom);
         mToInputLayout = (TextInputLayout) findViewById(R.id.hintTo);
@@ -194,17 +200,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         if (show)
         {
-            for (TextInputLayout l:layouts)
-            {
-                l.setError(getString(R.string.hint_error_text));
-            }
+            for (TextInputLayout l:layouts) l.setError(getString(R.string.hint_error_text));
+            return;
         }
-        else
-        {
-            for (TextInputLayout l:layouts)
-            {
-                l.setError("");
-            }
-        }
+
+        for (TextInputLayout l:layouts) l.setError("");
     }
 }

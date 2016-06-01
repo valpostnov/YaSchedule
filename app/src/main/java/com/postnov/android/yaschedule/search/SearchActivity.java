@@ -88,14 +88,14 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     @Override
     public void showProgressView()
     {
-        mEmptyView.setVisibility(View.GONE);
-        mProgressView.setVisibility(View.VISIBLE);
+        //mEmptyView.setVisibility(View.GONE);
+        //mProgressView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressView()
     {
-        mProgressView.setVisibility(View.GONE);
+        //mProgressView.setVisibility(View.GONE);
     }
 
     @Override
