@@ -18,10 +18,11 @@ public class TestUtils
     }
 
     @Test
-    public void testGetStringMonth() throws Exception
+    public void testToShortDate() throws Exception
     {
         int month = 7;
+        int day = 09;
 
-        assertEquals("Авг.", Utils.getStringMonth(month));
+        assertEquals("9 Августа", Utils.toShortDate(day, month));
     }
 }
