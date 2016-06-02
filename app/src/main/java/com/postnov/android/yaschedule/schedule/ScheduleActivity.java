@@ -21,7 +21,6 @@ import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
-import com.postnov.android.yaschedule.data.entity.schedule.Route;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.stations.StationsActivity;
@@ -29,8 +28,6 @@ import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
 import com.postnov.android.yaschedule.utils.TransportTypes;
 import com.postnov.android.yaschedule.utils.Utils;
-
-import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         ScheduleAdapter.OnItemClickListener, DatePickerDialog.OnDateSetListener
@@ -46,7 +43,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     private SchedulePresenter mPresenter;
     private ProgressDialog mProgressDialog;
     private BottomSheetBehavior mBottomSheetBehavior;
-    private TextView mEmptyView;
     private TextView mScheduleSubHeaderText;
 
     private AppCompatRadioButton mAllFilter;
@@ -80,7 +76,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     {
         super.onResume();
         mPresenter.bind(this);
-        search(mDate, mTransport, 1);
+        search();
     }
 
     @Override
@@ -107,6 +103,15 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
             case android.R.id.home:
                 finish();
                 return true;
+
+            case R.id.action_swap:
+                swapCities();
+                return true;
+
+            case R.id.action_set_date:
+                showDatePicker();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -163,7 +168,16 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         collapseBottomSheet();
     }
 
-    public void showDatePicker(MenuItem item)
+    public void swapCities()
+    {
+        String fromTmp = mCityFromCode;
+        mCityFromCode = mCityToCode;
+        mCityToCode = fromTmp;
+
+        search();
+    }
+
+    public void showDatePicker()
     {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, this,
                 Utils.getYear(), Utils.getMonthOfYear() - 1, Utils.getDayOfMonth());
@@ -177,7 +191,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
     {
         mDate = Utils.formatDateReverse(dayOfMonth, monthOfYear + 1, year);
-        search(mDate, mTransport, 1);
+        search();
     }
 
     @Override
@@ -226,8 +240,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
             transportTitle = getString(R.string.suburban);
         }
 
-        search(mDate, transport, 1);
         mTransport = transport;
+        search();
 
         mScheduleSubHeaderText.setText(transportTitle);
         collapseBottomSheet();
@@ -244,7 +258,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
                 DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
         recyclerView.addItemDecoration(itemDecoration);
 
-        mEmptyView = (TextView) findViewById(R.id.schedule_emptyview);
+        TextView mEmptyView = (TextView) findViewById(R.id.schedule_emptyview);
 
         mAdapter = new ScheduleAdapter();
         mAdapter.setEmptyView(mEmptyView);
@@ -284,15 +298,14 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    private void search(String date, String transport, int page)
+    private void search()
     {
         mPresenter.search(SearchQueryBuilder
                 .builder()
-                .setTransport(transport)
+                .setTransport(mTransport)
                 .setFrom(mCityFromCode)
                 .setTo(mCityToCode)
-                .setDate(date)
-                .setPage(page)
+                .setDate(mDate)
                 .build());
     }
 }

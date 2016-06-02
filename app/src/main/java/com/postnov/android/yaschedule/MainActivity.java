@@ -19,7 +19,6 @@ import com.postnov.android.yaschedule.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener
 {
-    public static final String EXTRA_ROUTE = "route";
     public static final String EXTRA_DATE = "normDate";
     public static final String EXTRA_QUERY_DATE = "queryDate";
     public static final String EXTRA_HINT = "hint";
@@ -63,13 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if (mDateView.length() == 0) showHintError(true, mDateInputLayout);
         else
         {
-            StringBuilder route = new StringBuilder();
-            route.append(mFromView.getText());
-            route.append(" - ");
-            route.append(mToView.getText());
-
             Intent intent = new Intent(this, ScheduleActivity.class);
-            intent.putExtra(EXTRA_ROUTE, route.toString());
             intent.putExtra(EXTRA_QUERY_DATE, mReversedDate);
             intent.putExtra(EXTRA_DATE, mNormalDate);
             intent.putExtra(EXTRA_FROM_CODE, mCityFromCode);
