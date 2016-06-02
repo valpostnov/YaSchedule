@@ -25,8 +25,9 @@
         android:id="@+id/stations_empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Нет остановок на пути следования"
+        android:text="@string/stations_empty_view"
         android:gravity="center_vertical|center_horizontal"
         android:layout_marginTop="?attr/actionBarSize"
-        style="@style/TextAppearance.AppCompat.Medium" />
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:visibility="gone" />
 </FrameLayout>

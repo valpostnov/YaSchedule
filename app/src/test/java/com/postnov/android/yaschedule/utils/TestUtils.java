@@ -21,8 +21,16 @@ public class TestUtils
     public void testToShortDate() throws Exception
     {
         int month = 7;
-        int day = 09;
+        int day = 9;
 
         assertEquals("9 Августа", Utils.toShortDate(day, month));
+    }
+
+    @Test
+    public void testGetOnlyDate() throws Exception
+    {
+        String date = "2016-5-3 12:12:00";
+
+        assertEquals("2016-5-3", Utils.getOnlyDate(date));
     }
 }

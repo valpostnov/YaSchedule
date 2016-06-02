@@ -62,7 +62,7 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
         {
             StringBuilder date = new StringBuilder();
             date.append("Отправление: ");
-            date.append(Utils.getTime(stop.getDeparture()));
+            date.append(Utils.getOnlyTime(stop.getDeparture()));
             date.append(", ");
             date.append(Utils.toShortDate(stop.getDeparture()));
 

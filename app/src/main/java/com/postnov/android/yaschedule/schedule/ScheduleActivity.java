@@ -1,5 +1,6 @@
 package com.postnov.android.yaschedule.schedule;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +14,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
+import com.postnov.android.yaschedule.data.entity.schedule.Route;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.stations.StationsActivity;
@@ -27,17 +30,17 @@ import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
 import com.postnov.android.yaschedule.utils.TransportTypes;
 import com.postnov.android.yaschedule.utils.Utils;
 
-import retrofit2.adapter.rxjava.HttpException;
+import java.util.List;
 
-public class ScheduleActivity extends AppCompatActivity implements ScheduleView, ScheduleAdapter.OnItemClickListener
+public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
+        ScheduleAdapter.OnItemClickListener, DatePickerDialog.OnDateSetListener
 {
     private static final String TAG = "ScheduleActivity";
+
     public static final String EXTRA_UID = "uid";
     public static final String EXTRA_DATE = "selectedDate";
     public static final String EXTRA_CODE_FROM = "fromCode";
     public static final String EXTRA_CODE_TO = "toCode";
-
-    private String defaultTt = "";
 
     private ScheduleAdapter mAdapter;
     private SchedulePresenter mPresenter;
@@ -54,6 +57,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
 
     private String mCityFromCode;
     private String mCityToCode;
+    private String mTransport = "";
     private String mDate;
 
     private Response mResponse;
@@ -76,7 +80,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     {
         super.onResume();
         mPresenter.bind(this);
-        search(defaultTt, 1);
+        search(mDate, mTransport, 1);
     }
 
     @Override
@@ -122,8 +126,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     @Override
     public void showList(Response response)
     {
-        mResponse = response;
-        mAdapter.swapList(response.getRoutes());
+        if (response != null)
+        {
+            mResponse = response;
+            mAdapter.swapList(response.getRoutes());
+            return;
+        }
+        mAdapter.swapList(null);
     }
 
     @Override
@@ -152,6 +161,23 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
             return;
         }
         collapseBottomSheet();
+    }
+
+    public void showDatePicker(MenuItem item)
+    {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this,
+                Utils.getYear(), Utils.getMonthOfYear() - 1, Utils.getDayOfMonth());
+        datePickerDialog.getDatePicker().setMinDate(Utils.getMinDayInYear());
+        datePickerDialog.getDatePicker().setMaxDate(Utils.getMaxDayInYear());
+
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+    {
+        mDate = Utils.formatDateReverse(dayOfMonth, monthOfYear + 1, year);
+        search(mDate, mTransport, 1);
     }
 
     @Override
@@ -200,8 +226,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
             transportTitle = getString(R.string.suburban);
         }
 
-        search(transport, 1);
-        defaultTt = transport;
+        search(mDate, transport, 1);
+        mTransport = transport;
 
         mScheduleSubHeaderText.setText(transportTitle);
         collapseBottomSheet();
@@ -258,14 +284,14 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    private void search(String transport, int page)
+    private void search(String date, String transport, int page)
     {
         mPresenter.search(SearchQueryBuilder
                 .builder()
                 .setTransport(transport)
                 .setFrom(mCityFromCode)
                 .setTo(mCityToCode)
-                .setDate(mDate)
+                .setDate(date)
                 .setPage(page)
                 .build());
     }

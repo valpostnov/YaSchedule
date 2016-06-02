@@ -44,7 +44,7 @@
         android:gravity="center_vertical|center_horizontal"
         android:layout_marginTop="?attr/actionBarSize"
         style="@style/TextAppearance.AppCompat.Medium"
-        />
+        android:visibility="gone" />
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

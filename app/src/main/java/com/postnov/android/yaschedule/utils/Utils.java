@@ -30,11 +30,17 @@ public class Utils
      * @param date yyyy-mm-dd HH:mm:ss
      * @return HH:mm
      */
-    public static String getTime(String date)
+    public static String getOnlyTime(String date)
     {
         int startIndex = date.lastIndexOf(" ");
         int endIndex = date.lastIndexOf(":");
         return date.substring(startIndex, endIndex).trim();
+    }
+
+    public static String getOnlyDate(String date)
+    {
+        int endIndex = date.lastIndexOf(" ");
+        return date.substring(0, endIndex).trim();
     }
 
     /**

@@ -46,6 +46,7 @@ public class StationsPresenterImpl implements StationsPresenter
                     public void onError(Throwable e)
                     {
                         mView.hideProgressDialog();
+                        mView.loadStations(null);
                         mView.showError(e);
                     }
 

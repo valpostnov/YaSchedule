@@ -31,7 +31,6 @@ public class StationsActivity extends AppCompatActivity implements StationsView
 
     private StationsAdapter mAdapter;
     private ProgressDialog mProgressDialog;
-    private TextView mEmptyView;
     private String mUID;
     private String mDate;
     private String mFromCode;
@@ -127,7 +126,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
                 DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
         recyclerView.addItemDecoration(itemDecoration);
 
-        mEmptyView = (TextView) findViewById(R.id.stations_empty_view);
+        TextView mEmptyView = (TextView) findViewById(R.id.stations_empty_view);
 
         mAdapter = new StationsAdapter(mFromCode, mToCode);
         mAdapter.setEmptyView(mEmptyView);

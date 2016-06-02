@@ -48,6 +48,7 @@ public class SchedulePresenterImpl implements SchedulePresenter
                     public void onError(Throwable e)
                     {
                         mView.hideProgressDialog();
+                        mView.showList(null);
                         mView.showError(e);
                     }
 

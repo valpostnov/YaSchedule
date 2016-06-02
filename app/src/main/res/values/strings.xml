@@ -6,13 +6,14 @@
     <string name="btn_find">Найти</string>
     <string name="hint_when">Когда</string>
     <string name="loading_title">Поиск рейсов</string>
-    <string name="schedule_emptyview_text">Список пуст</string>
 
     <string name="action_settings">Настройки</string>
     <string name="action_sort">Сортировать</string>
     <string name="action_share">Поделиться</string>
-
-    <string name="search_title">Поиск</string>
+    <string name="action_fave">Избранные рейсы</string>
+    <string name="action_filter_apply">Применить</string>
+    <string name="action_swap">Поменять местами</string>
+    <string name="action_set_date">Сменить дату</string>
 
     <string name="hint_from">Введите место отправления</string>
     <string name="hint_to">Введите место прибытия</string>
@@ -21,14 +22,16 @@
     <string name="plane">Самолеты</string>
     <string name="train">Поезда</string>
     <string name="suburban">Электрички</string>
-    <string name="sea">Морской транспорт</string>
-    <string name="action_filter_apply">Применить</string>
+
     <string name="filter_all">Все</string>
     <string name="filter_title">Фильтр по типам транспорта</string>
-    <string name="river">Речной транспорт</string>
-    <string name="action_fave">Избранные рейсы</string>
-    <string name="fave_emptyview_text">Список избранного пуст</string>
+
+    <string name="schedule_empty_view">Подходящих рейсов не найдено</string>
+    <string name="fave_empty_view">Список избранного пуст</string>
+    <string name="stations_empty_view">Нет доступных сведений о станциях</string>
+
+    <string name="search_title">Поиск</string>
     <string name="fave_activity_title">Избранные рейсы</string>
     <string name="station_activity_title">Станции на пути следования</string>
-    <string name="action_swap">Поменять местами</string>
+
 </resources>

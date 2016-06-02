@@ -49,6 +49,7 @@ public class SearchPresenterImpl implements ISearchPresenter
                     public void onError(Throwable e)
                     {
                         mSearchView.hideProgressView();
+                        mSearchView.showCities(null);
                         mSearchView.showError(e);
                     }
 

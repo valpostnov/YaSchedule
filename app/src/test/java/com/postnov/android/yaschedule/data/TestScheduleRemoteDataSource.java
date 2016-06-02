@@ -15,9 +15,9 @@ import rx.observers.TestSubscriber;
 
 public class TestScheduleRemoteDataSource
 {
-    private static final String FROM = "c23243";    //нино
-    private static final String TO = "l96";
-    private static final String DATE = "2016-06-02";
+    private static final String FROM = "c54";    //нино
+    private static final String TO = "c213";
+    private static final String DATE = "2016-06-03";
 
     private IScheduleDataSource mRemoteDataSource;
     private Map<String, String> mOptions;
