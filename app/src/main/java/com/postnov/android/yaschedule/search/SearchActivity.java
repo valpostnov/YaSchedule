@@ -1,5 +1,6 @@
 package com.postnov.android.yaschedule.search;
 
+import android.accounts.NetworkErrorException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,9 @@ import com.postnov.android.yaschedule.search.SearchResultAdapter.OnItemClickList
 import com.postnov.android.yaschedule.search.interfaces.ISearchPresenter;
 import com.postnov.android.yaschedule.search.interfaces.ISearchView;
 import com.postnov.android.yaschedule.utils.Const;
+import com.postnov.android.yaschedule.utils.NetworkManager;
 import com.postnov.android.yaschedule.utils.Utils;
+import com.postnov.android.yaschedule.utils.exception.NetworkConnectionError;
 
 import java.util.List;
 
@@ -35,7 +38,6 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     private static final String TAG = "SearchActivity";
     private SearchResultAdapter mAdapter;
     private ISearchPresenter mPresenter;
-    private TextView mEmptyView;
     private ProgressBar mProgressView;
     private EditText mSearchView;
     private Subscription subscription;
@@ -45,7 +47,9 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        mPresenter = new SearchPresenterImpl(Injection.provideCodesDataSource());
+        mPresenter = new SearchPresenterImpl(
+                Injection.provideCodesDataSource(),
+                NetworkManager.getInstance(this));
         initViews();
         initToolbar();
     }
@@ -101,6 +105,10 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     @Override
     public void showError(Throwable e)
     {
+        if (e instanceof NetworkConnectionError)
+        {
+            Utils.showToast(this, e.getMessage());
+        }
         Log.e(TAG, e.getMessage());
     }
 
@@ -108,7 +116,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.search_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mEmptyView = (TextView) findViewById(R.id.search_empty_view);
+        TextView mEmptyView = (TextView) findViewById(R.id.search_empty_view);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);

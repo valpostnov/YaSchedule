@@ -4,8 +4,9 @@ import com.postnov.android.yaschedule.data.entity.codes.Cities;
 import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
 import com.postnov.android.yaschedule.search.interfaces.ISearchPresenter;
 import com.postnov.android.yaschedule.search.interfaces.ISearchView;
-
-import java.util.concurrent.TimeUnit;
+import com.postnov.android.yaschedule.utils.Const;
+import com.postnov.android.yaschedule.utils.NetworkManager;
+import com.postnov.android.yaschedule.utils.exception.NetworkConnectionError;
 
 import rx.Subscriber;
 import rx.Subscription;
@@ -18,61 +19,70 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class SearchPresenterImpl implements ISearchPresenter
 {
-    private ISearchView mSearchView;
+    private ISearchView mView;
     private CompositeSubscription mSubscriptions;
     private ICodesDataSource mDataSource;
+    private NetworkManager mNetworkManager;
 
-    public SearchPresenterImpl(ICodesDataSource dataSource)
+    public SearchPresenterImpl(ICodesDataSource dataSource, NetworkManager networkManager)
     {
         mSubscriptions = new CompositeSubscription();
         mDataSource = dataSource;
+        mNetworkManager = networkManager;
     }
 
     @Override
     public void search(String city, String limit)
     {
-        mSearchView.showProgressView();
+        if (mNetworkManager.networkIsAvailable())
+        {
+            mView.showProgressView();
 
-        Subscription subscription = mDataSource
-                .getList(city, limit)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Cities>()
-                {
-                    @Override
-                    public void onCompleted()
+            Subscription subscription = mDataSource
+                    .getList(city, limit)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Cities>()
                     {
-                        mSearchView.hideProgressView();
-                    }
+                        @Override
+                        public void onCompleted()
+                        {
+                            mView.hideProgressView();
+                        }
 
-                    @Override
-                    public void onError(Throwable e)
-                    {
-                        mSearchView.hideProgressView();
-                        mSearchView.showCities(null);
-                        mSearchView.showError(e);
-                    }
+                        @Override
+                        public void onError(Throwable e)
+                        {
+                            mView.hideProgressView();
+                            mView.showCities(null);
+                            mView.showError(e);
+                        }
 
-                    @Override
-                    public void onNext(Cities cityCodes)
-                    {
-                        mSearchView.showCities(cityCodes.getSuggests());
-                    }
-                });
+                        @Override
+                        public void onNext(Cities cityCodes)
+                        {
+                            mView.showCities(cityCodes.getSuggests());
+                        }
+                    });
 
-        mSubscriptions.add(subscription);
+            mSubscriptions.add(subscription);
+        }
+        else
+        {
+            mView.showError(new NetworkConnectionError(Const.ERROR_NO_CONNECTION));
+        }
     }
 
     @Override
     public void bind(ISearchView view)
     {
-        mSearchView = view;
+        mView = view;
     }
 
     @Override
     public void unbind()
     {
-        mSearchView = null;
+        mView = null;
     }
 
     @Override

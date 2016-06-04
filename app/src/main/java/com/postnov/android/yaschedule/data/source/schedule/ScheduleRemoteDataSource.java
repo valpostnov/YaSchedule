@@ -28,7 +28,6 @@ public class ScheduleRemoteDataSource implements IScheduleDataSource
         if (sDataSource == null)
         {
             sDataSource = new ScheduleRemoteDataSource();
-            return sDataSource;
         }
 
         return sDataSource;

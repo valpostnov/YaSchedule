@@ -1,11 +1,22 @@
 <resources>
-    <dimen name="margin_medium">16dp</dimen>
+
     <dimen name="fab_margin">0dp</dimen>
+
     <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+
+    <dimen name="margin_small_horizontal">8dp</dimen>
+    <dimen name="margin_medium_horizontal">16dp</dimen>
+
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="margin_large">24dp</dimen>
-    <dimen name="startTimeTextSize">28sp</dimen>
-    <dimen name="finishTimeTextSize">28sp</dimen>
+
+    <dimen name="schedule_time_text_size">28sp</dimen>
     <dimen name="schedule_activity_custom_margin">104dp</dimen>
+    <dimen name="schedule_date_text_size">14sp</dimen>
+    <dimen name="schedule_station_text_size">13sp</dimen>
+    <dimen name="schedule_route_text_size">16sp</dimen>
+
+    <dimen name="main_edittext_size">32sp</dimen>
 </resources>

@@ -28,7 +28,7 @@
             android:name=".search.SearchActivity"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".fave.FaveActivity"
+            android:name=".recent.RecentActivity"
             android:screenOrientation="sensorPortrait" />
         <activity android:name=".stations.StationsActivity"></activity>
     </application>

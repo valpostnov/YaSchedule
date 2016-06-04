@@ -4,11 +4,11 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_fave"
+        android:id="@+id/action_recent"
         android:orderInCategory="200"
         android:title="@string/action_fave"
-        android:icon="@drawable/ic_fave"
-        android:onClick="showFaveActivity"
+        android:icon="@drawable/ic_recent"
+        android:onClick="showRecentActivity"
         app:showAsAction="ifRoom"
         />
     <item

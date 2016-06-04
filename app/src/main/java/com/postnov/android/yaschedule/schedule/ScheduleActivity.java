@@ -21,13 +21,16 @@ import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
+import com.postnov.android.yaschedule.data.source.recent.RecentDataSourceImpl;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.stations.StationsActivity;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
+import com.postnov.android.yaschedule.utils.NetworkManager;
 import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
 import com.postnov.android.yaschedule.utils.TransportTypes;
 import com.postnov.android.yaschedule.utils.Utils;
+import com.postnov.android.yaschedule.utils.exception.NetworkConnectionError;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         ScheduleAdapter.OnItemClickListener, DatePickerDialog.OnDateSetListener
@@ -63,7 +66,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-        mPresenter = new SchedulePresenterImpl(Injection.provideScheduleDataSource());
+
+        mPresenter = new SchedulePresenterImpl(
+                Injection.provideScheduleDataSource(),
+                RecentDataSourceImpl.getInstance(this),
+                NetworkManager.getInstance(this));
+
         initViews();
         initToolbar();
         mCityFromCode = getIntent().getStringExtra(MainActivity.EXTRA_FROM_CODE);
@@ -143,6 +151,10 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     @Override
     public void showError(Throwable e)
     {
+        if (e instanceof NetworkConnectionError)
+        {
+            Utils.showToast(this, e.getMessage());
+        }
         Log.e(TAG, e.getMessage());
     }
 

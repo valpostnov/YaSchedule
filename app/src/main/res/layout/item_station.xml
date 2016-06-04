@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_medium"
-    android:layout_marginBottom="@dimen/margin_medium">
+    android:layout_marginTop="@dimen/margin_medium_horizontal"
+    android:layout_marginBottom="@dimen/margin_medium_horizontal">
 
     <ImageView
         android:id="@+id/station_image"

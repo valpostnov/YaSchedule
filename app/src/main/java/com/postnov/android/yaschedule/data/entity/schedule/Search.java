@@ -16,10 +16,24 @@ public class Search
     @SerializedName("to")
     private To to;
 
+
     public class To
     {
         @SerializedName("title")
         private String title;
+
+        @SerializedName("code")
+        private String code;
+
+        public String getCode()
+        {
+            return code;
+        }
+
+        public void setCode(String code)
+        {
+            this.code = code;
+        }
 
         public String getTitle()
         {
@@ -36,6 +50,19 @@ public class Search
     {
         @SerializedName("title")
         private String title;
+
+        @SerializedName("code")
+        private String code;
+
+        public String getCode()
+        {
+            return code;
+        }
+
+        public void setCode(String code)
+        {
+            this.code = code;
+        }
 
         public String getTitle()
         {

@@ -31,7 +31,8 @@
     <string name="stations_empty_view">Нет доступных сведений о станциях</string>
 
     <string name="search_title">Поиск</string>
-    <string name="fave_activity_title">Избранные рейсы</string>
+    <string name="fave_activity_title">Недавние рейсы</string>
     <string name="station_activity_title">Станции на пути следования</string>
+    <string name="error_no_connection">Отсутсвует подключение к интернету</string>
 
 </resources>

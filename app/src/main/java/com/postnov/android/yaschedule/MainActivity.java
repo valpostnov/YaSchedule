@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
-import com.postnov.android.yaschedule.fave.FaveActivity;
+import com.postnov.android.yaschedule.recent.RecentActivity;
 import com.postnov.android.yaschedule.schedule.ScheduleActivity;
 import com.postnov.android.yaschedule.search.SearchActivity;
 import com.postnov.android.yaschedule.utils.Utils;
@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState != null)
+        {
+            mCityFromCode = savedInstanceState.getString(EXTRA_FROM_CODE);
+            mCityToCode = savedInstanceState.getString(EXTRA_TO_CODE);
+        }
         initToolbar();
         initViews();
     }
@@ -73,6 +78,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        outState.putString(EXTRA_FROM_CODE, mCityFromCode);
+        outState.putString(EXTRA_TO_CODE, mCityToCode);
+        super.onSaveInstanceState(outState);
+    }
+
     public void showSearchActivity(String hint, int requestCode)
     {
         Intent intent = new Intent(this, SearchActivity.class);
@@ -80,9 +93,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, requestCode);
     }
 
-    public void showFaveActivity(MenuItem item)
+    public void showRecentActivity(MenuItem item)
     {
-        Intent intent = new Intent(this, FaveActivity.class);
+        Intent intent = new Intent(this, RecentActivity.class);
         startActivity(intent);
     }
 

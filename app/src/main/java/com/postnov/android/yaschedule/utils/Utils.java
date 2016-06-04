@@ -1,6 +1,8 @@
 package com.postnov.android.yaschedule.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.Toast;
 
 import com.postnov.android.yaschedule.R;
@@ -46,7 +48,7 @@ public class Utils
     /**
      *
      * @param date example yyyy-mm-dd HH:mm:ss
-     * @return 'dd M', example '25 may'
+     * @return 'dd MMMM', example '25 may'
      */
     public static String toShortDate(String date)
     {
