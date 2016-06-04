@@ -18,6 +18,13 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 {
     private List<RecentRoute> mRoutes;
     private View mEmptyView;
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener
+    {
+        void onItemClick(View view, int position);
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -57,7 +64,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         mEmptyView = view;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         public TextView mTitle;
 
@@ -65,6 +72,19 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         {
             super(view);
             mTitle = (TextView) view.findViewById(R.id.last_route_title);
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v)
+        {
+            int adapterPosition = getAdapterPosition();
+            onItemClickListener.onItemClick(v, adapterPosition);
+        }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener)
+    {
+        onItemClickListener = listener;
     }
 }

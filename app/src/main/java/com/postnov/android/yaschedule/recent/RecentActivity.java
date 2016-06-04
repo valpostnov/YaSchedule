@@ -1,5 +1,6 @@
 package com.postnov.android.yaschedule.recent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.recent.RecentRoute;
 import com.postnov.android.yaschedule.data.source.recent.RecentDataSourceImpl;
@@ -18,7 +21,7 @@ import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 
 import java.util.List;
 
-public class RecentActivity extends AppCompatActivity implements RecentView
+public class RecentActivity extends AppCompatActivity implements RecentView, RecentAdapter.OnItemClickListener
 {
     private RecentAdapter mAdapter;
     private RecentPresenter mPresenter;
@@ -104,7 +107,18 @@ public class RecentActivity extends AppCompatActivity implements RecentView
 
         mAdapter = new RecentAdapter();
         mAdapter.setEmptyView(mEmptyView);
-        //mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onItemClick(View view, int position)
+    {
+        RecentRoute route = mAdapter.getList().get(position);
+
+        Intent intent = new Intent();
+        intent.putExtra(MainActivity.EXTRA_RECENT_ROUTE, route);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

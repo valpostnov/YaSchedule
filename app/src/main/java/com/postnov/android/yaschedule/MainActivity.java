@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
+import com.postnov.android.yaschedule.data.entity.recent.RecentRoute;
 import com.postnov.android.yaschedule.recent.RecentActivity;
 import com.postnov.android.yaschedule.schedule.ScheduleActivity;
 import com.postnov.android.yaschedule.search.SearchActivity;
@@ -25,12 +26,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final int REQUEST_CODE_FROM = 0;
     public static final int REQUEST_CODE_TO = 1;
+    public static final int REQUEST_RECENT_ROUTE = 2;
 
     public static final String EXTRA_CITY = "city";
     public static final String EXTRA_CODE = "cityCode";
 
     public static final String EXTRA_FROM_CODE = "fromCode";
     public static final String EXTRA_TO_CODE = "toCode";
+    public static final String EXTRA_RECENT_ROUTE = "recentRoute";
 
     private String mCityFromCode;
     private String mCityToCode;
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showRecentActivity(MenuItem item)
     {
         Intent intent = new Intent(this, RecentActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_RECENT_ROUTE);
     }
 
     @Override
@@ -123,6 +126,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case REQUEST_CODE_TO:
                     mToView.setText(city);
                     mCityToCode = data.getStringExtra(EXTRA_CODE);
+                    break;
+
+                case REQUEST_RECENT_ROUTE:
+                    RecentRoute route = data.getParcelableExtra(EXTRA_RECENT_ROUTE);
+                    mFromView.setText(route.getFrom());
+                    mToView.setText(route.getTo());
+                    mCityFromCode = route.getFromCode();
+                    mCityToCode = route.getToCode();
                     break;
             }
         }
