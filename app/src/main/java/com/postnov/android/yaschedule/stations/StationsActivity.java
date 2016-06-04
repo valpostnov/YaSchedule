@@ -20,7 +20,6 @@ import com.postnov.android.yaschedule.stations.interfaces.StationsView;
 import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 import com.postnov.android.yaschedule.utils.StationsQueryBuilder;
-import com.postnov.android.yaschedule.utils.Utils;
 
 import java.util.List;
 

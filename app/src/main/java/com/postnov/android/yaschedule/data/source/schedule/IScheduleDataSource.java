@@ -1,7 +1,6 @@
 package com.postnov.android.yaschedule.data.source.schedule;
 
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
-import com.postnov.android.yaschedule.data.entity.schedule.Route;
 
 import java.util.Map;
 

@@ -7,5 +7,6 @@ import com.postnov.android.yaschedule.base.BasePresenter;
  */
 public interface RecentPresenter extends BasePresenter<RecentView>
 {
-    void fetchFaves();
+    void fetchRecentList();
+    void clearRecentList();
 }

@@ -3,19 +3,14 @@ package com.postnov.android.yaschedule.data.source.recent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.postnov.android.yaschedule.data.entity.recent.RecentRoute;
-import com.squareup.sqlbrite.BriteDatabase;
-import com.squareup.sqlbrite.SqlBrite;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import rx.Observable;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 import static android.provider.BaseColumns._ID;
 import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.COLUMN_FROM;
@@ -30,11 +25,8 @@ import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract
 public class RecentDataSourceImpl implements IRecentDataSource
 {
     private static RecentDataSourceImpl sInstance;
-
-    private final BriteDatabase mDatabaseHelper;
-    private Func1<Cursor, RecentRoute> mRouteMapperFunction;
-    private List<RecentRoute> mCachedListRoute;
-
+    private RecentDbHelper mDbHelper;
+    private LinkedList<RecentRoute> mCachedListRoute;
     private static final String[] PROJECTION = {
             _ID,
             COLUMN_FROM_STATION,
@@ -42,6 +34,10 @@ public class RecentDataSourceImpl implements IRecentDataSource
             COLUMN_FROM,
             COLUMN_TO
     };
+
+    private static final String SQL = String.format(
+            "SELECT %s FROM %s ORDER BY %s DESC LIMIT %s",
+            TextUtils.join(",", PROJECTION), TABLE_NAME, _ID, 10);
 
     public static RecentDataSourceImpl getInstance(Context context)
     {
@@ -55,48 +51,27 @@ public class RecentDataSourceImpl implements IRecentDataSource
 
     private RecentDataSourceImpl(Context context)
     {
-        SqlBrite sqlBrite = SqlBrite.create();
-        RecentDbHelper dbHelper = new RecentDbHelper(context);
-        mDatabaseHelper = sqlBrite.wrapDatabaseHelper(dbHelper, Schedulers.io());
-
-        mRouteMapperFunction = new Func1<Cursor, RecentRoute>()
-        {
-            @Override
-            public RecentRoute call(Cursor cursor)
-            {
-                String fromCode = cursor.getString(1);
-                String toCode = cursor.getString(2);
-                String from = cursor.getString(3);
-                String to = cursor.getString(4);
-
-                RecentRoute route = new RecentRoute();
-                route.setFrom(from);
-                route.setTo(to);
-                route.setFromCode(fromCode);
-                route.setToCode(toCode);
-
-                return route;
-            }
-        };
-
-        mCachedListRoute = new ArrayList<>();
+        mDbHelper = new RecentDbHelper(context);
+        mCachedListRoute = initCache();
     }
 
     @Override
-    public Observable<List<RecentRoute>> getLastRoutes()
+    public Observable<List<RecentRoute>> getRecentRoutes()
     {
-        String sql = String.format("SELECT %s FROM %s", TextUtils.join(",", PROJECTION), TABLE_NAME);
-        return mDatabaseHelper.createQuery(TABLE_NAME, sql).mapToList(mRouteMapperFunction);
+        return Observable.just((List<RecentRoute>) mCachedListRoute);
     }
 
     @Override
     public void save(RecentRoute route)
     {
-        if (mCachedListRoute.isEmpty() || !mCachedListRoute.contains(route))
-        {
-            insert(route);
-            mCachedListRoute.add(route);
-        }
+        if (mCachedListRoute.isEmpty() || !mCachedListRoute.contains(route)) insert(route);
+    }
+
+    @Override
+    public void clear()
+    {
+        mCachedListRoute.clear();
+        mDbHelper.getWritableDatabase().delete(TABLE_NAME, null, null);
     }
 
     private void insert(RecentRoute route)
@@ -108,6 +83,41 @@ public class RecentDataSourceImpl implements IRecentDataSource
         values.put(COLUMN_FROM_STATION, route.getFromCode());
         values.put(COLUMN_TO_STATION, route.getToCode());
 
-        mDatabaseHelper.insert(TABLE_NAME, values, SQLiteDatabase.CONFLICT_REPLACE);
+        if (mDbHelper.getReadableDatabase().rawQuery(SQL, null).getCount() == 10)
+        {
+            deleteRowWithMinId();
+            mCachedListRoute.pollLast();
+        }
+        mDbHelper.getWritableDatabase().insert(TABLE_NAME, null, values);
+        mCachedListRoute.push(route);
+    }
+
+    private LinkedList<RecentRoute> initCache()
+    {
+        Cursor cursor = mDbHelper.getReadableDatabase().rawQuery(SQL, null);
+        LinkedList<RecentRoute> recentRoutes = new LinkedList<>();
+        RecentRoute route;
+
+        while (cursor.moveToNext())
+        {
+            route = new RecentRoute();
+            route.setFrom(cursor.getString(3));
+            route.setTo(cursor.getString(4));
+            route.setFromCode(cursor.getString(1));
+            route.setToCode(cursor.getString(2));
+            recentRoutes.add(route);
+        }
+
+        cursor.close();
+        return recentRoutes;
+    }
+
+    private void deleteRowWithMinId()
+    {
+        String sqlDelete = String.format(
+                "DELETE FROM %s WHERE %s = (SELECT min(%s) FROM %s)",
+                TABLE_NAME, _ID, _ID, TABLE_NAME);
+
+        mDbHelper.getWritableDatabase().execSQL(sqlDelete);
     }
 }

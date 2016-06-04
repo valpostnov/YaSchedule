@@ -17,20 +17,20 @@ import rx.schedulers.Schedulers;
  */
 public class RecentPresenterImpl implements RecentPresenter
 {
-    private IRecentDataSource mFaveDataSource;
+    private IRecentDataSource mRecentDataSource;
     private Subscription mSubscription;
     private RecentView mView;
 
     public RecentPresenterImpl(IRecentDataSource dataSource)
     {
-        mFaveDataSource = dataSource;
+        mRecentDataSource = dataSource;
     }
 
     @Override
-    public void fetchFaves()
+    public void fetchRecentList()
     {
-        mSubscription = mFaveDataSource
-                .getLastRoutes()
+        mSubscription = mRecentDataSource
+                .getRecentRoutes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<RecentRoute>>()
@@ -44,16 +44,23 @@ public class RecentPresenterImpl implements RecentPresenter
                     @Override
                     public void onError(Throwable e)
                     {
-                        mView.loadFaves(null);
+                        mView.loadRecentList(null);
                         mView.showError(e);
                     }
 
                     @Override
                     public void onNext(List<RecentRoute> routes)
                     {
-                        mView.loadFaves(routes);
+                        mView.loadRecentList(routes);
                     }
                 });
+    }
+
+    @Override
+    public void clearRecentList()
+    {
+        mRecentDataSource.clear();
+        mView.loadRecentList(null);
     }
 
     @Override

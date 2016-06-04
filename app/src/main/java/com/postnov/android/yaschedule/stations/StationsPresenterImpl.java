@@ -7,12 +7,9 @@ import com.postnov.android.yaschedule.stations.interfaces.StationsView;
 
 import java.util.Map;
 
-import retrofit2.adapter.rxjava.HttpException;
-import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**

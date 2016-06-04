@@ -4,7 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.*;
+import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.COLUMN_FROM;
+import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.COLUMN_FROM_STATION;
+import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.COLUMN_TO;
+import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.COLUMN_TO_STATION;
+import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.TABLE_NAME;
+import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry._ID;
 
 
 /**

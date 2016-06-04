@@ -30,7 +30,7 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fave);
+        setContentView(R.layout.activity_recent);
         mPresenter = new RecentPresenterImpl(RecentDataSourceImpl.getInstance(this));
         iniToolbar();
         initViews();
@@ -41,7 +41,7 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
     {
         super.onResume();
         mPresenter.bind(this);
-        mPresenter.fetchFaves();
+        mPresenter.fetchRecentList();
     }
 
     @Override
@@ -55,7 +55,8 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_recent, menu);
+        return true;
     }
 
     @Override
@@ -73,9 +74,15 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
     }
 
     @Override
-    public void loadFaves(List<RecentRoute> routes)
+    public void loadRecentList(List<RecentRoute> routes)
     {
         mAdapter.swapList(routes);
+    }
+
+
+    public void clearRecentList(MenuItem item)
+    {
+        mPresenter.clearRecentList();
     }
 
     @Override
@@ -86,7 +93,7 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
 
     private void iniToolbar()
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.fave_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.recent_toolbar);
         toolbar.setTitle(R.string.fave_activity_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -94,7 +101,7 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
 
     private void initViews()
     {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.fave_list);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recent_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -103,7 +110,7 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
                 DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
         recyclerView.addItemDecoration(itemDecoration);
 
-        TextView mEmptyView = (TextView) findViewById(R.id.fave_emptyview);
+        TextView mEmptyView = (TextView) findViewById(R.id.recent_emptyview);
 
         mAdapter = new RecentAdapter();
         mAdapter.setEmptyView(mEmptyView);

@@ -1,10 +1,8 @@
 package com.postnov.android.yaschedule.data.source.stations;
 
-import com.postnov.android.yaschedule.api.ScheduleApi;
 import com.postnov.android.yaschedule.api.StationsApi;
 import com.postnov.android.yaschedule.data.entity.stations.Thread;
 import com.postnov.android.yaschedule.utils.Const;
-import com.postnov.android.yaschedule.utils.StationsQueryBuilder;
 
 import java.util.Map;
 

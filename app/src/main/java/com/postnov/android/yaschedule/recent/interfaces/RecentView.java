@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface RecentView extends BaseView
 {
-    void loadFaves(List<RecentRoute> routes);
+    void loadRecentList(List<RecentRoute> routes);
 }

@@ -11,6 +11,7 @@ import rx.Observable;
  */
 public interface IRecentDataSource
 {
-    Observable<List<RecentRoute>> getLastRoutes();
+    Observable<List<RecentRoute>> getRecentRoutes();
     void save(RecentRoute route);
+    void clear();
 }

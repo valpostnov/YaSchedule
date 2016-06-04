@@ -28,7 +28,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_last_route, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recent, parent, false);
         return new ViewHolder(v);
     }
 
@@ -71,7 +71,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         public ViewHolder(View view)
         {
             super(view);
-            mTitle = (TextView) view.findViewById(R.id.last_route_title);
+            mTitle = (TextView) view.findViewById(R.id.recent_title);
             view.setOnClickListener(this);
         }
 

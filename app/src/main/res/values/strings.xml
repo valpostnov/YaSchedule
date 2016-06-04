@@ -34,5 +34,6 @@
     <string name="fave_activity_title">Недавние рейсы</string>
     <string name="station_activity_title">Станции на пути следования</string>
     <string name="error_no_connection">Отсутсвует подключение к интернету</string>
+    <string name="action_clear">Очистить список</string>
 
 </resources>
