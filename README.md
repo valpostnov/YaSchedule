@@ -16,6 +16,5 @@
 - Refrofit 2
 - RxAndroid
 - RxBinding
-- SQLBrite
 
 ###### «API предоставлен сервисом Яндекс.Расписания» 
