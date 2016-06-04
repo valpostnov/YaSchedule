@@ -10,7 +10,7 @@
     <string name="action_settings">Настройки</string>
     <string name="action_sort">Сортировать</string>
     <string name="action_share">Поделиться</string>
-    <string name="action_fave">Избранные рейсы</string>
+    <string name="action_fave">Недавние рейсы</string>
     <string name="action_filter_apply">Применить</string>
     <string name="action_swap">Поменять города местами</string>
     <string name="action_set_date">Сменить дату</string>
@@ -27,7 +27,7 @@
     <string name="filter_title">Фильтр по типам транспорта</string>
 
     <string name="schedule_empty_view">Подходящих рейсов не найдено</string>
-    <string name="fave_empty_view">Список избранного пуст</string>
+    <string name="fave_empty_view">Список недавних рейсов пуст</string>
     <string name="stations_empty_view">Нет доступных сведений о станциях</string>
 
     <string name="search_title">Поиск</string>
