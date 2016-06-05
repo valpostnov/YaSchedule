@@ -6,9 +6,9 @@
 - Просмотр промежуточных станций по маршруту следования
 
 # 
-<img height = "400" src = "https://github.com/valpostnov/YaSchedule/blob/schedule_v1/app/screens/mainn.png" />
+<img height = "400" src = "https://github.com/valpostnov/YaSchedule/blob/schedule_v1/app/screens/main.png" />
 &nbsp;
-<img height = "400" src = "https://github.com/valpostnov/YaSchedule/blob/schedule_v1/app/screens/schedulee.png" />
+<img height = "400" src = "https://github.com/valpostnov/YaSchedule/blob/schedule_v1/app/screens/schedule.png" />
 &nbsp;
 <img height = "400" src = "https://github.com/valpostnov/YaSchedule/blob/schedule_v1/app/screens/stationss.png" />
 
@@ -16,6 +16,5 @@
 - Refrofit 2
 - RxAndroid
 - RxBinding
-- SQLBrite
 
 ###### «API предоставлен сервисом Яндекс.Расписания» 
