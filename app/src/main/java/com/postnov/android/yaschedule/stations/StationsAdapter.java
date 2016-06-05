@@ -11,8 +11,6 @@ import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Station;
 import com.postnov.android.yaschedule.data.entity.stations.Stop;
 import com.postnov.android.yaschedule.utils.Utils;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +19,8 @@ import java.util.List;
 public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHolder>
 {
     private List<Stop> mStops;
+    private List<Stop> mAllStops;
+
     private View mEmptyView;
     private String mFromCode;
     private String mToCode;
@@ -92,9 +92,20 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
 
     public void swapList(List<Stop> stopList)
     {
+        mAllStops = stopList;
         mStops = getListWithoutExtraStations(stopList);
         notifyDataSetChanged();
         mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
+    }
+
+    public void showAllStops()
+    {
+        if (!mStops.equals(mAllStops))
+        {
+            mStops = mAllStops;
+            notifyDataSetChanged();
+            mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
+        }
     }
 
     public List<Stop> getList()

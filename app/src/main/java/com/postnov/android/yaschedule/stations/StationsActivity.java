@@ -88,7 +88,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
                 return true;
 
             case R.id.action_hide_stations:
-                //mAdapter.showAllStations();
+                mAdapter.showAllStops();
                 return true;
 
             default:
