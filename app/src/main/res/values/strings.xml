@@ -35,5 +35,6 @@
     <string name="station_activity_title">Станции на пути следования</string>
     <string name="error_no_connection">Отсутсвует подключение к интернету</string>
     <string name="action_clear">Очистить список</string>
+    <string name="action_hide_stations">Показать все станции</string>
 
 </resources>

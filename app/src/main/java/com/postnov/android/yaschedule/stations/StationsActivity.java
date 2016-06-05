@@ -73,7 +73,8 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_stations, menu);
+        return true;
     }
 
     @Override
@@ -85,6 +86,11 @@ public class StationsActivity extends AppCompatActivity implements StationsView
             case android.R.id.home:
                 finish();
                 return true;
+
+            case R.id.action_hide_stations:
+                //mAdapter.showAllStations();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
