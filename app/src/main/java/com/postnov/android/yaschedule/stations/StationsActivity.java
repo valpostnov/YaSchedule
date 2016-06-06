@@ -139,7 +139,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage(getString(R.string.loading_title));
+        mProgressDialog.setMessage(getString(R.string.loading_stations));
     }
 
     private void iniToolbar()

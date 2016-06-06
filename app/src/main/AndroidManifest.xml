@@ -23,14 +23,16 @@
         </activity>
         <activity
             android:name=".schedule.ScheduleActivity"
-            android:screenOrientation="sensorPortrait" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".search.SearchActivity"
-            android:screenOrientation="sensorPortrait" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".recent.RecentActivity"
-            android:screenOrientation="sensorPortrait" />
-        <activity android:name=".stations.StationsActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".stations.StationsActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

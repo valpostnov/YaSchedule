@@ -5,7 +5,8 @@
     <string name="to">Куда</string>
     <string name="btn_find">Найти</string>
     <string name="hint_when">Когда</string>
-    <string name="loading_title">Поиск рейсов</string>
+    <string name="loading_schedule">Поиск рейсов</string>
+    <string name="loading_stations">Поиск станций</string>
 
     <string name="action_settings">Настройки</string>
     <string name="action_sort">Сортировать</string>

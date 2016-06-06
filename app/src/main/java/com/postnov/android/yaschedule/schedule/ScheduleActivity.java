@@ -21,7 +21,6 @@ import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
-import com.postnov.android.yaschedule.data.source.recent.RecentDataSourceImpl;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.stations.StationsActivity;
@@ -279,7 +278,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage(getString(R.string.loading_title));
+        mProgressDialog.setMessage(getString(R.string.loading_schedule));
 
         View bottomSheet = findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);

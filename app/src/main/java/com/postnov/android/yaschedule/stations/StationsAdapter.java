@@ -100,7 +100,7 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
 
     public void showAllStops()
     {
-        if (!mStops.equals(mAllStops))
+        if (mStops != null && !mStops.equals(mAllStops))
         {
             mStops = mAllStops;
             notifyDataSetChanged();
