@@ -9,7 +9,6 @@ import com.postnov.android.yaschedule.utils.NetworkManager;
 import com.postnov.android.yaschedule.utils.exception.NetworkConnectionError;
 
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -37,8 +36,7 @@ public class SearchPresenterImpl implements ISearchPresenter
         if (mNetworkManager.networkIsAvailable())
         {
             mView.showProgressView();
-
-            Subscription subscription = mDataSource
+            mSubscriptions.add(mDataSource
                     .getList(city, limit)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -63,9 +61,8 @@ public class SearchPresenterImpl implements ISearchPresenter
                         {
                             mView.showCities(cityCodes.getSuggests());
                         }
-                    });
 
-            mSubscriptions.add(subscription);
+                    }));
         }
         else
         {

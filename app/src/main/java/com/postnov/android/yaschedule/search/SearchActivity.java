@@ -27,6 +27,7 @@ import com.postnov.android.yaschedule.utils.Utils;
 import com.postnov.android.yaschedule.utils.exception.NetworkConnectionError;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Subscription;
 import rx.functions.Action1;
@@ -159,6 +160,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
                         if (query.isEmpty()) mAdapter.swapList(null);
                     }
                 })
+                .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<CharSequence>()
                 {
                     @Override
