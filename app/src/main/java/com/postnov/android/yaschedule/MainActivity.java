@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             mCityFromCode = savedInstanceState.getString(EXTRA_FROM_CODE);
             mCityToCode = savedInstanceState.getString(EXTRA_TO_CODE);
+            mReversedDate = savedInstanceState.getString(EXTRA_QUERY_DATE);
         }
         initToolbar();
         initViews();
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         outState.putString(EXTRA_FROM_CODE, mCityFromCode);
         outState.putString(EXTRA_TO_CODE, mCityToCode);
+        outState.putString(EXTRA_QUERY_DATE, mReversedDate);
         super.onSaveInstanceState(outState);
     }
 

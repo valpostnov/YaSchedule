@@ -69,7 +69,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
 
         mPresenter = new SchedulePresenterImpl(
                 Injection.provideScheduleDataSource(),
-                RecentDataSourceImpl.getInstance(this),
+                Injection.provideRecentDataSource(this),
                 NetworkManager.getInstance(this));
 
         initViews();

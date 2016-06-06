@@ -12,19 +12,15 @@ import java.util.List;
 
 import rx.Observable;
 
-import static android.provider.BaseColumns._ID;
-import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.COLUMN_FROM;
-import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.COLUMN_FROM_STATION;
-import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.COLUMN_TO;
-import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.COLUMN_TO_STATION;
-import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.TABLE_NAME;
+import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract.RecentEntry.*;
 
 /**
  * Created by platon on 03.06.2016.
  */
 public class RecentDataSourceImpl implements IRecentDataSource
 {
-    private static RecentDataSourceImpl sInstance;
+    private static RecentDataSourceImpl sINSTANCE;
+    private static final int MAX_ROWS_COUNT = 7;
     private RecentDbHelper mDbHelper;
     private LinkedList<RecentRoute> mCachedListRoute;
     private static final String[] PROJECTION = {
@@ -36,17 +32,17 @@ public class RecentDataSourceImpl implements IRecentDataSource
     };
 
     private static final String SQL = String.format(
-            "SELECT %s FROM %s ORDER BY %s DESC LIMIT %s",
-            TextUtils.join(",", PROJECTION), TABLE_NAME, _ID, 10);
+            "SELECT %s FROM %s ORDER BY %s DESC",
+            TextUtils.join(",", PROJECTION), TABLE_NAME, _ID);
 
     public static RecentDataSourceImpl getInstance(Context context)
     {
-        if (sInstance == null)
+        if (sINSTANCE == null)
         {
-            sInstance = new RecentDataSourceImpl(context);
+            sINSTANCE = new RecentDataSourceImpl(context);
         }
 
-        return sInstance;
+        return sINSTANCE;
     }
 
     private RecentDataSourceImpl(Context context)
@@ -83,7 +79,7 @@ public class RecentDataSourceImpl implements IRecentDataSource
         values.put(COLUMN_FROM_STATION, route.getFromCode());
         values.put(COLUMN_TO_STATION, route.getToCode());
 
-        if (mDbHelper.getReadableDatabase().rawQuery(SQL, null).getCount() == 10)
+        if (mDbHelper.getReadableDatabase().rawQuery(SQL, null).getCount() == MAX_ROWS_COUNT)
         {
             deleteRowWithMinId();
             mCachedListRoute.pollLast();

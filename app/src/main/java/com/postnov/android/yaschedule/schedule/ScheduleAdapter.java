@@ -71,13 +71,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
-    public void insertRows(List<Route> routeList)
-    {
-        int positionStart = mRoutes.size();
-        int itemCount = routeList.size();
-        notifyItemRangeInserted(positionStart, itemCount);
-    }
-
     public List<Route> getList()
     {
         return mRoutes;

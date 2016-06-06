@@ -155,7 +155,7 @@ public class Utils
         final int TRAIN_DRAWABLE =  R.drawable.ic_railway_green;
         final int PLANE_DRAWABLE = R.drawable.ic_flight_green;
         final int BUS_DRAWABLE = R.drawable.ic_bus_green;
-        final int SUBURBAN_DRAWABLE = R.drawable.ic_suburban_green;
+        final int SUBURBAN_DRAWABLE = R.drawable.ic_train_green;
 
         switch (tt)
         {

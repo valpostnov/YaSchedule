@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.recent.RecentRoute;
@@ -31,7 +32,7 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent);
-        mPresenter = new RecentPresenterImpl(RecentDataSourceImpl.getInstance(this));
+        mPresenter = new RecentPresenterImpl(Injection.provideRecentDataSource(this));
         iniToolbar();
         initViews();
     }
