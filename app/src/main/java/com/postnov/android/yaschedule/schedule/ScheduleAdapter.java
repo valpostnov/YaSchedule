@@ -53,8 +53,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         holder.mFinishTime.setText(Utils.getOnlyTime(route.getArrival()));
         holder.mStartDate.setText(Utils.toShortDate(route.getDeparture()));
         holder.mFinishDate.setText(Utils.toShortDate(route.getArrival()));
-        holder.mStationFrom.setText(from.getTitle());
-        holder.mStationTo.setText(to.getTitle());
+        holder.mStationFrom.setText(Utils.splitTitle(from.getTitle()));
+        holder.mStationTo.setText(Utils.splitTitle(to.getTitle()));
     }
 
     @Override

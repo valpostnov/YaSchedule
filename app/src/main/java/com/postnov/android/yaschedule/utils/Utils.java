@@ -175,4 +175,25 @@ public class Utils
                 return 0;
         }
     }
+
+    /**
+     *
+     * @param title, Москва (Ярославский вокзал)
+     * @return newTitle, Москва + "/n" + (Ярославский вокзал)
+     */
+    public static String splitTitle(String title)
+    {
+        int endIndex = title.indexOf("(");
+        if (endIndex > 0)
+        {
+            StringBuilder newString = new StringBuilder();
+            newString.append(title.substring(0, endIndex).trim());
+            newString.append("\n");
+            newString.append(title.substring(endIndex).trim());
+
+            return newString.toString();
+        }
+
+        return title;
+    }
 }

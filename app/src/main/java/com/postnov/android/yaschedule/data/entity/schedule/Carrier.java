@@ -13,9 +13,6 @@ public class Carrier
     @SerializedName("code")
     private String code;
 
-    @SerializedName("codes")
-    private Codes codes;
-
     public String getTitle() {
         return title;
     }
@@ -30,13 +27,5 @@ public class Carrier
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public Codes getCodes() {
-        return codes;
-    }
-
-    public void setCodes(Codes codes) {
-        this.codes = codes;
     }
 }

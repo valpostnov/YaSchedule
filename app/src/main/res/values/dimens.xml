@@ -9,14 +9,17 @@
     <dimen name="margin_small_horizontal">8dp</dimen>
     <dimen name="margin_medium_horizontal">16dp</dimen>
 
+    <dimen name="margin_small_vertical">8dp</dimen>
+    <dimen name="margin_medium_vertical">16dp</dimen>
+
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="schedule_time_text_size">28sp</dimen>
+    <dimen name="schedule_time_text_size">24sp</dimen>
     <dimen name="schedule_activity_custom_margin">104dp</dimen>
     <dimen name="schedule_date_text_size">14sp</dimen>
-    <dimen name="schedule_station_text_size">13sp</dimen>
-    <dimen name="schedule_route_text_size">16sp</dimen>
+    <dimen name="schedule_station_text_size">12sp</dimen>
+    <dimen name="schedule_route_text_size">14sp</dimen>
 
     <dimen name="main_edittext_size">32sp</dimen>
 </resources>

@@ -33,4 +33,12 @@ public class TestUtils
 
         assertEquals("2016-5-3", Utils.getOnlyDate(date));
     }
+
+    @Test
+    public void testDivideString() throws Exception
+    {
+        String title = "Москва (Ярославский вокзал)";
+
+        assertEquals("Москва\n(Ярославский вокзал)", Utils.splitTitle(title));
+    }
 }
