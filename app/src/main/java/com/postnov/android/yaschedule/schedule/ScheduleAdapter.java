@@ -23,11 +23,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     private View mEmptyView;
 
     private OnItemClickListener onItemClickListener;
-
-    public interface OnItemClickListener
-    {
-        void onItemClick(View view, int position);
-    }
+    private OnEndlessListener onEndlessListener;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -55,6 +51,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         holder.mFinishDate.setText(Utils.toShortDate(route.getArrival()));
         holder.mStationFrom.setText(Utils.splitTitle(from.getTitle()));
         holder.mStationTo.setText(Utils.splitTitle(to.getTitle()));
+
+        if (position == getItemCount() - 1)
+        {
+
+        }
     }
 
     @Override
@@ -64,9 +65,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         return mRoutes.size();
     }
 
-    public void swapList(List<Route> routeList)
+    public void swapList(List<Route> routes)
     {
-        mRoutes = routeList;
+        mRoutes = routes;
         notifyDataSetChanged();
         mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
@@ -112,8 +113,23 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         }
     }
 
+    public interface OnItemClickListener
+    {
+        void onItemClick(View view, int position);
+    }
+
+    public interface OnEndlessListener
+    {
+        void onLoadMore(int page);
+    }
+
     public void setOnItemClickListener(OnItemClickListener listener)
     {
         onItemClickListener = listener;
+    }
+
+    public void setOnEndlessListener(OnEndlessListener listener)
+    {
+        onEndlessListener = listener;
     }
 }

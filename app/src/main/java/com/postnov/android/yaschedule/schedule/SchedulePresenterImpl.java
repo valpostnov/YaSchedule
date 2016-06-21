@@ -46,47 +46,11 @@ public class SchedulePresenterImpl implements SchedulePresenter
         if (mNetworkManager.networkIsAvailable())
         {
             mView.showProgressDialog();
-
-            Subscription subscription = mDataSource.search(options)
-                    .subscribeOn(Schedulers.io())
-                    .doOnNext(new Action1<Response>()
-                    {
-                        @Override
-                        public void call(Response response)
-                        {
-                            saveSearchRequest(response);
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Response>()
-                    {
-                        @Override
-                        public void onCompleted()
-                        {
-                            mView.hideProgressDialog();
-                        }
-
-                        @Override
-                        public void onError(Throwable e)
-                        {
-                            mView.hideProgressDialog();
-                            mView.showList(null);
-                            mView.showError(e);
-                        }
-
-                        @Override
-                        public void onNext(Response response)
-                        {
-                            mView.showList(response);
-                        }
-                    });
-
-            mSubscriptions.add(subscription);
+            mSubscriptions.add(createSearchSubscription(options));
+            return;
         }
-        else
-        {
-            mView.showError(new NetworkConnectionError(Const.ERROR_NO_CONNECTION));
-        }
+
+        mView.showError(new NetworkConnectionError(Const.ERROR_NO_CONNECTION));
     }
 
     @Override
@@ -114,5 +78,42 @@ public class SchedulePresenterImpl implements SchedulePresenter
         route.setToCode(response.getSearch().getTo().getCode());
 
         mFaveDataSource.save(route);
+    }
+
+    private Subscription createSearchSubscription(Map<String, String> options)
+    {
+        return mDataSource.search(options)
+                .subscribeOn(Schedulers.io())
+                .doOnNext(new Action1<Response>()
+                {
+                    @Override
+                    public void call(Response response)
+                    {
+                        saveSearchRequest(response);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response>()
+                {
+                    @Override
+                    public void onCompleted()
+                    {
+                        mView.hideProgressDialog();
+                    }
+
+                    @Override
+                    public void onError(Throwable e)
+                    {
+                        mView.hideProgressDialog();
+                        mView.showList(null);
+                        mView.showError(e);
+                    }
+
+                    @Override
+                    public void onNext(Response response)
+                    {
+                        mView.showList(response);
+                    }
+                });
     }
 }

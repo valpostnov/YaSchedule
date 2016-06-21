@@ -5,6 +5,7 @@ package com.postnov.android.yaschedule.utils;
  */
 public interface TransportTypes
 {
+    String ALL = "";
     String PLANE = "plane";
     String TRAIN = "train";
     String SUBURBAN = "suburban";

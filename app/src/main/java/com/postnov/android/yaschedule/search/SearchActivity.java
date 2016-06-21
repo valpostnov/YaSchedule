@@ -38,18 +38,18 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     private static final String TAG = "SearchActivity";
     private SearchResultAdapter mAdapter;
     private ISearchPresenter mPresenter;
-    private ProgressBar mProgressView;
+    //private ProgressBar mProgressView;
     private EditText mSearchView;
-    private Subscription subscription;
+    private Subscription mUISubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        mPresenter = new SearchPresenterImpl(
-                Injection.provideCodesDataSource(),
-                NetworkManager.getInstance(this));
+        mPresenter = new SearchPresenterImpl(Injection.provideCodesDataSource(),
+                NetworkManager.getInstance(getApplicationContext()));
+
         initViews();
         initToolbar();
     }
@@ -77,7 +77,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     @Override
     protected void onPause()
     {
-        subscription.unsubscribe();
+        mUISubscription.unsubscribe();
         mPresenter.unsubscribe();
         mPresenter.unbind();
         super.onPause();
@@ -114,23 +114,22 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
 
     private void initViews()
     {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.search_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        TextView mEmptyView = (TextView) findViewById(R.id.search_empty_view);
-
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+        View mEmptyView = findViewById(R.id.search_empty_view);
 
         mAdapter = new SearchResultAdapter();
         mAdapter.setEmptyView(mEmptyView);
         mAdapter.setOnItemClickListener(this);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.search_recyclerview);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
 
         String searchHint = getIntent().getStringExtra(MainActivity.EXTRA_HINT);
         mSearchView = (EditText) findViewById(R.id.search_view);
         mSearchView.setHint(searchHint);
-
-        mProgressView = (ProgressBar) findViewById(R.id.search_progressview);
+        //mProgressView = (ProgressBar) findViewById(R.id.search_progressview);
     }
 
     private void initToolbar()
@@ -142,25 +141,16 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
 
     private void subscribeOnTextChange()
     {
-        subscription = RxTextView
+        mUISubscription = RxTextView
                 .textChanges(mSearchView)
-                .map(new Func1<CharSequence, String>()
+                .doOnNext(new Action1<CharSequence>()
                 {
                     @Override
-                    public String call(CharSequence query)
+                    public void call(CharSequence query)
                     {
-                        return query.toString().trim();
+                        if (query.length() == 0) mAdapter.swapList(null);
                     }
                 })
-                .doOnNext(new Action1<String>()
-                {
-                    @Override
-                    public void call(String query)
-                    {
-                        if (query.isEmpty()) mAdapter.swapList(null);
-                    }
-                })
-                .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<CharSequence>()
                 {
                     @Override

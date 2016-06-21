@@ -11,16 +11,16 @@ public class Pagination
     private int total;
 
     @SerializedName("per_page")
-    private int per_page;
+    private int perPage;
 
     @SerializedName("page")
     private int page;
 
     @SerializedName("has_next")
-    private boolean has_next;
+    private boolean hasNext;
 
     @SerializedName("page_count")
-    private int page_count;
+    private int pageCount;
 
     public int getTotal() {
         return total;
@@ -30,12 +30,12 @@ public class Pagination
         this.total = total;
     }
 
-    public int getPer_page() {
-        return per_page;
+    public int getPerPage() {
+        return perPage;
     }
 
-    public void setPer_page(int per_page) {
-        this.per_page = per_page;
+    public void setPerPage(int perPage) {
+        this.perPage = perPage;
     }
 
     public int getPage() {
@@ -46,19 +46,19 @@ public class Pagination
         this.page = page;
     }
 
-    public boolean isHas_next() {
-        return has_next;
+    public boolean isHasNext() {
+        return hasNext;
     }
 
-    public void setHas_next(boolean has_next) {
-        this.has_next = has_next;
+    public void setHasNext(boolean hasNext) {
+        this.hasNext = hasNext;
     }
 
-    public int getPage_count() {
-        return page_count;
+    public int getPageCount() {
+        return pageCount;
     }
 
-    public void setPage_count(int page_count) {
-        this.page_count = page_count;
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
     }
 }
