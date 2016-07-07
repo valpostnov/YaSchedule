@@ -37,8 +37,7 @@ import static android.support.design.widget.BottomSheetBehavior.STATE_EXPANDED;
 import static android.support.design.widget.BottomSheetBehavior.STATE_COLLAPSED;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
-        ScheduleAdapter.OnItemClickListener, DatePickerDialog.OnDateSetListener,
-        ScheduleAdapter.OnEndlessListener {
+        ScheduleAdapter.OnItemClickListener, DatePickerDialog.OnDateSetListener {
 
     private static final String TAG = "ScheduleActivity";
 
@@ -139,8 +138,10 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
             case STATE_EXPANDED:
                 showHideBottomSheetFilter(null);
                 break;
+
+            default:
+                super.onBackPressed();
         }
-        super.onBackPressed();
     }
 
     @Override
@@ -236,13 +237,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         startActivity(intent);
     }
 
-
-    @Override
-    public void onLoadMore(int page)
-    {
-
-    }
-
     public void applyFilter(View view)
     {
         String transportTitle = "";
@@ -287,7 +281,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         mAdapter = new ScheduleAdapter();
         mAdapter.setEmptyView(emptyView);
         mAdapter.setOnItemClickListener(this);
-        mAdapter.setOnEndlessListener(this);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.schedule_recyclerview);
         recyclerView.setLayoutManager(layoutManager);
