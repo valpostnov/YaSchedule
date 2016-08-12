@@ -1,15 +1,22 @@
 package com.postnov.android.yaschedule.stations;
 
+import android.util.Log;
+
+import com.postnov.android.yaschedule.data.entity.stations.Stop;
 import com.postnov.android.yaschedule.data.entity.stations.Thread;
 import com.postnov.android.yaschedule.data.source.stations.IStationsDataSource;
 import com.postnov.android.yaschedule.stations.interfaces.StationsPresenter;
 import com.postnov.android.yaschedule.stations.interfaces.StationsView;
 
+import java.util.List;
 import java.util.Map;
 
+import retrofit2.adapter.rxjava.HttpException;
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -30,8 +37,16 @@ public class StationsPresenterImpl implements StationsPresenter
     public void fetchStations(final Map<String, String> query)
     {
         mView.showProgressDialog();
-        mSubscription = mDataSource
-                .stationList(query)
+        mSubscription = withConcreteDate(query)
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Thread>>()
+                {
+                    @Override
+                    public Observable<? extends Thread> call(Throwable e)
+                    {
+                        if (e instanceof HttpException) return withoutConcreteDate(query);
+                        return Observable.error(e);
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Thread>()
@@ -74,5 +89,16 @@ public class StationsPresenterImpl implements StationsPresenter
     public void unsubscribe()
     {
         mSubscription.unsubscribe();
+    }
+
+    private Observable<Thread> withConcreteDate(Map<String, String> query)
+    {
+        return mDataSource.stationList(query);
+    }
+
+    private Observable<Thread> withoutConcreteDate(Map<String, String> query)
+    {
+        query.remove("date");
+        return mDataSource.stationList(query);
     }
 }

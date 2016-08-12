@@ -95,19 +95,14 @@
             />
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_find"
-        android:layout_gravity="center_horizontal"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:textColor="@color/button_text_selector"
-        android:layout_marginLeft="@dimen/margin_large"
-        android:layout_marginRight="@dimen/margin_large"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/margin_large"
         android:id="@+id/button_find"
         android:onClick="showSchedule"
-        android:focusableInTouchMode="false"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_search"
+        android:clickable="true" />
 </RelativeLayout>

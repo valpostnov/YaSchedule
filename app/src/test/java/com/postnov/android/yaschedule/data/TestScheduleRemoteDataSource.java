@@ -29,7 +29,6 @@ public class TestScheduleRemoteDataSource
                 .setFrom(FROM)
                 .setTo(TO)
                 .setLang(Const.LANG_RU)
-                .setPage(1)
                 .setDate(DATE)
                 .build();
 

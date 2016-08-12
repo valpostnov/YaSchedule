@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="Станция"
         style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="@dimen/text_before_image_margin"
         android:gravity="center_vertical"
         android:singleLine="false"
         android:layout_marginEnd="@dimen/margin_medium"
@@ -30,7 +30,7 @@
         android:text="Остановка"
         android:layout_marginEnd="@dimen/margin_medium"
         android:layout_alignParentEnd="false"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="@dimen/text_before_image_margin"
         android:layout_below="@+id/station_title"
         android:textColor="@color/abc_primary_text_material_dark" />
     <TextView
@@ -40,7 +40,7 @@
         android:text="Отправление"
         android:layout_marginEnd="@dimen/margin_medium"
         android:layout_alignParentEnd="false"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="@dimen/text_before_image_margin"
         android:layout_below="@+id/station_stop_time" />
 
 </RelativeLayout>
