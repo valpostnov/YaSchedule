@@ -8,11 +8,10 @@ import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.NetworkManager;
-import com.postnov.android.yaschedule.utils.exception.NetworkConnectionError;
+import com.postnov.android.yaschedule.utils.exception.NetworkConnectionException;
 
 import java.util.Map;
 
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -22,95 +21,63 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by platon on 21.05.2016.
  */
-public class SchedulePresenterImpl implements SchedulePresenter
-{
-    private IScheduleDataSource mDataSource;
-    private IRecentDataSource mFaveDataSource;
+public class SchedulePresenterImpl implements SchedulePresenter {
+    private final IScheduleDataSource scheduleDataSource;
+    private final IRecentDataSource recentDataSource;
     private ScheduleView mView;
     private CompositeSubscription mSubscriptions;
     private NetworkManager mNetworkManager; //Todo init!!!
 
-    public SchedulePresenterImpl(IScheduleDataSource dataSource, IRecentDataSource faveDataSource)
-    {
-        mDataSource = dataSource;
-        mFaveDataSource = faveDataSource;
+    public SchedulePresenterImpl(IScheduleDataSource scheduleDataSource,
+                                 IRecentDataSource recentDataSource) {
+        this.scheduleDataSource = scheduleDataSource;
+        this.recentDataSource = recentDataSource;
         mSubscriptions = new CompositeSubscription();
     }
 
     @Override
-    public void search(Map<String, String> options)
-    {
-        if (mNetworkManager.networkIsAvailable())
-        {
+    public void search(Map<String, String> options) {
+        if (mNetworkManager.networkIsAvailable()) {
             mView.showProgressDialog();
             mSubscriptions.add(createSearchSubscription(options));
             return;
         }
 
-        mView.showError(new NetworkConnectionError(Const.ERROR_NO_CONNECTION));
+        mView.showError(new NetworkConnectionException(Const.ERROR_NO_CONNECTION));
     }
 
     @Override
-    public void bind(ScheduleView view)
-    {
+    public void bind(ScheduleView view) {
         mView = view;
     }
 
     @Override
     public void unbind() {
+        mSubscriptions.clear();
         mView = null;
     }
 
-    @Override
-    public void unsubscribe() {
-        mSubscriptions.clear();
-    }
-
-    private void saveSearchRequest(Response response)
-    {
+    private void saveSearchRequest(Response response) {
         RecentRoute route = new RecentRoute();
         route.setFrom(response.getSearch().getFrom().getTitle());
         route.setTo(response.getSearch().getTo().getTitle());
         route.setFromCode(response.getSearch().getFrom().getCode());
         route.setToCode(response.getSearch().getTo().getCode());
 
-        mFaveDataSource.save(route);
+        recentDataSource.save(route);
     }
 
-    private Subscription createSearchSubscription(Map<String, String> options)
-    {
-        return mDataSource.search(options)
+    private Subscription createSearchSubscription(Map<String, String> options) {
+        return scheduleDataSource.search(options)
                 .subscribeOn(Schedulers.io())
-                .doOnNext(new Action1<Response>()
-                {
-                    @Override
-                    public void call(Response response)
-                    {
-                        saveSearchRequest(response);
-                    }
-                })
+                .doOnNext(this::saveSearchRequest)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response>()
-                {
-                    @Override
-                    public void onCompleted()
-                    {
-                        mView.hideProgressDialog();
-                    }
-
-                    @Override
-                    public void onError(Throwable e)
-                    {
-                        mView.hideProgressDialog();
-                        mView.showList(null);
-                        mView.showError(e);
-                    }
-
-                    @Override
-                    public void onNext(Response response)
-                    {
-                        mView.showList(response);
-                    }
-                });
+                .subscribe(response -> mView.showList(response), onError);
     }
+
+    private Action1<Throwable> onError = e -> {
+        mView.hideProgressDialog();
+        mView.showList(null);
+        mView.showError(e);
+    };
 }

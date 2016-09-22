@@ -18,19 +18,17 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.postnov.android.yaschedule.App;
-import com.postnov.android.yaschedule.Injection;
-import com.postnov.android.yaschedule.MainActivity;
+import com.postnov.android.yaschedule.base.BaseActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
 import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.stations.StationsActivity;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
-import com.postnov.android.yaschedule.utils.NetworkManager;
 import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
 import com.postnov.android.yaschedule.utils.TransportTypes;
 import com.postnov.android.yaschedule.utils.Utils;
-import com.postnov.android.yaschedule.utils.exception.NetworkConnectionError;
+import com.postnov.android.yaschedule.utils.exception.NetworkConnectionException;
 
 import java.util.Map;
 
@@ -67,8 +65,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     private Response mResponse;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
@@ -80,39 +77,33 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         initToolbar();
 
         mTransport = TransportTypes.ALL;
-        mCityFromCode = getIntent().getStringExtra(MainActivity.EXTRA_FROM_CODE);
-        mCityToCode = getIntent().getStringExtra(MainActivity.EXTRA_TO_CODE);
-        mDate = getIntent().getStringExtra(MainActivity.EXTRA_QUERY_DATE);
+        mCityFromCode = getIntent().getStringExtra(BaseActivity.EXTRA_FROM_CODE);
+        mCityToCode = getIntent().getStringExtra(BaseActivity.EXTRA_TO_CODE);
+        mDate = getIntent().getStringExtra(BaseActivity.EXTRA_QUERY_DATE);
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         mPresenter.bind(this);
         mPresenter.search(createQuery());
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
-        mPresenter.unsubscribe();
         mPresenter.unbind();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_schedule, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
@@ -131,10 +122,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     }
 
     @Override
-    public void onBackPressed()
-    {
-        switch (mBottomSheetBehavior.getState())
-        {
+    public void onBackPressed() {
+        switch (mBottomSheetBehavior.getState()) {
             case STATE_EXPANDED:
                 showHideBottomSheetFilter(null);
                 break;
@@ -145,10 +134,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     }
 
     @Override
-    public void showList(Response response)
-    {
-        if (response != null)
-        {
+    public void showList(Response response) {
+        if (response != null) {
             mResponse = response;
             mAdapter.swapList(response.getRoutes());
             return;
@@ -157,31 +144,25 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     }
 
     @Override
-    public void showError(Throwable e)
-    {
-        if (e instanceof NetworkConnectionError)
-        {
+    public void showError(Throwable e) {
+        if (e instanceof NetworkConnectionException) {
             Utils.showToast(this, e.getMessage());
         }
         Log.e(TAG, e.getMessage());
     }
 
     @Override
-    public void showProgressDialog()
-    {
+    public void showProgressDialog() {
         mProgressDialog.show();
     }
 
     @Override
-    public void hideProgressDialog()
-    {
+    public void hideProgressDialog() {
         mProgressDialog.dismiss();
     }
 
-    public void showHideBottomSheetFilter(View view)
-    {
-        switch (mBottomSheetBehavior.getState())
-        {
+    public void showHideBottomSheetFilter(View view) {
+        switch (mBottomSheetBehavior.getState()) {
             case STATE_EXPANDED:
                 mBottomSheetBehavior.setState(STATE_COLLAPSED);
                 break;
@@ -192,16 +173,14 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         }
     }
 
-    public void swapCities()
-    {
+    public void swapCities() {
         String fromTmp = mCityFromCode;
         mCityFromCode = mCityToCode;
         mCityToCode = fromTmp;
         mPresenter.search(createQuery());
     }
 
-    public void showDatePicker()
-    {
+    public void showDatePicker() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 this,
@@ -215,15 +194,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-    {
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         mDate = Utils.formatDateReverse(dayOfMonth, monthOfYear + 1, year);
         mPresenter.search(createQuery());
     }
 
     @Override
-    public void onItemClick(View view, int position)
-    {
+    public void onItemClick(View view, int position) {
         String uid = mResponse.getRoutes().get(position).getRouteOptions().getUid();
         String from = mResponse.getRoutes().get(position).getFromStation().getCode();
         String to = mResponse.getRoutes().get(position).getToStation().getCode();
@@ -237,32 +214,22 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         startActivity(intent);
     }
 
-    public void applyFilter(View view)
-    {
+    public void applyFilter(View view) {
         String transportTitle = "";
 
-        if (mAllTt.isChecked())
-        {
+        if (mAllTt.isChecked()) {
             mTransport = TransportTypes.ALL;
             transportTitle = getString(R.string.filter_all);
-        }
-        else if (mBusTt.isChecked())
-        {
+        } else if (mBusTt.isChecked()) {
             mTransport = TransportTypes.BUS;
             transportTitle = getString(R.string.bus);
-        }
-        else if (mTrainTt.isChecked())
-        {
+        } else if (mTrainTt.isChecked()) {
             mTransport = TransportTypes.TRAIN;
             transportTitle = getString(R.string.train);
-        }
-        else if (mPlaneTt.isChecked())
-        {
+        } else if (mPlaneTt.isChecked()) {
             mTransport = TransportTypes.PLANE;
             transportTitle = getString(R.string.plane);
-        }
-        else if (mSuburbanTt.isChecked())
-        {
+        } else if (mSuburbanTt.isChecked()) {
             mTransport = TransportTypes.SUBURBAN;
             transportTitle = getString(R.string.suburban);
         }
@@ -272,8 +239,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         showHideBottomSheetFilter(null);
     }
 
-    private void initViews()
-    {
+    private void initViews() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
         View emptyView = findViewById(R.id.schedule_emptyview);
@@ -303,15 +269,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         mSuburbanTt = (AppCompatRadioButton) findViewById(R.id.suburban_filter);
     }
 
-    private void initToolbar()
-    {
+    private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.schedule_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private Map<String, String> createQuery()
-    {
+    private Map<String, String> createQuery() {
         return SearchQueryBuilder
                 .builder()
                 .setTransport(mTransport)

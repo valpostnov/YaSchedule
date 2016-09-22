@@ -23,8 +23,7 @@ import com.postnov.android.yaschedule.utils.StationsQueryBuilder;
 
 import java.util.List;
 
-public class StationsActivity extends AppCompatActivity implements StationsView
-{
+public class StationsActivity extends AppCompatActivity implements StationsView {
     private static final String TAG = "StationsActivity";
     private StationsPresenter mPresenter;
 
@@ -36,8 +35,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     private String mToCode;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stations);
         mPresenter = new StationsPresenterImpl(App.get(this).stationsDataSource());
@@ -50,8 +48,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         mPresenter.bind(this);
         mPresenter.fetchStations(StationsQueryBuilder
@@ -63,26 +60,21 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
-        mPresenter.unsubscribe();
         mPresenter.unbind();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_stations, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int menuItemId = item.getItemId();
-        switch (menuItemId)
-        {
+        switch (menuItemId) {
             case android.R.id.home:
                 finish();
                 return true;
@@ -97,31 +89,26 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     }
 
     @Override
-    public void loadStations(List<Stop> stopList)
-    {
+    public void loadStations(List<Stop> stopList) {
         mAdapter.swapList(stopList);
     }
 
     @Override
-    public void showProgressDialog()
-    {
+    public void showProgressDialog() {
         mProgressDialog.show();
     }
 
     @Override
-    public void hideProgressDialog()
-    {
+    public void hideProgressDialog() {
         mProgressDialog.dismiss();
     }
 
     @Override
-    public void showError(Throwable e)
-    {
+    public void showError(Throwable e) {
         Log.e(TAG, e.getMessage());
     }
 
-    private void initViews()
-    {
+    private void initViews() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.stations_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -142,8 +129,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
         mProgressDialog.setMessage(getString(R.string.loading_stations));
     }
 
-    private void iniToolbar()
-    {
+    private void iniToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_stations);
         toolbar.setNavigationIcon(R.drawable.ic_close);
         toolbar.setTitle(R.string.station_activity_title);

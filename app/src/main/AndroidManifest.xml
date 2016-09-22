@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name=".base.BaseActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.StatusBarTransparent">
             <intent-filter>

@@ -1,4 +1,4 @@
-package com.postnov.android.yaschedule;
+package com.postnov.android.yaschedule.base;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -12,13 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
+import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.recent.RecentRoute;
 import com.postnov.android.yaschedule.recent.RecentActivity;
 import com.postnov.android.yaschedule.schedule.ScheduleActivity;
 import com.postnov.android.yaschedule.search.SearchActivity;
 import com.postnov.android.yaschedule.utils.Utils;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener
 {
     public static final String EXTRA_DATE = "normDate";
     public static final String EXTRA_QUERY_DATE = "queryDate";
