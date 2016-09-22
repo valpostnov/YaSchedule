@@ -83,4 +83,46 @@ public class Station
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Station station = (Station) o;
+
+        if (!code.equals(station.code)) return false;
+        if (!stationType.equals(station.stationType)) return false;
+        if (!title.equals(station.title)) return false;
+        if (!popularTitle.equals(station.popularTitle)) return false;
+        if (!shortTitle.equals(station.shortTitle)) return false;
+        if (!transportType.equals(station.transportType)) return false;
+        return type.equals(station.type);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = code.hashCode();
+        result = 31 * result + stationType.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + popularTitle.hashCode();
+        result = 31 * result + shortTitle.hashCode();
+        result = 31 * result + transportType.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Station{" +
+                "code='" + code + '\'' +
+                ", stationType='" + stationType + '\'' +
+                ", title='" + title + '\'' +
+                ", popularTitle='" + popularTitle + '\'' +
+                ", shortTitle='" + shortTitle + '\'' +
+                ", transportType='" + transportType + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

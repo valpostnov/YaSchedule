@@ -105,4 +105,52 @@ public class Suggest
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Suggest suggest = (Suggest) o;
+
+        if (countryId != suggest.countryId) return false;
+        if (objectId != suggest.objectId) return false;
+        if (!fullTitle.equals(suggest.fullTitle)) return false;
+        if (!title.equals(suggest.title)) return false;
+        if (!fullTitleRu.equals(suggest.fullTitleRu)) return false;
+        if (!titleRu.equals(suggest.titleRu)) return false;
+        if (!ttype.equals(suggest.ttype)) return false;
+        if (!type.equals(suggest.type)) return false;
+        return pointKey.equals(suggest.pointKey);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fullTitle.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + countryId;
+        result = 31 * result + objectId;
+        result = 31 * result + fullTitleRu.hashCode();
+        result = 31 * result + titleRu.hashCode();
+        result = 31 * result + ttype.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + pointKey.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Suggest{" +
+                "fullTitle='" + fullTitle + '\'' +
+                ", title='" + title + '\'' +
+                ", countryId=" + countryId +
+                ", objectId=" + objectId +
+                ", fullTitleRu='" + fullTitleRu + '\'' +
+                ", titleRu='" + titleRu + '\'' +
+                ", ttype='" + ttype + '\'' +
+                ", type='" + type + '\'' +
+                ", pointKey='" + pointKey + '\'' +
+                '}';
+    }
 }

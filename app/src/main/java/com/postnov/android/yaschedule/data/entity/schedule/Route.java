@@ -127,4 +127,58 @@ public class Route
     public void setDepartureTerminal(String departureTerminal) {
         this.departureTerminal = departureTerminal;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Route route = (Route) o;
+
+        if (!arrival.equals(route.arrival)) return false;
+        if (!duration.equals(route.duration)) return false;
+        if (!arrivalTerminal.equals(route.arrivalTerminal)) return false;
+        if (!arrivalPlatform.equals(route.arrivalPlatform)) return false;
+        if (!fromStation.equals(route.fromStation)) return false;
+        if (!routeOptions.equals(route.routeOptions)) return false;
+        if (!departurePlatform.equals(route.departurePlatform)) return false;
+        if (!departure.equals(route.departure)) return false;
+        if (!stops.equals(route.stops)) return false;
+        if (!toStation.equals(route.toStation)) return false;
+        return departureTerminal.equals(route.departureTerminal);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = arrival.hashCode();
+        result = 31 * result + duration.hashCode();
+        result = 31 * result + arrivalTerminal.hashCode();
+        result = 31 * result + arrivalPlatform.hashCode();
+        result = 31 * result + fromStation.hashCode();
+        result = 31 * result + routeOptions.hashCode();
+        result = 31 * result + departurePlatform.hashCode();
+        result = 31 * result + departure.hashCode();
+        result = 31 * result + stops.hashCode();
+        result = 31 * result + toStation.hashCode();
+        result = 31 * result + departureTerminal.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "arrival='" + arrival + '\'' +
+                ", duration='" + duration + '\'' +
+                ", arrivalTerminal='" + arrivalTerminal + '\'' +
+                ", arrivalPlatform='" + arrivalPlatform + '\'' +
+                ", fromStation=" + fromStation +
+                ", routeOptions=" + routeOptions +
+                ", departurePlatform='" + departurePlatform + '\'' +
+                ", departure='" + departure + '\'' +
+                ", stops='" + stops + '\'' +
+                ", toStation=" + toStation +
+                ", departureTerminal='" + departureTerminal + '\'' +
+                '}';
+    }
 }

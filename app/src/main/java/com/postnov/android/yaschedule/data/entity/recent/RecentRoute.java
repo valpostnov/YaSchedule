@@ -104,4 +104,14 @@ public class RecentRoute implements Parcelable
         dest.writeString(mFromCode);
         dest.writeString(mToCode);
     }
+
+    @Override
+    public String toString() {
+        return "RecentRoute{" +
+                "mFrom='" + mFrom + '\'' +
+                ", mTo='" + mTo + '\'' +
+                ", mFromCode='" + mFromCode + '\'' +
+                ", mToCode='" + mToCode + '\'' +
+                '}';
+    }
 }

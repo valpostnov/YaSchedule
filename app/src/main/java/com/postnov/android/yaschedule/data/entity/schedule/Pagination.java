@@ -61,4 +61,40 @@ public class Pagination
     public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pagination that = (Pagination) o;
+
+        if (total != that.total) return false;
+        if (perPage != that.perPage) return false;
+        if (page != that.page) return false;
+        if (hasNext != that.hasNext) return false;
+        return pageCount == that.pageCount;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = total;
+        result = 31 * result + perPage;
+        result = 31 * result + page;
+        result = 31 * result + (hasNext ? 1 : 0);
+        result = 31 * result + pageCount;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Pagination{" +
+                "total=" + total +
+                ", perPage=" + perPage +
+                ", page=" + page +
+                ", hasNext=" + hasNext +
+                ", pageCount=" + pageCount +
+                '}';
+    }
 }

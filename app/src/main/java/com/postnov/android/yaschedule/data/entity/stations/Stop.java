@@ -84,4 +84,46 @@ public class Stop
     public void setDuration(String duration) {
         this.duration = duration;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Stop stop = (Stop) o;
+
+        if (!arrival.equals(stop.arrival)) return false;
+        if (!departure.equals(stop.departure)) return false;
+        if (!terminal.equals(stop.terminal)) return false;
+        if (!platform.equals(stop.platform)) return false;
+        if (!station.equals(stop.station)) return false;
+        if (!stopTime.equals(stop.stopTime)) return false;
+        return duration.equals(stop.duration);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = arrival.hashCode();
+        result = 31 * result + departure.hashCode();
+        result = 31 * result + terminal.hashCode();
+        result = 31 * result + platform.hashCode();
+        result = 31 * result + station.hashCode();
+        result = 31 * result + stopTime.hashCode();
+        result = 31 * result + duration.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Stop{" +
+                "arrival='" + arrival + '\'' +
+                ", departure='" + departure + '\'' +
+                ", terminal='" + terminal + '\'' +
+                ", platform='" + platform + '\'' +
+                ", station=" + station +
+                ", stopTime='" + stopTime + '\'' +
+                ", duration='" + duration + '\'' +
+                '}';
+    }
 }

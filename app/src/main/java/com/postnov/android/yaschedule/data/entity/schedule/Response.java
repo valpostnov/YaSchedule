@@ -47,4 +47,34 @@ public class Response
     {
         this.mSearch = search;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Response response = (Response) o;
+
+        if (!mRoutes.equals(response.mRoutes)) return false;
+        if (!mPagination.equals(response.mPagination)) return false;
+        return mSearch.equals(response.mSearch);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mRoutes.hashCode();
+        result = 31 * result + mPagination.hashCode();
+        result = 31 * result + mSearch.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "mRoutes=" + mRoutes +
+                ", mPagination=" + mPagination +
+                ", mSearch=" + mSearch +
+                '}';
+    }
 }

@@ -94,4 +94,49 @@ public class RouteOptions
     public void setExpressType(String expressType) {
         this.expressType = expressType;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RouteOptions that = (RouteOptions) o;
+
+        if (!carrier.equals(that.carrier)) return false;
+        if (!transportType.equals(that.transportType)) return false;
+        if (!uid.equals(that.uid)) return false;
+        if (!title.equals(that.title)) return false;
+        if (!vehicle.equals(that.vehicle)) return false;
+        if (!number.equals(that.number)) return false;
+        if (!shortTitle.equals(that.shortTitle)) return false;
+        return expressType.equals(that.expressType);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = carrier.hashCode();
+        result = 31 * result + transportType.hashCode();
+        result = 31 * result + uid.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + vehicle.hashCode();
+        result = 31 * result + number.hashCode();
+        result = 31 * result + shortTitle.hashCode();
+        result = 31 * result + expressType.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "RouteOptions{" +
+                "carrier=" + carrier +
+                ", transportType='" + transportType + '\'' +
+                ", uid='" + uid + '\'' +
+                ", title='" + title + '\'' +
+                ", vehicle='" + vehicle + '\'' +
+                ", number='" + number + '\'' +
+                ", shortTitle='" + shortTitle + '\'' +
+                ", expressType='" + expressType + '\'' +
+                '}';
+    }
 }

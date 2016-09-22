@@ -28,4 +28,31 @@ public class Carrier
     public void setCode(String code) {
         this.code = code;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Carrier carrier = (Carrier) o;
+
+        if (!title.equals(carrier.title)) return false;
+        return code.equals(carrier.code);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = title.hashCode();
+        result = 31 * result + code.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Carrier{" +
+                "title='" + title + '\'' +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }

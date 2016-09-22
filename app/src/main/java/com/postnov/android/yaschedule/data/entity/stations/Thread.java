@@ -41,4 +41,34 @@ public class Thread
     public void setStops(List<Stop> stops) {
         this.mStops = stops;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Thread thread = (Thread) o;
+
+        if (!mUid.equals(thread.mUid)) return false;
+        if (!mDays.equals(thread.mDays)) return false;
+        return mStops.equals(thread.mStops);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mUid.hashCode();
+        result = 31 * result + mDays.hashCode();
+        result = 31 * result + mStops.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Thread{" +
+                "mUid='" + mUid + '\'' +
+                ", mDays='" + mDays + '\'' +
+                ", mStops=" + mStops +
+                '}';
+    }
 }

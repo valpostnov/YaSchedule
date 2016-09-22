@@ -98,4 +98,34 @@ public class Search
     public void setTo(To to) {
         this.to = to;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Search search = (Search) o;
+
+        if (!date.equals(search.date)) return false;
+        if (!from.equals(search.from)) return false;
+        return to.equals(search.to);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = date.hashCode();
+        result = 31 * result + from.hashCode();
+        result = 31 * result + to.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Search{" +
+                "date='" + date + '\'' +
+                ", from=" + from +
+                ", to=" + to +
+                '}';
+    }
 }
