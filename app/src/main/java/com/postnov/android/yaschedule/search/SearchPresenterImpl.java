@@ -21,13 +21,12 @@ public class SearchPresenterImpl implements ISearchPresenter
     private ISearchView mView;
     private CompositeSubscription mSubscriptions;
     private ICodesDataSource mDataSource;
-    private NetworkManager mNetworkManager;
+    private NetworkManager mNetworkManager; //Todo init!!!
 
-    public SearchPresenterImpl(ICodesDataSource dataSource, NetworkManager networkManager)
+    public SearchPresenterImpl(ICodesDataSource dataSource)
     {
         mSubscriptions = new CompositeSubscription();
         mDataSource = dataSource;
-        mNetworkManager = networkManager;
     }
 
     @Override

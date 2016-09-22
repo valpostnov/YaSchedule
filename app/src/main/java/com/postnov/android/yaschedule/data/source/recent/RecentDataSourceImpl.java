@@ -19,7 +19,6 @@ import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract
  */
 public class RecentDataSourceImpl implements IRecentDataSource
 {
-    private static RecentDataSourceImpl sINSTANCE;
     private static final int MAX_ROWS_COUNT = 7;
     private RecentDbHelper mDbHelper;
     private LinkedList<RecentRoute> mCachedListRoute;
@@ -35,17 +34,7 @@ public class RecentDataSourceImpl implements IRecentDataSource
             "SELECT %s FROM %s ORDER BY %s DESC",
             TextUtils.join(",", PROJECTION), TABLE_NAME, _ID);
 
-    public static RecentDataSourceImpl getInstance(Context context)
-    {
-        if (sINSTANCE == null)
-        {
-            sINSTANCE = new RecentDataSourceImpl(context);
-        }
-
-        return sINSTANCE;
-    }
-
-    private RecentDataSourceImpl(Context context)
+    public RecentDataSourceImpl(Context context)
     {
         mDbHelper = new RecentDbHelper(context);
         mCachedListRoute = initCache();
@@ -54,7 +43,7 @@ public class RecentDataSourceImpl implements IRecentDataSource
     @Override
     public Observable<List<RecentRoute>> getRecentRoutes()
     {
-        return Observable.just((List<RecentRoute>) mCachedListRoute);
+        return Observable.just(mCachedListRoute);
     }
 
     @Override

@@ -10,10 +10,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
+import com.postnov.android.yaschedule.App;
 import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
@@ -27,11 +26,9 @@ import com.postnov.android.yaschedule.utils.Utils;
 import com.postnov.android.yaschedule.utils.exception.NetworkConnectionError;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import rx.Subscription;
 import rx.functions.Action1;
-import rx.functions.Func1;
 
 public class SearchActivity extends AppCompatActivity implements ISearchView, OnItemClickListener
 {
@@ -47,8 +44,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        mPresenter = new SearchPresenterImpl(Injection.provideCodesDataSource(),
-                NetworkManager.getInstance(getApplicationContext()));
+        mPresenter = new SearchPresenterImpl(App.get(this).codesDataSource());
 
         initViews();
         initToolbar();

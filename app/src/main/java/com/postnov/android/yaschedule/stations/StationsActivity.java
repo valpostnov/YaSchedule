@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.postnov.android.yaschedule.Injection;
+import com.postnov.android.yaschedule.App;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.stations.Stop;
 import com.postnov.android.yaschedule.schedule.ScheduleActivity;
@@ -40,7 +40,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stations);
-        mPresenter = new StationsPresenterImpl(Injection.provideStationsDataSource());
+        mPresenter = new StationsPresenterImpl(App.get(this).stationsDataSource());
         mUID = getIntent().getStringExtra(ScheduleActivity.EXTRA_UID);
         mDate = getIntent().getStringExtra(ScheduleActivity.EXTRA_DATE);
         mFromCode = getIntent().getStringExtra(ScheduleActivity.EXTRA_CODE_FROM);

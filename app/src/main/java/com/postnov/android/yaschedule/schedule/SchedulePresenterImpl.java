@@ -28,16 +28,13 @@ public class SchedulePresenterImpl implements SchedulePresenter
     private IRecentDataSource mFaveDataSource;
     private ScheduleView mView;
     private CompositeSubscription mSubscriptions;
-    private NetworkManager mNetworkManager;
+    private NetworkManager mNetworkManager; //Todo init!!!
 
-    public SchedulePresenterImpl(IScheduleDataSource dataSource,
-                                 IRecentDataSource faveDataSource,
-                                 NetworkManager networkManager)
+    public SchedulePresenterImpl(IScheduleDataSource dataSource, IRecentDataSource faveDataSource)
     {
         mDataSource = dataSource;
         mFaveDataSource = faveDataSource;
         mSubscriptions = new CompositeSubscription();
-        mNetworkManager = networkManager;
     }
 
     @Override

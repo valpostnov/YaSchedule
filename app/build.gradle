@@ -27,22 +27,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    productFlavors {
-        mock {
-            applicationIdSuffix = ".mock"
-        }
-        prod
-    }
 }
 
 ext {
-    supportLibVersion = "24.1.1"
+    supportLibVersion = "24.2.1"
     retrofitVersion = "2.0.1"
     rxAndroidVersion = "1.2.0"
     butterKnifeVersion = "8.2.1"
     glideVersion = "3.7.0"
     mobmetricalib = "2.42"
+    rxbinding = "0.4.0"
 }
 
 dependencies {
@@ -67,4 +61,5 @@ dependencies {
     compile "io.reactivex:rxandroid:$rxAndroidVersion"
 
     compile "com.yandex.android:mobmetricalib:$mobmetricalib"
+    compile "com.jakewharton.rxbinding:rxbinding:$rxbinding"
 }

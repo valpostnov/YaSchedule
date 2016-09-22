@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.postnov.android.yaschedule.App;
 import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.MainActivity;
 import com.postnov.android.yaschedule.R;
@@ -72,9 +73,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         setContentView(R.layout.activity_schedule);
 
         mPresenter = new SchedulePresenterImpl(
-                Injection.provideScheduleDataSource(),
-                Injection.provideRecentDataSource(getApplicationContext()),
-                NetworkManager.getInstance(getApplicationContext()));
+                App.get(this).scheduleDataSource(),
+                App.get(this).recentDataSource());
 
         initViews();
         initToolbar();

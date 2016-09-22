@@ -11,30 +11,17 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.functions.Action1;
 
 /**
  * Created by platon on 20.05.2016.
  */
 public class ScheduleRemoteDataSource implements IScheduleDataSource
 {
-    private static ScheduleRemoteDataSource sDataSource;
-
     private ScheduleApi mApi;
     private SoftReference<Response> mCachedResponse;
     private Map<String, String> mCachedOptions;
 
-    public static ScheduleRemoteDataSource getInstance()
-    {
-        if (sDataSource == null)
-        {
-            sDataSource = new ScheduleRemoteDataSource();
-        }
-
-        return sDataSource;
-    }
-
-    private ScheduleRemoteDataSource()
+    public ScheduleRemoteDataSource()
     {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Const.ENDPOINT)
@@ -52,14 +39,9 @@ public class ScheduleRemoteDataSource implements IScheduleDataSource
             return Observable.just(mCachedResponse.get());
         }
 
-        return mApi.search(options).doOnNext(new Action1<Response>()
-        {
-            @Override
-            public void call(Response response)
-            {
-                mCachedResponse = new SoftReference<>(response);
-                mCachedOptions = options;
-            }
+        return mApi.search(options).doOnNext(response -> {
+            mCachedResponse = new SoftReference<>(response);
+            mCachedOptions = options;
         });
     }
 }
