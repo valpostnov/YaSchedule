@@ -12,6 +12,7 @@ import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.data.source.schedule.ScheduleRemoteDataSource;
 import com.postnov.android.yaschedule.data.source.stations.IStationsDataSource;
 import com.postnov.android.yaschedule.data.source.stations.StationsDataSourceImpl;
+import com.yandex.metrica.YandexMetrica;
 
 /**
  * Created by platon on 22.09.2016.
@@ -35,6 +36,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (!BuildConfig.DEBUG) {
+            YandexMetrica.activate(getApplicationContext(), BuildConfig.METRICA_KEY);
+            YandexMetrica.enableActivityAutoTracking(this);
+        }
 
         recentDataSource = new RecentDataSourceImpl(this);
         scheduleDataSource = new ScheduleRemoteDataSource();
