@@ -33,10 +33,11 @@ ext {
     supportLibVersion = "24.2.1"
     retrofitVersion = "2.0.1"
     rxAndroidVersion = "1.2.0"
-    butterKnifeVersion = "8.2.1"
+    butterKnifeVersion = "8.4.0"
     glideVersion = "3.7.0"
     mobmetricalib = "2.42"
     rxbinding = "0.4.0"
+    timber = "4.1.1"
 }
 
 dependencies {
@@ -59,6 +60,8 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
 
     compile "io.reactivex:rxandroid:$rxAndroidVersion"
+
+    compile "com.jakewharton.timber:timber:$timber"
 
     compile "com.yandex.android:mobmetricalib:$mobmetricalib"
     compile "com.jakewharton.rxbinding:rxbinding:$rxbinding"
