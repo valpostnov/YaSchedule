@@ -1,8 +1,8 @@
 package com.postnov.android.yaschedule.data;
 
-import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.data.entity.stations.Stops;
 import com.postnov.android.yaschedule.data.source.stations.IStationsDataSource;
+import com.postnov.android.yaschedule.data.source.stations.StationsRemoteDataSource;
 import com.postnov.android.yaschedule.utils.StationsQueryBuilder;
 
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class TestStationsRemoteDataSource
                 .setLang("ru")
                 .build();
 
-        mRemoteDataSource = Injection.provideStationsDataSource();
+        mRemoteDataSource = new StationsRemoteDataSource();
     }
 
     @Test

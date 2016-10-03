@@ -11,7 +11,7 @@ import com.postnov.android.yaschedule.data.source.recent.RecentLocalDataSource;
 import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.data.source.schedule.ScheduleRemoteDataSource;
 import com.postnov.android.yaschedule.data.source.stations.IStationsDataSource;
-import com.postnov.android.yaschedule.data.source.stations.StationsDataSourceImpl;
+import com.postnov.android.yaschedule.data.source.stations.StationsRemoteDataSource;
 import com.postnov.android.yaschedule.utils.INetworkManager;
 import com.postnov.android.yaschedule.utils.NetworkManager;
 import com.yandex.metrica.YandexMetrica;
@@ -49,7 +49,7 @@ public class App extends Application {
         recentDataSource = new RecentLocalDataSource(this);
         scheduleDataSource = new ScheduleRemoteDataSource();
         codesDataSource = new CodesRemoteDataSource();
-        stationsDataSource = new StationsDataSourceImpl();
+        stationsDataSource = new StationsRemoteDataSource();
     }
 
     public IRecentDataSource recentDataSource() {

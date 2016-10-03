@@ -14,10 +14,10 @@ import rx.Observable;
 /**
  * Created by platon on 31.05.2016.
  */
-public class StationsDataSourceImpl implements IStationsDataSource {
+public class StationsRemoteDataSource implements IStationsDataSource {
     private StationsApi stationsApi;
 
-    public StationsDataSourceImpl() {
+    public StationsRemoteDataSource() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Const.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())

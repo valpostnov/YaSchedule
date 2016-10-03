@@ -1,7 +1,7 @@
 package com.postnov.android.yaschedule.data;
 
-import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.data.entity.codes.Cities;
+import com.postnov.android.yaschedule.data.source.codes.CodesRemoteDataSource;
 import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
 
 import org.junit.Before;
@@ -19,7 +19,7 @@ public class TestCodesRemoteDataSource
     @Before
     public void setupDataSource()
     {
-        mRemoteDataSource = Injection.provideCodesDataSource();
+        mRemoteDataSource = new CodesRemoteDataSource();
     }
 
     @Test

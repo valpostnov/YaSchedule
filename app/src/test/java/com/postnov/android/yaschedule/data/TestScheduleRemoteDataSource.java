@@ -1,8 +1,8 @@
 package com.postnov.android.yaschedule.data;
 
-import com.postnov.android.yaschedule.Injection;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
 import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
+import com.postnov.android.yaschedule.data.source.schedule.ScheduleRemoteDataSource;
 import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.SearchQueryBuilder;
 
@@ -32,7 +32,7 @@ public class TestScheduleRemoteDataSource
                 .setDate(DATE)
                 .build();
 
-        mRemoteDataSource = Injection.provideScheduleDataSource();
+        mRemoteDataSource = new ScheduleRemoteDataSource();
     }
 
     @Test
