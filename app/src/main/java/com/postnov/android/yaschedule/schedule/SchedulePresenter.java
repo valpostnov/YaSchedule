@@ -7,7 +7,7 @@ import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.schedule.interfaces.ISchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.utils.Const;
-import com.postnov.android.yaschedule.utils.NetworkManager;
+import com.postnov.android.yaschedule.utils.INetworkManager;
 import com.postnov.android.yaschedule.utils.exception.NetworkConnectionException;
 
 import java.util.Map;
@@ -26,9 +26,9 @@ public class SchedulePresenter implements ISchedulePresenter {
     private final IRecentDataSource recentDataSource;
     private ScheduleView scheduleView;
     private CompositeSubscription subscription;
-    private NetworkManager networkManager;
+    private INetworkManager networkManager;
 
-    public SchedulePresenter(IScheduleDataSource sds, IRecentDataSource rds, NetworkManager nm) {
+    public SchedulePresenter(IScheduleDataSource sds, IRecentDataSource rds, INetworkManager nm) {
         scheduleDataSource = sds;
         recentDataSource = rds;
         networkManager = nm;

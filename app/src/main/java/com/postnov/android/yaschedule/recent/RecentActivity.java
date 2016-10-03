@@ -26,9 +26,9 @@ public class RecentActivity extends AppCompatActivity implements IRecentView, Re
     private RecentAdapter recentAdapter;
     private IRecentPresenter presenter;
 
-    @BindView(R.id.recent_emptyview) View emptyView;
-    @BindView(R.id.recent_toolbar) Toolbar toolbar;
-    @BindView(R.id.recent_list) RecyclerView rv;
+    @BindView(R.id.recent_emptyview)    View emptyView;
+    @BindView(R.id.recent_toolbar)      Toolbar toolbar;
+    @BindView(R.id.recent_list)         RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,8 +8,7 @@ import java.util.List;
 /**
  * Created by platon on 24.05.2016.
  */
-public interface ISearchView extends BaseView
-{
+public interface ISearchView extends BaseView {
     void showCities(List<Suggest> cities);
     void showProgressView();
     void hideProgressView();

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by platon on 29.05.2016.
  */
-public interface StationsView extends BaseView
+public interface IStationsView extends BaseView
 {
     void loadStations(List<Stop> stopList);
     void showProgressDialog();

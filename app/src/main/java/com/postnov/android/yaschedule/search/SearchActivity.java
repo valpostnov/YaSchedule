@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -25,22 +24,26 @@ import com.postnov.android.yaschedule.utils.exception.NetworkConnectionException
 
 import java.util.List;
 
+import butterknife.BindView;
 import rx.Subscription;
-import rx.functions.Action1;
+import timber.log.Timber;
 
 public class SearchActivity extends AppCompatActivity implements ISearchView, OnItemClickListener {
-    private static final String TAG = "SearchActivity";
-    private SearchResultAdapter mAdapter;
-    private ISearchPresenter mPresenter;
-    //private ProgressBar mProgressView;
-    private EditText mSearchView;
-    private Subscription mUISubscription;
+    private SearchResultAdapter resultAdapter;
+    private ISearchPresenter presenter;
+    private Subscription uiSubscription;
+
+    @BindView(R.id.toolbar_search)          Toolbar toolbar;
+    @BindView(R.id.search_view)             EditText searchView;
+    @BindView(R.id.search_empty_view)       View emptyView;
+    @BindView(R.id.search_recyclerview)     RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        mPresenter = new SearchPresenterImpl(App.get(this).codesDataSource());
+        Timber.tag("SearchActivity");
+        presenter = new SearchPresenter(App.get(this).codesDataSource());
 
         initViews();
         initToolbar();
@@ -59,20 +62,21 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.bind(this);
+        presenter.bind(this);
         subscribeOnTextChange();
     }
 
     @Override
     protected void onPause() {
-        mUISubscription.unsubscribe();
-        mPresenter.unbind();
+        uiSubscription.unsubscribe();
+        presenter.unbind();
         super.onPause();
     }
 
     @Override
     public void showCities(List<Suggest> suggests) {
-        mAdapter.swapList(suggests);
+        resultAdapter.swapList(suggests);
+        emptyView.setVisibility(resultAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -91,55 +95,40 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
         if (e instanceof NetworkConnectionException) {
             Utils.showToast(this, e.getMessage());
         }
-        Log.e(TAG, e.getMessage());
+        Timber.wtf(e, e.getMessage());
     }
 
     private void initViews() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        View mEmptyView = findViewById(R.id.search_empty_view);
+        resultAdapter = new SearchResultAdapter();
+        resultAdapter.setOnItemClickListener(this);
 
-        mAdapter = new SearchResultAdapter();
-        mAdapter.setEmptyView(mEmptyView);
-        mAdapter.setOnItemClickListener(this);
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.search_recyclerview);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(mAdapter);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setAdapter(resultAdapter);
 
         String searchHint = getIntent().getStringExtra(BaseActivity.EXTRA_HINT);
-        mSearchView = (EditText) findViewById(R.id.search_view);
-        mSearchView.setHint(searchHint);
-        //mProgressView = (ProgressBar) findViewById(R.id.search_progressview);
+        searchView.setHint(searchHint);
     }
 
     private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void subscribeOnTextChange() {
-        mUISubscription = RxTextView
-                .textChanges(mSearchView)
-                .doOnNext(new Action1<CharSequence>() {
-                    @Override
-                    public void call(CharSequence query) {
-                        if (query.length() == 0) mAdapter.swapList(null);
-                    }
+        uiSubscription = RxTextView
+                .textChanges(searchView)
+                .doOnNext(query -> {
+                    if (query.length() == 0) resultAdapter.swapList(null);
                 })
-                .subscribe(new Action1<CharSequence>() {
-                    @Override
-                    public void call(CharSequence query) {
-                        if (query.length() != 0)
-                            mPresenter.search(query.toString(), Const.RESULT_LIMIT);
-                    }
+                .subscribe(query -> {
+                    if (query.length() != 0)
+                        presenter.search(query.toString(), Const.RESULT_LIMIT);
                 });
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        Suggest suggest = mAdapter.getList().get(position);
+        Suggest suggest = resultAdapter.getList().get(position);
         Intent intent = new Intent();
         intent.putExtra(BaseActivity.EXTRA_CITY, suggest.getTitleRu());
         intent.putExtra(BaseActivity.EXTRA_CODE, suggest.getPointKey());

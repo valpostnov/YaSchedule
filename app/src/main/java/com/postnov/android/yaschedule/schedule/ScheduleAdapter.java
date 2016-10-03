@@ -17,23 +17,18 @@ import java.util.List;
 /**
  * Created by platon on 20.05.2016.
  */
-public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder>
-{
-    private List<Route> mRoutes;
-    private View mEmptyView;
-
+public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
+    private List<Route> routes;
     private OnItemClickListener onItemClickListener;
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Route route = getList().get(position);
         RouteOptions routeOptions = route.getRouteOptions();
         Station from = route.getFromStation();
@@ -53,31 +48,21 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     }
 
     @Override
-    public int getItemCount()
-    {
-        if (null == mRoutes) return 0;
-        return mRoutes.size();
+    public int getItemCount() {
+        if (null == routes) return 0;
+        return routes.size();
     }
 
-    public void swapList(List<Route> routes)
-    {
-        mRoutes = routes;
+    public void swapList(List<Route> routes) {
+        this.routes = routes;
         notifyDataSetChanged();
-        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
-    public List<Route> getList()
-    {
-        return mRoutes;
+    public List<Route> getList() {
+        return routes;
     }
 
-    public void setEmptyView(View view)
-    {
-        mEmptyView = view;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mRoute;
         public TextView mStartTime;
         public TextView mFinishTime;
@@ -86,8 +71,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         public TextView mStationFrom;
         public TextView mStationTo;
 
-        public ViewHolder(View view)
-        {
+        public ViewHolder(View view) {
             super(view);
             mRoute = (TextView) view.findViewById(R.id.route);
             mStartTime = (TextView) view.findViewById(R.id.startTime);
@@ -100,20 +84,17 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         }
 
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             onItemClickListener.onItemClick(v, adapterPosition);
         }
     }
 
-    public interface OnItemClickListener
-    {
+    public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener)
-    {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         onItemClickListener = listener;
     }
 }

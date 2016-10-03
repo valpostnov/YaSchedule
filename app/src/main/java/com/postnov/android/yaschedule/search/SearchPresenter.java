@@ -15,13 +15,13 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by platon on 24.05.2016.
  */
-public class SearchPresenterImpl implements ISearchPresenter {
+public class SearchPresenter implements ISearchPresenter {
     private ISearchView searchView;
     private final CompositeSubscription subscription;
     private final ICodesDataSource codesDataSource;
     private NetworkManager networkManager; //Todo init!!!
 
-    public SearchPresenterImpl(ICodesDataSource codesDataSource) {
+    public SearchPresenter(ICodesDataSource codesDataSource) {
         subscription = new CompositeSubscription();
         this.codesDataSource = codesDataSource;
     }

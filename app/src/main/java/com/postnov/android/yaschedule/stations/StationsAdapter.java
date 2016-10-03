@@ -11,56 +11,48 @@ import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Station;
 import com.postnov.android.yaschedule.data.entity.stations.Stop;
 import com.postnov.android.yaschedule.utils.Utils;
+
 import java.util.List;
 
 /**
  * Created by platon on 20.05.2016.
  */
-public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHolder>
-{
-    private List<Stop> mStops;
-    private List<Stop> mAllStops;
+public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHolder> {
+    private List<Stop> stops;
+    private List<Stop> allStops;
 
-    private View mEmptyView;
-    private String mFromCode;
-    private String mToCode;
+    private String fromCode;
+    private String toCode;
 
     private static final int MAIN_STATION_DRAWABLE = R.drawable.ic_dot;
     private static final int SUB_STATION_DRAWABLE = R.drawable.ic_dot_border;
 
-    public StationsAdapter(String fromCode, String toCode)
-    {
-        mFromCode = fromCode;
-        mToCode = toCode;
+    public StationsAdapter(String fromCode, String toCode) {
+        this.fromCode = fromCode;
+        this.toCode = toCode;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_station, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Stop stop = getList().get(position);
         Station station = stop.getStation();
 
-        if (station.getCode().equals(mFromCode) || station.getCode().equals(mToCode))
-        {
+        if (station.getCode().equals(fromCode) || station.getCode().equals(toCode)) {
             holder.mImageView.setImageResource(MAIN_STATION_DRAWABLE);
-        }
-        else
-        {
+        } else {
             holder.mImageView.setImageResource(SUB_STATION_DRAWABLE);
         }
 
         holder.mTitle.setText(stop.getStation().getTitle());
 
         if (stop.getDeparture() == null) holder.mDeparture.setVisibility(View.GONE);
-        else
-        {
+        else {
             StringBuilder date = new StringBuilder();
             date.append("Отправление: ");
             date.append(Utils.getOnlyTime(stop.getDeparture()));
@@ -72,8 +64,7 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
         }
 
         if (stop.getStopTime() == null) holder.mStopTime.setVisibility(View.GONE);
-        else
-        {
+        else {
             StringBuilder stopTime = new StringBuilder();
             stopTime.append("Стоянка: ");
             stopTime.append(Utils.convertSecToMinutes(stop.getStopTime()));
@@ -84,48 +75,35 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
     }
 
     @Override
-    public int getItemCount()
-    {
-        if (null == mStops) return 0;
-        return mStops.size();
+    public int getItemCount() {
+        if (null == stops) return 0;
+        return stops.size();
     }
 
-    public void swapList(List<Stop> stopList)
-    {
-        mAllStops = stopList;
-        mStops = getListWithoutExtraStations(stopList);
+    public void swapList(List<Stop> stopList) {
+        allStops = stopList;
+        stops = getListWithoutExtraStations(stopList);
         notifyDataSetChanged();
-        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
-    public void showAllStops()
-    {
-        if (mStops != null && !mStops.equals(mAllStops))
-        {
-            mStops = mAllStops;
+    public void showAllStops() {
+        if (stops != null && !stops.equals(allStops)) {
+            stops = allStops;
             notifyDataSetChanged();
-            mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
         }
     }
 
-    public List<Stop> getList()
-    {
-        return mStops;
+    public List<Stop> getList() {
+        return stops;
     }
 
-    public void setEmptyView(View view)
-    {
-        mEmptyView = view;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTitle;
         public TextView mDeparture;
         public TextView mStopTime;
-        public ViewHolder(View view)
-        {
+
+        public ViewHolder(View view) {
             super(view);
             mImageView = (ImageView) view.findViewById(R.id.station_image);
             mTitle = (TextView) view.findViewById(R.id.station_title);
@@ -134,17 +112,14 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
         }
     }
 
-    private List<Stop> getListWithoutExtraStations(List<Stop> stops)
-    {
-        if (stops != null)
-        {
+    private List<Stop> getListWithoutExtraStations(List<Stop> stops) {
+        if (stops != null) {
             int indexFrom = 0;
             int indexTo = 0;
 
-            for (int i = 0; i < stops.size(); i++)
-            {
-                if (stops.get(i).getStation().getCode().equals(mFromCode)) indexFrom = i;
-                if (stops.get(i).getStation().getCode().equals(mToCode)) indexTo = i;
+            for (int i = 0; i < stops.size(); i++) {
+                if (stops.get(i).getStation().getCode().equals(fromCode)) indexFrom = i;
+                if (stops.get(i).getStation().getCode().equals(toCode)) indexTo = i;
             }
 
             return stops.subList(indexFrom, indexTo + 1);

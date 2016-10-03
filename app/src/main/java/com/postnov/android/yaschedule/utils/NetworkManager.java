@@ -7,30 +7,15 @@ import android.net.NetworkInfo;
 /**
  * Created by platon on 11.05.2016.
  */
-public class NetworkManager
-{
-    private static NetworkManager sInstance;
-    private Context mContext;
+public class NetworkManager implements INetworkManager {
+    private ConnectivityManager connectivityManager;
 
-    public static NetworkManager getInstance(Context context)
-    {
-        if (sInstance == null)
-        {
-            sInstance = new NetworkManager(context);
-        }
-
-        return sInstance;
+    public NetworkManager(Context context) {
+        connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
-    private NetworkManager(Context context)
-    {
-        mContext = context;
-    }
-
-    public boolean networkIsAvailable()
-    {
-        ConnectivityManager connMgr = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
-        return  (activeInfo != null && activeInfo.isConnected());
+    public boolean networkIsAvailable() {
+        NetworkInfo activeInfo = connectivityManager.getActiveNetworkInfo();
+        return (activeInfo != null && activeInfo.isConnected());
     }
 }

@@ -6,39 +6,47 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 
 import com.postnov.android.yaschedule.App;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.stations.Stop;
 import com.postnov.android.yaschedule.schedule.ScheduleActivity;
-import com.postnov.android.yaschedule.stations.interfaces.StationsPresenter;
-import com.postnov.android.yaschedule.stations.interfaces.StationsView;
+import com.postnov.android.yaschedule.stations.interfaces.IStationsPresenter;
+import com.postnov.android.yaschedule.stations.interfaces.IStationsView;
 import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 import com.postnov.android.yaschedule.utils.StationsQueryBuilder;
 
 import java.util.List;
 
-public class StationsActivity extends AppCompatActivity implements StationsView {
-    private static final String TAG = "StationsActivity";
-    private StationsPresenter mPresenter;
+import butterknife.BindView;
+import timber.log.Timber;
 
-    private StationsAdapter mAdapter;
-    private ProgressDialog mProgressDialog;
+public class StationsActivity extends AppCompatActivity implements IStationsView {
+    private IStationsPresenter presenter;
+    private StationsAdapter stationsAdapter;
+
+    private ProgressDialog progressDialog;
     private String mUID;
     private String mDate;
     private String mFromCode;
     private String mToCode;
 
+    @BindView(R.id.stations_recyclerview)   RecyclerView rv;
+    @BindView(R.id.stations_empty_view)     View emptyView;
+    @BindView(R.id.toolbar_stations)        Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stations);
-        mPresenter = new StationsPresenterImpl(App.get(this).stationsDataSource());
+        Timber.tag("StationsActivity");
+
+        presenter = new StationsPresenter(App.get(this).stationsDataSource());
+
         mUID = getIntent().getStringExtra(ScheduleActivity.EXTRA_UID);
         mDate = getIntent().getStringExtra(ScheduleActivity.EXTRA_DATE);
         mFromCode = getIntent().getStringExtra(ScheduleActivity.EXTRA_CODE_FROM);
@@ -50,8 +58,8 @@ public class StationsActivity extends AppCompatActivity implements StationsView 
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.bind(this);
-        mPresenter.fetchStations(StationsQueryBuilder
+        presenter.bind(this);
+        presenter.fetchStations(StationsQueryBuilder
                 .builder()
                 .setDate(mDate)
                 .setLang(Const.LANG_RU)
@@ -62,7 +70,7 @@ public class StationsActivity extends AppCompatActivity implements StationsView 
     @Override
     protected void onPause() {
         super.onPause();
-        mPresenter.unbind();
+        presenter.unbind();
     }
 
     @Override
@@ -80,7 +88,8 @@ public class StationsActivity extends AppCompatActivity implements StationsView 
                 return true;
 
             case R.id.action_hide_stations:
-                mAdapter.showAllStops();
+                stationsAdapter.showAllStops();
+                emptyView.setVisibility(stationsAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
                 return true;
 
             default:
@@ -90,47 +99,37 @@ public class StationsActivity extends AppCompatActivity implements StationsView 
 
     @Override
     public void loadStations(List<Stop> stopList) {
-        mAdapter.swapList(stopList);
+        stationsAdapter.swapList(stopList);
+        emptyView.setVisibility(stationsAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void showProgressDialog() {
-        mProgressDialog.show();
+        progressDialog.show();
     }
 
     @Override
     public void hideProgressDialog() {
-        mProgressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     @Override
     public void showError(Throwable e) {
-        Log.e(TAG, e.getMessage());
+        Timber.wtf(e, e.getMessage());
     }
 
     private void initViews() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.stations_recyclerview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+        stationsAdapter = new StationsAdapter(mFromCode, mToCode);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        rv.setAdapter(stationsAdapter);
 
-        RecyclerView.ItemDecoration itemDecoration = new
-                DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
-        recyclerView.addItemDecoration(itemDecoration);
-
-        TextView mEmptyView = (TextView) findViewById(R.id.stations_empty_view);
-
-        mAdapter = new StationsAdapter(mFromCode, mToCode);
-        mAdapter.setEmptyView(mEmptyView);
-        recyclerView.setAdapter(mAdapter);
-
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage(getString(R.string.loading_stations));
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(getString(R.string.loading_stations));
     }
 
     private void iniToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_stations);
         toolbar.setNavigationIcon(R.drawable.ic_close);
         toolbar.setTitle(R.string.station_activity_title);
         setSupportActionBar(toolbar);

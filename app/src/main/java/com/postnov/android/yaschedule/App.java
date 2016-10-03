@@ -12,6 +12,8 @@ import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.data.source.schedule.ScheduleRemoteDataSource;
 import com.postnov.android.yaschedule.data.source.stations.IStationsDataSource;
 import com.postnov.android.yaschedule.data.source.stations.StationsDataSourceImpl;
+import com.postnov.android.yaschedule.utils.INetworkManager;
+import com.postnov.android.yaschedule.utils.NetworkManager;
 import com.yandex.metrica.YandexMetrica;
 
 /**
@@ -24,6 +26,7 @@ public class App extends Application {
     private IScheduleDataSource scheduleDataSource;
     private ICodesDataSource codesDataSource;
     private IStationsDataSource stationsDataSource;
+    private INetworkManager networkManager;
 
     public static App get(Context context) {
         return (App) context.getApplicationContext();
@@ -42,6 +45,7 @@ public class App extends Application {
             YandexMetrica.enableActivityAutoTracking(this);
         }
 
+        networkManager = new NetworkManager(this);
         recentDataSource = new RecentLocalDataSource(this);
         scheduleDataSource = new ScheduleRemoteDataSource();
         codesDataSource = new CodesRemoteDataSource();
@@ -62,5 +66,9 @@ public class App extends Application {
 
     public IStationsDataSource stationsDataSource() {
         return stationsDataSource;
+    }
+
+    public INetworkManager networkManager() {
+        return networkManager;
     }
 }

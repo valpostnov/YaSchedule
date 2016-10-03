@@ -14,75 +14,58 @@ import java.util.List;
 /**
  * Created by platon on 20.05.2016.
  */
-public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder>
-{
-    private List<Suggest> mSuggests;
-    private View mEmptyView;
+public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
+    private List<Suggest> suggests;
     private OnItemClickListener onItemClickListener;
 
-    public interface OnItemClickListener
-    {
+    public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_result, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Suggest suggest = getList().get(position);
-        holder.mResult.setText(suggest.getTitleRu());
+        holder.tvResult.setText(suggest.getTitleRu());
     }
 
     @Override
-    public int getItemCount()
-    {
-        if (null == mSuggests) return 0;
-        return mSuggests.size();
+    public int getItemCount() {
+        if (null == suggests) return 0;
+        return suggests.size();
     }
 
-    public void swapList(List<Suggest> suggests)
-    {
-        mSuggests = suggests;
+    public void swapList(List<Suggest> suggests) {
+        this.suggests = suggests;
         notifyDataSetChanged();
-        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
-    public List<Suggest> getList()
-    {
-        return mSuggests;
+    public List<Suggest> getList() {
+        return suggests;
     }
 
-    public void setEmptyView(View view)
-    {
-        mEmptyView = view;
-    }
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView tvResult;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
-        public TextView mResult;
-        public ViewHolder(View view)
-        {
+        public ViewHolder(View view) {
             super(view);
-            mResult = (TextView) view.findViewById(R.id.search_result);
+            tvResult = (TextView) view.findViewById(R.id.search_result);
             view.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             onItemClickListener.onItemClick(v, adapterPosition);
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener)
-    {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         onItemClickListener = listener;
     }
 }

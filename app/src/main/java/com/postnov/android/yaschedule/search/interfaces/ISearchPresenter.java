@@ -5,7 +5,6 @@ import com.postnov.android.yaschedule.base.BasePresenter;
 /**
  * Created by platon on 24.05.2016.
  */
-public interface ISearchPresenter extends BasePresenter<ISearchView>
-{
+public interface ISearchPresenter extends BasePresenter<ISearchView> {
     void search(String city, String limit);
 }

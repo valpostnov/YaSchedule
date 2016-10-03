@@ -1,8 +1,8 @@
 package com.postnov.android.yaschedule.stations;
 
 import com.postnov.android.yaschedule.data.source.stations.IStationsDataSource;
-import com.postnov.android.yaschedule.stations.interfaces.StationsPresenter;
-import com.postnov.android.yaschedule.stations.interfaces.StationsView;
+import com.postnov.android.yaschedule.stations.interfaces.IStationsPresenter;
+import com.postnov.android.yaschedule.stations.interfaces.IStationsView;
 
 import java.util.Map;
 
@@ -14,12 +14,12 @@ import rx.schedulers.Schedulers;
 /**
  * Created by platon on 31.05.2016.
  */
-public class StationsPresenterImpl implements StationsPresenter {
+public class StationsPresenter implements IStationsPresenter {
     private final IStationsDataSource stationsDataSource;
-    private StationsView stationsView;
+    private IStationsView stationsView;
     private Subscription subscription;
 
-    public StationsPresenterImpl(IStationsDataSource stationsDataSource) {
+    public StationsPresenter(IStationsDataSource stationsDataSource) {
         this.stationsDataSource = stationsDataSource;
     }
 
@@ -33,7 +33,7 @@ public class StationsPresenterImpl implements StationsPresenter {
     }
 
     @Override
-    public void bind(StationsView view) {
+    public void bind(IStationsView view) {
         stationsView = view;
     }
 
