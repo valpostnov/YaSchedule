@@ -15,33 +15,30 @@ import rx.Observable;
 /**
  * Created by platon on 20.05.2016.
  */
-public class ScheduleRemoteDataSource implements IScheduleDataSource
-{
-    private ScheduleApi mApi;
-    private SoftReference<Response> mCachedResponse;
-    private Map<String, String> mCachedOptions;
+public class ScheduleRemoteDataSource implements IScheduleDataSource {
+    private ScheduleApi scheduleApi;
+    private SoftReference<Response> cachedResponse;
+    private Map<String, String> cachedOptions;
 
-    public ScheduleRemoteDataSource()
-    {
+    public ScheduleRemoteDataSource() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Const.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
-        mApi = retrofit.create(ScheduleApi.class);
+        scheduleApi = retrofit.create(ScheduleApi.class);
     }
+
     @Override
-    public Observable<Response> search(final Map<String, String> options)
-    {
-        if (mCachedResponse != null && mCachedOptions.equals(options))
-        {
-            return Observable.just(mCachedResponse.get());
+    public Observable<Response> search(final Map<String, String> options) {
+        if (cachedResponse != null && cachedOptions.equals(options)) {
+            return Observable.just(cachedResponse.get());
         }
 
-        return mApi.search(options).doOnNext(response -> {
-            mCachedResponse = new SoftReference<>(response);
-            mCachedOptions = options;
+        return scheduleApi.search(options).doOnNext(response -> {
+            cachedResponse = new SoftReference<>(response);
+            cachedOptions = options;
         });
     }
 }

@@ -9,27 +9,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.postnov.android.yaschedule.App;
-import com.postnov.android.yaschedule.base.BaseActivity;
 import com.postnov.android.yaschedule.R;
+import com.postnov.android.yaschedule.base.BaseActivity;
 import com.postnov.android.yaschedule.data.entity.recent.RecentRoute;
-import com.postnov.android.yaschedule.recent.interfaces.RecentPresenter;
-import com.postnov.android.yaschedule.recent.interfaces.RecentView;
+import com.postnov.android.yaschedule.recent.interfaces.IRecentPresenter;
+import com.postnov.android.yaschedule.recent.interfaces.IRecentView;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 
 import java.util.List;
 
-public class RecentActivity extends AppCompatActivity implements RecentView, RecentAdapter.OnItemClickListener {
-    private RecentAdapter mAdapter;
-    private RecentPresenter mPresenter;
+import butterknife.BindView;
+
+public class RecentActivity extends AppCompatActivity implements IRecentView, RecentAdapter.OnItemClickListener {
+    private RecentAdapter recentAdapter;
+    private IRecentPresenter presenter;
+
+    @BindView(R.id.recent_emptyview) View emptyView;
+    @BindView(R.id.recent_toolbar) Toolbar toolbar;
+    @BindView(R.id.recent_list) RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent);
-        mPresenter = new RecentPresenterImpl(App.get(this).recentDataSource());
+        presenter = new RecentPresenter(App.get(this).recentDataSource());
         iniToolbar();
         initViews();
     }
@@ -37,13 +42,13 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.bind(this);
-        mPresenter.fetchRecentList();
+        presenter.bind(this);
+        presenter.fetchRecentList();
     }
 
     @Override
     protected void onPause() {
-        mPresenter.unbind();
+        presenter.unbind();
         super.onPause();
     }
 
@@ -67,12 +72,13 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
 
     @Override
     public void loadRecentList(List<RecentRoute> routes) {
-        mAdapter.swapList(routes);
+        recentAdapter.swapList(routes);
+        emptyView.setVisibility(recentAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
 
     public void clearRecentList(MenuItem item) {
-        mPresenter.clearRecentList();
+        presenter.clearRecentList();
     }
 
     @Override
@@ -81,34 +87,23 @@ public class RecentActivity extends AppCompatActivity implements RecentView, Rec
     }
 
     private void iniToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.recent_toolbar);
         toolbar.setTitle(R.string.fave_activity_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initViews() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recent_list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+        recentAdapter = new RecentAdapter();
+        recentAdapter.setOnItemClickListener(this);
 
-        RecyclerView.ItemDecoration itemDecoration = new
-                DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
-        recyclerView.addItemDecoration(itemDecoration);
-
-        TextView mEmptyView = (TextView) findViewById(R.id.recent_emptyview);
-
-        mAdapter = new RecentAdapter();
-        mAdapter.setEmptyView(mEmptyView);
-        mAdapter.setOnItemClickListener(this);
-        recyclerView.setAdapter(mAdapter);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        rv.setAdapter(recentAdapter);
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        RecentRoute route = mAdapter.getList().get(position);
-
+        RecentRoute route = recentAdapter.getList().get(position);
         Intent intent = new Intent();
         intent.putExtra(BaseActivity.EXTRA_RECENT_ROUTE, route);
         setResult(RESULT_OK, intent);

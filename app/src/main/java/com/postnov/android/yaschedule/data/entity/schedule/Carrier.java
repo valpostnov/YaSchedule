@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by platon on 19.05.2016.
  */
-public class Carrier
-{
+public class Carrier {
     @SerializedName("title")
     private String title;
 

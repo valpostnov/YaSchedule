@@ -31,7 +31,7 @@ public class SearchPresenterImpl implements ISearchPresenter {
         if (networkManager.networkIsAvailable()) {
             searchView.showProgressView();
             subscription.add(codesDataSource
-                    .getList(city, limit)
+                    .getCities(city, limit)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(cities -> searchView.showCities(cities.getSuggests()), onError));

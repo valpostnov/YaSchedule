@@ -1,7 +1,7 @@
 package com.postnov.android.yaschedule.data;
 
 import com.postnov.android.yaschedule.Injection;
-import com.postnov.android.yaschedule.data.entity.stations.Thread;
+import com.postnov.android.yaschedule.data.entity.stations.Stops;
 import com.postnov.android.yaschedule.data.source.stations.IStationsDataSource;
 import com.postnov.android.yaschedule.utils.StationsQueryBuilder;
 
@@ -33,8 +33,8 @@ public class TestStationsRemoteDataSource
     @Test
     public void testFetchStations() throws Exception
     {
-        TestSubscriber<Thread> subscriber = new TestSubscriber<>();
-        mRemoteDataSource.stationList(mOptions).subscribe(subscriber);
+        TestSubscriber<Stops> subscriber = new TestSubscriber<>();
+        mRemoteDataSource.getStops(mOptions).subscribe(subscriber);
         subscriber.assertNoErrors();
     }
 }

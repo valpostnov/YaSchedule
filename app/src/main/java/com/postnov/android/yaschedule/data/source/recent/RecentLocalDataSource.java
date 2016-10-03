@@ -17,10 +17,9 @@ import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract
 /**
  * Created by platon on 03.06.2016.
  */
-public class RecentDataSourceImpl implements IRecentDataSource
-{
+public class RecentLocalDataSource implements IRecentDataSource {
     private static final int MAX_ROWS_COUNT = 7;
-    private RecentDbHelper mDbHelper;
+    private RecentDBHelper mDbHelper;
     private LinkedList<RecentRoute> mCachedListRoute;
     private static final String[] PROJECTION = {
             _ID,
@@ -34,33 +33,28 @@ public class RecentDataSourceImpl implements IRecentDataSource
             "SELECT %s FROM %s ORDER BY %s DESC",
             TextUtils.join(",", PROJECTION), TABLE_NAME, _ID);
 
-    public RecentDataSourceImpl(Context context)
-    {
-        mDbHelper = new RecentDbHelper(context);
+    public RecentLocalDataSource(Context context) {
+        mDbHelper = new RecentDBHelper(context);
         mCachedListRoute = initCache();
     }
 
     @Override
-    public Observable<List<RecentRoute>> getRecentRoutes()
-    {
+    public Observable<List<RecentRoute>> getRecentRoutes() {
         return Observable.just(mCachedListRoute);
     }
 
     @Override
-    public void save(RecentRoute route)
-    {
+    public void save(RecentRoute route) {
         if (mCachedListRoute.isEmpty() || !mCachedListRoute.contains(route)) insert(route);
     }
 
     @Override
-    public void clear()
-    {
+    public void clear() {
         mCachedListRoute.clear();
         mDbHelper.getWritableDatabase().delete(TABLE_NAME, null, null);
     }
 
-    private void insert(RecentRoute route)
-    {
+    private void insert(RecentRoute route) {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_FROM, route.getFrom());
@@ -68,8 +62,7 @@ public class RecentDataSourceImpl implements IRecentDataSource
         values.put(COLUMN_FROM_STATION, route.getFromCode());
         values.put(COLUMN_TO_STATION, route.getToCode());
 
-        if (mDbHelper.getReadableDatabase().rawQuery(SQL, null).getCount() == MAX_ROWS_COUNT)
-        {
+        if (mDbHelper.getReadableDatabase().rawQuery(SQL, null).getCount() == MAX_ROWS_COUNT) {
             deleteRowWithMinId();
             mCachedListRoute.pollLast();
         }
@@ -77,14 +70,12 @@ public class RecentDataSourceImpl implements IRecentDataSource
         mCachedListRoute.push(route);
     }
 
-    private LinkedList<RecentRoute> initCache()
-    {
+    private LinkedList<RecentRoute> initCache() {
         Cursor cursor = mDbHelper.getReadableDatabase().rawQuery(SQL, null);
         LinkedList<RecentRoute> recentRoutes = new LinkedList<>();
         RecentRoute route;
 
-        while (cursor.moveToNext())
-        {
+        while (cursor.moveToNext()) {
             route = new RecentRoute();
             route.setFrom(cursor.getString(3));
             route.setTo(cursor.getString(4));
@@ -97,8 +88,7 @@ public class RecentDataSourceImpl implements IRecentDataSource
         return recentRoutes;
     }
 
-    private void deleteRowWithMinId()
-    {
+    private void deleteRowWithMinId() {
         String sqlDelete = String.format(
                 "DELETE FROM %s WHERE %s = (SELECT min(%s) FROM %s)",
                 TABLE_NAME, _ID, _ID, TABLE_NAME);

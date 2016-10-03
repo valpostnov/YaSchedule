@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by platon on 19.05.2016.
  */
-public class RouteOptions
-{
+public class RouteOptions {
     @SerializedName("carrier")
     private Carrier carrier;
 

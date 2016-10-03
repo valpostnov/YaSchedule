@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by platon on 24.05.2016.
  */
-public class Suggest
-{
+public class Suggest {
     @SerializedName("full_title")
     private String fullTitle;
 

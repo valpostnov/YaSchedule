@@ -26,7 +26,7 @@ public class TestCodesRemoteDataSource
     public void testFetchCodes() throws Exception
     {
         TestSubscriber<Cities> subscriber = new TestSubscriber<>();
-        mRemoteDataSource.getList(CITY, LIMIT).subscribe(subscriber);
+        mRemoteDataSource.getCities(CITY, LIMIT).subscribe(subscriber);
         subscriber.assertNoErrors();
     }
 }

@@ -26,7 +26,7 @@ public class StationsPresenterImpl implements StationsPresenter {
     @Override
     public void fetchStations(final Map<String, String> query) {
         stationsView.showProgressDialog();
-        subscription = stationsDataSource.stationList(query)
+        subscription = stationsDataSource.getStops(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(thread -> stationsView.loadStations(thread.getStops()), onError);

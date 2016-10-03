@@ -14,77 +14,59 @@ import java.util.List;
 /**
  * Created by platon on 29.05.2016.
  */
-public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder>
-{
-    private List<RecentRoute> mRoutes;
-    private View mEmptyView;
+class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder> {
+    private List<RecentRoute> recentRoutes;
     private OnItemClickListener onItemClickListener;
 
-    public interface OnItemClickListener
-    {
+    interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recent, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         RecentRoute route = getList().get(position);
         String title = route.getFrom() + " - " + route.getTo();
         holder.mTitle.setText(title);
     }
 
     @Override
-    public int getItemCount()
-    {
-        if (null == mRoutes) return 0;
-        return mRoutes.size();
+    public int getItemCount() {
+        if (null == recentRoutes) return 0;
+        return recentRoutes.size();
     }
 
-    public void swapList(List<RecentRoute> newList)
-    {
-        mRoutes = newList;
+    public void swapList(List<RecentRoute> newList) {
+        recentRoutes = newList;
         notifyDataSetChanged();
-        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
-    public List<RecentRoute> getList()
-    {
-        return mRoutes;
+    public List<RecentRoute> getList() {
+        return recentRoutes;
     }
 
-    public void setEmptyView(View view)
-    {
-        mEmptyView = view;
-    }
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView mTitle;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
-        public TextView mTitle;
-
-        public ViewHolder(View view)
-        {
+        ViewHolder(View view) {
             super(view);
             mTitle = (TextView) view.findViewById(R.id.recent_title);
             view.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             onItemClickListener.onItemClick(v, adapterPosition);
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener)
-    {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         onItemClickListener = listener;
     }
 }

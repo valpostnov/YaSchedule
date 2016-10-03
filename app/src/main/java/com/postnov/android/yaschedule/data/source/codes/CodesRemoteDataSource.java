@@ -11,25 +11,22 @@ import rx.Observable;
 /**
  * Created by platon on 24.05.2016.
  */
-public class CodesRemoteDataSource implements ICodesDataSource
-{
+public class CodesRemoteDataSource implements ICodesDataSource {
     private static final String ENDPOINT = "https://suggests.rasp.yandex.net/";
-    private CitiesApi mApi;
+    private CitiesApi citiesApi;
 
-    public CodesRemoteDataSource()
-    {
+    public CodesRemoteDataSource() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
-        mApi = retrofit.create(CitiesApi.class);
+        citiesApi = retrofit.create(CitiesApi.class);
     }
 
     @Override
-    public Observable<Cities> getList(String city, String limit)
-    {
-        return mApi.cityList(city, limit);
+    public Observable<Cities> getCities(String city, String limit) {
+        return citiesApi.cityList(city, limit);
     }
 }

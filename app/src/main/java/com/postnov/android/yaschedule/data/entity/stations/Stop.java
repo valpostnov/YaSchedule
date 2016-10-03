@@ -6,9 +6,8 @@ import com.postnov.android.yaschedule.data.entity.schedule.Station;
 /**
  * Created by platon on 31.05.2016.
  */
-public class Stop
-{
-    @SerializedName("uid")
+public class Stop {
+    @SerializedName("arrival")
     private String arrival;
 
     @SerializedName("departure")

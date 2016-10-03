@@ -7,7 +7,6 @@ import rx.Observable;
 /**
  * Created by platon on 24.05.2016.
  */
-public interface ICodesDataSource
-{
-    Observable<Cities> getList(String city, String limit);
+public interface ICodesDataSource {
+    Observable<Cities> getCities(String city, String limit);
 }

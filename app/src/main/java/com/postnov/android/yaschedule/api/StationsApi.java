@@ -1,6 +1,6 @@
 package com.postnov.android.yaschedule.api;
 
-import com.postnov.android.yaschedule.data.entity.stations.Thread;
+import com.postnov.android.yaschedule.data.entity.stations.Stops;
 
 import java.util.Map;
 
@@ -11,8 +11,7 @@ import rx.Observable;
 /**
  * Created by platon on 31.05.2016.
  */
-public interface StationsApi
-{
+public interface StationsApi {
     @GET("thread/")
-    Observable<Thread> stationList(@QueryMap Map<String, String> options);
+    Observable<Stops> stationList(@QueryMap Map<String, String> options);
 }

@@ -1,7 +1,7 @@
 package com.postnov.android.yaschedule.data.source.stations;
 
 import com.postnov.android.yaschedule.api.StationsApi;
-import com.postnov.android.yaschedule.data.entity.stations.Thread;
+import com.postnov.android.yaschedule.data.entity.stations.Stops;
 import com.postnov.android.yaschedule.utils.Const;
 
 import java.util.Map;
@@ -14,24 +14,21 @@ import rx.Observable;
 /**
  * Created by platon on 31.05.2016.
  */
-public class StationsDataSourceImpl implements IStationsDataSource
-{
-    private StationsApi mApi;
+public class StationsDataSourceImpl implements IStationsDataSource {
+    private StationsApi stationsApi;
 
-    public StationsDataSourceImpl()
-    {
+    public StationsDataSourceImpl() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Const.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
-        mApi = retrofit.create(StationsApi.class);
+        stationsApi = retrofit.create(StationsApi.class);
     }
 
     @Override
-    public Observable<Thread> stationList(Map<String, String> options)
-    {
-        return mApi.stationList(options);
+    public Observable<Stops> getStops(Map<String, String> options) {
+        return stationsApi.stationList(options);
     }
 }

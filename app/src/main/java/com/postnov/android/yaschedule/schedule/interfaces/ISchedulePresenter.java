@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by platon on 20.05.2016.
  */
-public interface SchedulePresenter extends BasePresenter<ScheduleView>
+public interface ISchedulePresenter extends BasePresenter<ScheduleView>
 {
     void search(Map<String, String> options);
 }

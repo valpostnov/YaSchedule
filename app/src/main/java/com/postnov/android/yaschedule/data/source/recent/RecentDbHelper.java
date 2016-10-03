@@ -15,10 +15,9 @@ import static com.postnov.android.yaschedule.data.source.recent.ScheduleContract
 /**
  * Created by platon on 29.05.2016.
  */
-public class RecentDbHelper extends SQLiteOpenHelper
-{
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "schedule.db";
+class RecentDBHelper extends SQLiteOpenHelper {
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "schedule.db";
 
     private static final String TYPE_TEXT = " TEXT";
     private static final String COMMA_SEP = ",";
@@ -35,20 +34,17 @@ public class RecentDbHelper extends SQLiteOpenHelper
     private static final String SQL_DELETE_SCHEDULE =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
 
-    public RecentDbHelper(Context context)
-    {
+    RecentDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db)
-    {
+    public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_SCHEDULE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-    {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_SCHEDULE);
         onCreate(db);
     }

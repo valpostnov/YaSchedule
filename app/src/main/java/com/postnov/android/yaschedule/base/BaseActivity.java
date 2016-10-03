@@ -19,8 +19,7 @@ import com.postnov.android.yaschedule.schedule.ScheduleActivity;
 import com.postnov.android.yaschedule.search.SearchActivity;
 import com.postnov.android.yaschedule.utils.Utils;
 
-public class BaseActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener
-{
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     public static final String EXTRA_DATE = "normDate";
     public static final String EXTRA_QUERY_DATE = "queryDate";
     public static final String EXTRA_HINT = "hint";
@@ -51,12 +50,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     private TextInputLayout mDateInputLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             mCityFromCode = savedInstanceState.getString(EXTRA_FROM_CODE);
             mCityToCode = savedInstanceState.getString(EXTRA_TO_CODE);
             mReversedDate = savedInstanceState.getString(EXTRA_QUERY_DATE);
@@ -65,13 +62,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         initViews();
     }
 
-    public void showSchedule(View view)
-    {
+    public void showSchedule(View view) {
         if (mFromView.length() == 0) showHintError(true, mFromInputLayout);
         else if (mToView.length() == 0) showHintError(true, mToInputLayout);
         else if (mDateView.length() == 0) showHintError(true, mDateInputLayout);
-        else
-        {
+        else {
             Intent intent = new Intent(this, ScheduleActivity.class);
             intent.putExtra(EXTRA_QUERY_DATE, mReversedDate);
             intent.putExtra(EXTRA_DATE, mNormalDate);
@@ -84,43 +79,36 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
+    protected void onSaveInstanceState(Bundle outState) {
         outState.putString(EXTRA_FROM_CODE, mCityFromCode);
         outState.putString(EXTRA_TO_CODE, mCityToCode);
         outState.putString(EXTRA_QUERY_DATE, mReversedDate);
         super.onSaveInstanceState(outState);
     }
 
-    public void showSearchActivity(String hint, int requestCode)
-    {
+    public void showSearchActivity(String hint, int requestCode) {
         Intent intent = new Intent(this, SearchActivity.class);
         intent.putExtra(EXTRA_HINT, hint);
         startActivityForResult(intent, requestCode);
     }
 
-    public void showRecentActivity(MenuItem item)
-    {
+    public void showRecentActivity(MenuItem item) {
         Intent intent = new Intent(this, RecentActivity.class);
         startActivityForResult(intent, REQUEST_RECENT_ROUTE);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (data != null)
-        {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
             String city = data.getStringExtra(EXTRA_CITY);
 
-            switch (requestCode)
-            {
+            switch (requestCode) {
                 case REQUEST_CODE_FROM:
                     mFromView.setText(city);
                     mCityFromCode = data.getStringExtra(EXTRA_CODE);
@@ -143,10 +131,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.from:
                 showSearchActivity(getString(R.string.hint_from), REQUEST_CODE_FROM);
                 break;
@@ -161,17 +147,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-    {
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         mReversedDate = Utils.formatDateReverse(dayOfMonth, monthOfYear + 1, year);
         mNormalDate = Utils.toShortDate(dayOfMonth, monthOfYear);
         mDateView.setText(mNormalDate);
     }
 
-    public void swapCities(MenuItem item)
-    {
-        if (mFromView.length() != 0 && mToView.length() != 0)
-        {
+    public void swapCities(MenuItem item) {
+        if (mFromView.length() != 0 && mToView.length() != 0) {
             String fromTmp = mFromView.getText().toString();
             String toTmp = mToView.getText().toString();
             String codeFromTmp = mCityFromCode;
@@ -184,8 +167,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void initViews()
-    {
+    private void initViews() {
         mFromView = (TextInputEditText) findViewById(R.id.from);
         mFromView.setOnClickListener(this);
 
@@ -200,14 +182,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         mDateInputLayout = (TextInputLayout) findViewById(R.id.hintWhen);
     }
 
-    private void initToolbar()
-    {
+    private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
     }
 
-    private void showDatePickerDialog()
-    {
+    private void showDatePickerDialog() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, this,
                 Utils.getYear(), Utils.getMonthOfYear() - 1, Utils.getDayOfMonth());
         datePickerDialog.getDatePicker().setMinDate(Utils.getMinDayInYear());
@@ -216,14 +196,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         datePickerDialog.show();
     }
 
-    private void showHintError(boolean show, TextInputLayout... layouts)
-    {
-        if (show)
-        {
-            for (TextInputLayout l:layouts) l.setError(getString(R.string.hint_error_text));
+    private void showHintError(boolean show, TextInputLayout... layouts) {
+        if (show) {
+            for (TextInputLayout l : layouts) l.setError(getString(R.string.hint_error_text));
             return;
         }
 
-        for (TextInputLayout l:layouts) l.setError("");
+        for (TextInputLayout l : layouts) l.setError("");
     }
 }

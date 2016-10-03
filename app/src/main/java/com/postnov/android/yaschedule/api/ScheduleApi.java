@@ -11,8 +11,7 @@ import rx.Observable;
 /**
  * Created by platon on 19.05.2016.
  */
-public interface ScheduleApi
-{
+public interface ScheduleApi {
     @GET("search/")
     Observable<Response> search(@QueryMap Map<String, String> options);
 }

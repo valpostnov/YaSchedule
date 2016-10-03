@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by platon on 19.05.2016.
  */
-public class Route
-{
+public class Route {
     @SerializedName("arrival")
     private String arrival;
 

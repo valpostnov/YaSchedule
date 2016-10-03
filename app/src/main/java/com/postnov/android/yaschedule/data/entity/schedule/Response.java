@@ -7,8 +7,7 @@ import java.util.List;
 /**
  * Created by platon on 19.05.2016.
  */
-public class Response
-{
+public class Response {
     @SerializedName("threads")
     private List<Route> mRoutes;
 
@@ -18,33 +17,27 @@ public class Response
     @SerializedName("search")
     private Search mSearch;
 
-    public List<Route> getRoutes ()
-    {
+    public List<Route> getRoutes() {
         return mRoutes;
     }
 
-    public void setRoutes (List<Route> routes)
-    {
+    public void setRoutes(List<Route> routes) {
         mRoutes = routes;
     }
 
-    public Pagination getPagination ()
-    {
+    public Pagination getPagination() {
         return mPagination;
     }
 
-    public void setPagination (Pagination pagination)
-    {
+    public void setPagination(Pagination pagination) {
         mPagination = pagination;
     }
 
-    public Search getSearch()
-    {
+    public Search getSearch() {
         return mSearch;
     }
 
-    public void setSearch(Search search)
-    {
+    public void setSearch(Search search) {
         this.mSearch = search;
     }
 

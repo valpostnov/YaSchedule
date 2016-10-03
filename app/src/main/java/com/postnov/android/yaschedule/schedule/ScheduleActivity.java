@@ -21,7 +21,7 @@ import com.postnov.android.yaschedule.App;
 import com.postnov.android.yaschedule.base.BaseActivity;
 import com.postnov.android.yaschedule.R;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
-import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
+import com.postnov.android.yaschedule.schedule.interfaces.ISchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.stations.StationsActivity;
 import com.postnov.android.yaschedule.utils.DividerItemDecoration;
@@ -46,7 +46,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     public static final String EXTRA_CODE_TO = "com.postnov.schedule.TO_CODE";
 
     private ScheduleAdapter mAdapter;
-    private SchedulePresenter mPresenter;
+    private ISchedulePresenter mPresenter;
     private ProgressDialog mProgressDialog;
     private BottomSheetBehavior mBottomSheetBehavior;
     private TextView mSubHeaderText;
@@ -69,9 +69,10 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
-        mPresenter = new SchedulePresenterImpl(
+        mPresenter = new SchedulePresenter(
                 App.get(this).scheduleDataSource(),
-                App.get(this).recentDataSource());
+                App.get(this).recentDataSource(),
+                App.get(this).networkManager());
 
         initViews();
         initToolbar();

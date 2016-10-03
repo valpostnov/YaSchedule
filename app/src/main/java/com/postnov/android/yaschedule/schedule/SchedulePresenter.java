@@ -4,7 +4,7 @@ import com.postnov.android.yaschedule.data.entity.recent.RecentRoute;
 import com.postnov.android.yaschedule.data.entity.schedule.Response;
 import com.postnov.android.yaschedule.data.source.recent.IRecentDataSource;
 import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
-import com.postnov.android.yaschedule.schedule.interfaces.SchedulePresenter;
+import com.postnov.android.yaschedule.schedule.interfaces.ISchedulePresenter;
 import com.postnov.android.yaschedule.schedule.interfaces.ScheduleView;
 import com.postnov.android.yaschedule.utils.Const;
 import com.postnov.android.yaschedule.utils.NetworkManager;
@@ -21,40 +21,40 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by platon on 21.05.2016.
  */
-public class SchedulePresenterImpl implements SchedulePresenter {
+public class SchedulePresenter implements ISchedulePresenter {
     private final IScheduleDataSource scheduleDataSource;
     private final IRecentDataSource recentDataSource;
-    private ScheduleView mView;
-    private CompositeSubscription mSubscriptions;
-    private NetworkManager mNetworkManager; //Todo init!!!
+    private ScheduleView scheduleView;
+    private CompositeSubscription subscription;
+    private NetworkManager networkManager;
 
-    public SchedulePresenterImpl(IScheduleDataSource scheduleDataSource,
-                                 IRecentDataSource recentDataSource) {
-        this.scheduleDataSource = scheduleDataSource;
-        this.recentDataSource = recentDataSource;
-        mSubscriptions = new CompositeSubscription();
+    public SchedulePresenter(IScheduleDataSource sds, IRecentDataSource rds, NetworkManager nm) {
+        scheduleDataSource = sds;
+        recentDataSource = rds;
+        networkManager = nm;
+        subscription = new CompositeSubscription();
     }
 
     @Override
     public void search(Map<String, String> options) {
-        if (mNetworkManager.networkIsAvailable()) {
-            mView.showProgressDialog();
-            mSubscriptions.add(createSearchSubscription(options));
+        if (networkManager.networkIsAvailable()) {
+            scheduleView.showProgressDialog();
+            subscription.add(createSearchSubscription(options));
             return;
         }
 
-        mView.showError(new NetworkConnectionException(Const.ERROR_NO_CONNECTION));
+        scheduleView.showError(new NetworkConnectionException(Const.ERROR_NO_CONNECTION));
     }
 
     @Override
     public void bind(ScheduleView view) {
-        mView = view;
+        scheduleView = view;
     }
 
     @Override
     public void unbind() {
-        mSubscriptions.clear();
-        mView = null;
+        subscription.clear();
+        scheduleView = null;
     }
 
     private void saveSearchRequest(Response response) {
@@ -72,12 +72,12 @@ public class SchedulePresenterImpl implements SchedulePresenter {
                 .subscribeOn(Schedulers.io())
                 .doOnNext(this::saveSearchRequest)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> mView.showList(response), onError);
+                .subscribe(response -> scheduleView.showList(response), onError);
     }
 
     private Action1<Throwable> onError = e -> {
-        mView.hideProgressDialog();
-        mView.showList(null);
-        mView.showError(e);
+        scheduleView.hideProgressDialog();
+        scheduleView.showList(null);
+        scheduleView.showError(e);
     };
 }

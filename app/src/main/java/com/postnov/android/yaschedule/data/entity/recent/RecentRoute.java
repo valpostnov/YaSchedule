@@ -6,112 +6,104 @@ import android.os.Parcelable;
 /**
  * Created by platon on 03.06.2016.
  */
-public class RecentRoute implements Parcelable
-{
-    private String mFrom;
-    private String mTo;
-    private String mFromCode;
-    private String mToCode;
+public class RecentRoute implements Parcelable {
+    private String from;
+    private String to;
+    private String fromCode;
+    private String toCode;
 
-    public RecentRoute() {}
-
-    protected RecentRoute(Parcel in)
-    {
-        mFrom = in.readString();
-        mTo = in.readString();
-        mFromCode = in.readString();
-        mToCode = in.readString();
+    public RecentRoute() {
     }
 
-    public static final Creator<RecentRoute> CREATOR = new Creator<RecentRoute>()
-    {
+    protected RecentRoute(Parcel in) {
+        from = in.readString();
+        to = in.readString();
+        fromCode = in.readString();
+        toCode = in.readString();
+    }
+
+    public static final Creator<RecentRoute> CREATOR = new Creator<RecentRoute>() {
         @Override
-        public RecentRoute createFromParcel(Parcel in)
-        {
+        public RecentRoute createFromParcel(Parcel in) {
             return new RecentRoute(in);
         }
 
         @Override
-        public RecentRoute[] newArray(int size)
-        {
+        public RecentRoute[] newArray(int size) {
             return new RecentRoute[size];
         }
     };
 
     public String getFrom() {
-        return mFrom;
+        return from;
     }
 
     public void setFrom(String from) {
-        this.mFrom = from;
+        this.from = from;
     }
 
     public String getTo() {
-        return mTo;
+        return to;
     }
 
     public void setTo(String to) {
-        this.mTo = to;
+        this.to = to;
     }
 
     public String getFromCode() {
-        return mFromCode;
+        return fromCode;
     }
 
     public void setFromCode(String fromCode) {
-        this.mFromCode = fromCode;
+        this.fromCode = fromCode;
     }
 
     public String getToCode() {
-        return mToCode;
+        return toCode;
     }
 
     public void setToCode(String toCode) {
-        this.mToCode = toCode;
+        this.toCode = toCode;
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         RecentRoute that = (RecentRoute) o;
 
-        if (!mFromCode.equals(that.mFromCode)) return false;
-        return mToCode.equals(that.mToCode);
+        if (!fromCode.equals(that.fromCode)) return false;
+        return toCode.equals(that.toCode);
     }
 
     @Override
-    public int hashCode()
-    {
-        int result = mFromCode.hashCode();
-        result = 31 * result + mToCode.hashCode();
+    public int hashCode() {
+        int result = fromCode.hashCode();
+        result = 31 * result + toCode.hashCode();
         return result;
     }
 
     @Override
-    public int describeContents()
-    {
+    public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString(mFrom);
-        dest.writeString(mTo);
-        dest.writeString(mFromCode);
-        dest.writeString(mToCode);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(from);
+        dest.writeString(to);
+        dest.writeString(fromCode);
+        dest.writeString(toCode);
     }
 
     @Override
     public String toString() {
         return "RecentRoute{" +
-                "mFrom='" + mFrom + '\'' +
-                ", mTo='" + mTo + '\'' +
-                ", mFromCode='" + mFromCode + '\'' +
-                ", mToCode='" + mToCode + '\'' +
+                "from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", fromCode='" + fromCode + '\'' +
+                ", toCode='" + toCode + '\'' +
                 '}';
     }
 }

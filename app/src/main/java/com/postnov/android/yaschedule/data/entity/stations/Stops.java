@@ -7,39 +7,38 @@ import java.util.List;
 /**
  * Created by platon on 31.05.2016.
  */
-public class Thread
-{
+public class Stops {
     @SerializedName("uid")
-    private String mUid;
+    private String uid;
 
     @SerializedName("days")
-    private String mDays;
+    private String days;
 
     @SerializedName("stops")
-    private List<Stop> mStops;
+    private List<Stop> stops;
 
     public String getUid() {
-        return mUid;
+        return uid;
     }
 
     public void setUid(String uid) {
-        this.mUid = uid;
+        this.uid = uid;
     }
 
     public String getDays() {
-        return mDays;
+        return days;
     }
 
     public void setDays(String days) {
-        this.mDays = days;
+        this.days = days;
     }
 
     public List<Stop> getStops() {
-        return mStops;
+        return stops;
     }
 
     public void setStops(List<Stop> stops) {
-        this.mStops = stops;
+        this.stops = stops;
     }
 
     @Override
@@ -47,28 +46,28 @@ public class Thread
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Thread thread = (Thread) o;
+        Stops stops = (Stops) o;
 
-        if (!mUid.equals(thread.mUid)) return false;
-        if (!mDays.equals(thread.mDays)) return false;
-        return mStops.equals(thread.mStops);
+        if (!uid.equals(stops.uid)) return false;
+        if (!days.equals(stops.days)) return false;
+        return this.stops.equals(stops.stops);
 
     }
 
     @Override
     public int hashCode() {
-        int result = mUid.hashCode();
-        result = 31 * result + mDays.hashCode();
-        result = 31 * result + mStops.hashCode();
+        int result = uid.hashCode();
+        result = 31 * result + days.hashCode();
+        result = 31 * result + stops.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "Thread{" +
-                "mUid='" + mUid + '\'' +
-                ", mDays='" + mDays + '\'' +
-                ", mStops=" + mStops +
+        return "Stops{" +
+                "uid='" + uid + '\'' +
+                ", days='" + days + '\'' +
+                ", stops=" + stops +
                 '}';
     }
 }

@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by platon on 30.05.2016.
  */
-public class Search
-{
+public class Search {
     @SerializedName("date")
     private String date;
 
@@ -16,61 +15,50 @@ public class Search
     @SerializedName("to")
     private To to;
 
-
-    public class To
-    {
+    public class To {
         @SerializedName("title")
         private String title;
 
         @SerializedName("code")
         private String code;
 
-        public String getCode()
-        {
+        public String getCode() {
             return code;
         }
 
-        public void setCode(String code)
-        {
+        public void setCode(String code) {
             this.code = code;
         }
 
-        public String getTitle()
-        {
+        public String getTitle() {
             return title;
         }
 
-        public void setTitle(String title)
-        {
+        public void setTitle(String title) {
             this.title = title;
         }
     }
 
-    public class From
-    {
+    public class From {
         @SerializedName("title")
         private String title;
 
         @SerializedName("code")
         private String code;
 
-        public String getCode()
-        {
+        public String getCode() {
             return code;
         }
 
-        public void setCode(String code)
-        {
+        public void setCode(String code) {
             this.code = code;
         }
 
-        public String getTitle()
-        {
+        public String getTitle() {
             return title;
         }
 
-        public void setTitle(String title)
-        {
+        public void setTitle(String title) {
             this.title = title;
         }
     }

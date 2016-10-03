@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import com.postnov.android.yaschedule.data.source.codes.CodesRemoteDataSource;
 import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
 import com.postnov.android.yaschedule.data.source.recent.IRecentDataSource;
-import com.postnov.android.yaschedule.data.source.recent.RecentDataSourceImpl;
+import com.postnov.android.yaschedule.data.source.recent.RecentLocalDataSource;
 import com.postnov.android.yaschedule.data.source.schedule.IScheduleDataSource;
 import com.postnov.android.yaschedule.data.source.schedule.ScheduleRemoteDataSource;
 import com.postnov.android.yaschedule.data.source.stations.IStationsDataSource;
@@ -42,7 +42,7 @@ public class App extends Application {
             YandexMetrica.enableActivityAutoTracking(this);
         }
 
-        recentDataSource = new RecentDataSourceImpl(this);
+        recentDataSource = new RecentLocalDataSource(this);
         scheduleDataSource = new ScheduleRemoteDataSource();
         codesDataSource = new CodesRemoteDataSource();
         stationsDataSource = new StationsDataSourceImpl();

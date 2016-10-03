@@ -9,8 +9,7 @@ import rx.Observable;
 /**
  * Created by platon on 03.06.2016.
  */
-public interface IRecentDataSource
-{
+public interface IRecentDataSource {
     Observable<List<RecentRoute>> getRecentRoutes();
     void save(RecentRoute route);
     void clear();
