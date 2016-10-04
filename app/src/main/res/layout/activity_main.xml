@@ -33,14 +33,14 @@
             android:hint="@string/from"
             android:textSize="@dimen/main_edittext_size"
             android:inputType="text"
-            android:singleLine="true"
             android:paddingLeft="@dimen/margin_large"
             android:paddingRight="@dimen/margin_large"
             android:fontFamily="sans-serif-light"
             android:focusableInTouchMode="false"
             android:clickable="true"
             android:longClickable="false"
-            android:background="?attr/selectableItemBackground" />
+            android:background="?attr/selectableItemBackground"
+            android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -59,13 +59,13 @@
             android:background="?attr/selectableItemBackground"
             android:textSize="@dimen/main_edittext_size"
             android:inputType="text"
-            android:singleLine="true"
             android:paddingLeft="@dimen/margin_large"
             android:paddingRight="@dimen/margin_large"
             android:fontFamily="sans-serif-light"
             android:focusableInTouchMode="false"
             android:clickable="true"
             android:longClickable="false"
+            android:maxLines="1"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -83,7 +83,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_when"
             android:textSize="@dimen/main_edittext_size"
-            android:singleLine="true"
             android:paddingLeft="@dimen/margin_large"
             android:paddingRight="@dimen/margin_large"
             android:clickable="true"
@@ -92,6 +91,7 @@
             android:focusableInTouchMode="false"
             android:inputType="text"
             android:longClickable="false"
+            android:maxLines="1"
             />
     </android.support.design.widget.TextInputLayout>
 

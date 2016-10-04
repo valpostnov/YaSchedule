@@ -33,6 +33,8 @@ import com.postnov.android.yaschedule.utils.exception.NetworkConnectionException
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static android.support.design.widget.BottomSheetBehavior.STATE_EXPANDED;
 import static android.support.design.widget.BottomSheetBehavior.STATE_COLLAPSED;
@@ -74,6 +76,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+        ButterKnife.bind(this);
+        Timber.tag("ScheduleActivity");
 
         presenter = new SchedulePresenter(
                 App.get(this).scheduleDataSource(),
@@ -156,7 +160,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         if (e instanceof NetworkConnectionException) {
             Utils.showToast(this, e.getMessage());
         }
-        Log.e(TAG, e.getMessage());
+        Timber.wtf(e, e.getMessage());
     }
 
     @Override

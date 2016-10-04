@@ -21,6 +21,8 @@ import com.postnov.android.yaschedule.utils.DividerItemDecoration;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class RecentActivity extends AppCompatActivity implements IRecentView, RecentAdapter.OnItemClickListener {
     private RecentAdapter recentAdapter;
@@ -34,6 +36,9 @@ public class RecentActivity extends AppCompatActivity implements IRecentView, Re
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent);
+        ButterKnife.bind(this);
+        Timber.tag("RecentActivity");
+
         presenter = new RecentPresenter(App.get(this).recentDataSource());
         iniToolbar();
         initViews();
@@ -83,7 +88,7 @@ public class RecentActivity extends AppCompatActivity implements IRecentView, Re
 
     @Override
     public void showError(Throwable e) {
-        e.printStackTrace();
+        Timber.wtf(e, e.getMessage());
     }
 
     private void iniToolbar() {

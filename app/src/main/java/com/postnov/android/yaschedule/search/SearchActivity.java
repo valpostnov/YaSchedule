@@ -25,6 +25,7 @@ import com.postnov.android.yaschedule.utils.exception.NetworkConnectionException
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.Subscription;
 import timber.log.Timber;
 
@@ -42,6 +43,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        ButterKnife.bind(this);
         Timber.tag("SearchActivity");
         presenter = new SearchPresenter(App.get(this).codesDataSource());
 

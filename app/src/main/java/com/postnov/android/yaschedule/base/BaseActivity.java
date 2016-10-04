@@ -20,8 +20,9 @@ import com.postnov.android.yaschedule.search.SearchActivity;
 import com.postnov.android.yaschedule.utils.Utils;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class BaseActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class BaseActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     public static final String EXTRA_DATE = "normDate";
     public static final String EXTRA_QUERY_DATE = "queryDate";
     public static final String EXTRA_HINT = "hint";
@@ -56,6 +57,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
         if (savedInstanceState != null) {
@@ -63,7 +65,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             cityToCode = savedInstanceState.getString(EXTRA_TO_CODE);
             reversedDate = savedInstanceState.getString(EXTRA_QUERY_DATE);
         }
-        initViews();
     }
 
     public void showSchedule(View view) {
@@ -137,7 +138,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.from:
@@ -172,12 +172,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
             fromView.setText(toTmp);
             toView.setText(fromTmp);
         }
-    }
-
-    private void initViews() {
-        fromView.setOnClickListener(this);
-        toView.setOnClickListener(this);
-        dateView.setOnClickListener(this);
     }
 
     private void showDatePickerDialog() {

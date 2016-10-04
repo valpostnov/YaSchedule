@@ -23,6 +23,7 @@ import com.postnov.android.yaschedule.utils.StationsQueryBuilder;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class StationsActivity extends AppCompatActivity implements IStationsView {
@@ -43,6 +44,7 @@ public class StationsActivity extends AppCompatActivity implements IStationsView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stations);
+        ButterKnife.bind(this);
         Timber.tag("StationsActivity");
 
         presenter = new StationsPresenter(App.get(this).stationsDataSource());
