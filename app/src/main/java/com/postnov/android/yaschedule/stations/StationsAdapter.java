@@ -14,6 +14,9 @@ import com.postnov.android.yaschedule.utils.Utils;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by platon on 20.05.2016.
  */
@@ -41,37 +44,7 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Stop stop = getList().get(position);
-        Station station = stop.getStation();
-
-        if (station.getCode().equals(fromCode) || station.getCode().equals(toCode)) {
-            holder.mImageView.setImageResource(MAIN_STATION_DRAWABLE);
-        } else {
-            holder.mImageView.setImageResource(SUB_STATION_DRAWABLE);
-        }
-
-        holder.mTitle.setText(stop.getStation().getTitle());
-
-        if (stop.getDeparture() == null) holder.mDeparture.setVisibility(View.GONE);
-        else {
-            StringBuilder date = new StringBuilder();
-            date.append("Отправление: ");
-            date.append(Utils.getOnlyTime(stop.getDeparture()));
-            date.append(", ");
-            date.append(Utils.toShortDate(stop.getDeparture()));
-
-            holder.mDeparture.setVisibility(View.VISIBLE);
-            holder.mDeparture.setText(date);
-        }
-
-        if (stop.getStopTime() == null) holder.mStopTime.setVisibility(View.GONE);
-        else {
-            StringBuilder stopTime = new StringBuilder();
-            stopTime.append("Стоянка: ");
-            stopTime.append(Utils.convertSecToMinutes(stop.getStopTime()));
-
-            holder.mStopTime.setVisibility(View.VISIBLE);
-            holder.mStopTime.setText(stopTime);
-        }
+        holder.bind(stop);
     }
 
     @Override
@@ -97,18 +70,51 @@ public class StationsAdapter extends RecyclerView.Adapter<StationsAdapter.ViewHo
         return stops;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        public TextView mTitle;
-        public TextView mDeparture;
-        public TextView mStopTime;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.station_image)       ImageView ivStationPic;
+        @BindView(R.id.station_title)       TextView tvStationTitle;
+        @BindView(R.id.station_departure)   TextView tvStationDep;
+        @BindView(R.id.station_stop_time)   TextView tvStationStopTime;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
-            mImageView = (ImageView) view.findViewById(R.id.station_image);
-            mTitle = (TextView) view.findViewById(R.id.station_title);
-            mDeparture = (TextView) view.findViewById(R.id.station_departure);
-            mStopTime = (TextView) view.findViewById(R.id.station_stop_time);
+            ButterKnife.bind(this, view);
+        }
+
+        public void bind(Stop stop) {
+            Station station = stop.getStation();
+
+            if (station.getCode().equals(fromCode) || station.getCode().equals(toCode)) {
+                ivStationPic.setImageResource(MAIN_STATION_DRAWABLE);
+            } else {
+                ivStationPic.setImageResource(SUB_STATION_DRAWABLE);
+            }
+
+            tvStationTitle.setText(stop.getStation().getTitle());
+
+            if (stop.getDeparture() == null) {
+                tvStationDep.setVisibility(View.GONE);
+            } else {
+                StringBuilder date = new StringBuilder();
+                date.append("Отправление: ");
+                date.append(Utils.getOnlyTime(stop.getDeparture()));
+                date.append(", ");
+                date.append(Utils.toShortDate(stop.getDeparture()));
+
+                tvStationDep.setVisibility(View.VISIBLE);
+                tvStationDep.setText(date);
+            }
+
+            if (stop.getStopTime() == null) {
+                tvStationStopTime.setVisibility(View.GONE);
+            } else {
+                StringBuilder stopTime = new StringBuilder();
+                stopTime.append("Стоянка: ");
+                stopTime.append(Utils.convertSecToMinutes(stop.getStopTime()));
+
+                tvStationStopTime.setVisibility(View.VISIBLE);
+                tvStationStopTime.setText(stopTime);
+            }
         }
     }
 

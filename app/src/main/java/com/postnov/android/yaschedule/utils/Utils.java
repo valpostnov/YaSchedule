@@ -13,43 +13,35 @@ import java.util.TimeZone;
 /**
  * Created by platon on 24.05.2016.
  */
-public class Utils
-{
-    public static void showToast(Context context, String message, int length)
-    {
+public class Utils {
+    public static void showToast(Context context, String message, int length) {
         Toast.makeText(context, message, length).show();
     }
 
-    public static void showToast(Context context, String message)
-    {
+    public static void showToast(Context context, String message) {
         showToast(context, message, Toast.LENGTH_SHORT);
     }
 
     /**
-     *
      * @param date yyyy-mm-dd HH:mm:ss
      * @return HH:mm
      */
-    public static String getOnlyTime(String date)
-    {
+    public static String getOnlyTime(String date) {
         int startIndex = date.lastIndexOf(" ");
         int endIndex = date.lastIndexOf(":");
         return date.substring(startIndex, endIndex).trim();
     }
 
-    public static String getOnlyDate(String date)
-    {
+    public static String getOnlyDate(String date) {
         int endIndex = date.lastIndexOf(" ");
         return date.substring(0, endIndex).trim();
     }
 
     /**
-     *
      * @param date example yyyy-mm-dd HH:mm:ss
      * @return 'dd MMMM', example '25 may'
      */
-    public static String toShortDate(String date)
-    {
+    public static String toShortDate(String date) {
         int month = Integer.valueOf(date.substring(date.indexOf("-") + 1, date.lastIndexOf("-")));
         int day = Integer.valueOf(date.substring(date.lastIndexOf("-") + 1, date.lastIndexOf(" ")));
 
@@ -57,14 +49,12 @@ public class Utils
     }
 
     /**
-     *
-     * @param day dd
+     * @param day   dd
      * @param month mm
-     * @param year yyyy
+     * @param year  yyyy
      * @return yyyy-mm-dd
      */
-    public static String formatDateReverse(int day, int month, int year)
-    {
+    public static String formatDateReverse(int day, int month, int year) {
         StringBuilder date = new StringBuilder();
         date.append(year);
         date.append("-");
@@ -76,13 +66,11 @@ public class Utils
     }
 
     /**
-     *
-     * @param day dd, example 01
+     * @param day   dd, example 01
      * @param month mm, example 06
      * @return d MMMM, example 1 June
      */
-    public static String toShortDate(int day, int month)
-    {
+    public static String toShortDate(int day, int month) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
@@ -92,14 +80,11 @@ public class Utils
     }
 
     /**
-     *
      * @param seconds, like this 120s
      * @return minutes, like this 2 min.
      */
-    public static String convertSecToMinutes(String seconds)
-    {
-        if (seconds != null)
-        {
+    public static String convertSecToMinutes(String seconds) {
+        if (seconds != null) {
             int sec = Integer.valueOf(seconds);
             int min = sec / 60;
 
@@ -109,29 +94,25 @@ public class Utils
         return "";
     }
 
-    public static int getYear()
-    {
+    public static int getYear() {
         Calendar c = Calendar.getInstance(TimeZone.getDefault());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy", Locale.getDefault());
         return Integer.parseInt(sdf.format(c.getTime()));
     }
 
-    public static int getMonthOfYear()
-    {
+    public static int getMonthOfYear() {
         Calendar c = Calendar.getInstance(TimeZone.getDefault());
         SimpleDateFormat sdf = new SimpleDateFormat("M", Locale.getDefault());
         return Integer.parseInt(sdf.format(c.getTime()));
     }
 
-    public static int getDayOfMonth()
-    {
+    public static int getDayOfMonth() {
         Calendar c = Calendar.getInstance(TimeZone.getDefault());
         SimpleDateFormat sdf = new SimpleDateFormat("dd", Locale.getDefault());
         return Integer.parseInt(sdf.format(c.getTime()));
     }
 
-    public static long getMaxDayInYear()
-    {
+    public static long getMaxDayInYear() {
         Calendar cal = Calendar.getInstance(Locale.getDefault());
         cal.set(Calendar.DAY_OF_MONTH, 31);
         cal.set(Calendar.MONTH, 11);
@@ -140,8 +121,7 @@ public class Utils
         return cal.getTimeInMillis();
     }
 
-    public static long getMinDayInYear()
-    {
+    public static long getMinDayInYear() {
         Calendar cal = Calendar.getInstance(Locale.getDefault());
         cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.MONTH, 0);
@@ -150,15 +130,13 @@ public class Utils
         return cal.getTimeInMillis();
     }
 
-    public static int getTransportImage(String tt)
-    {
-        final int TRAIN_DRAWABLE =  R.drawable.ic_railway_green;
+    public static int getTransportImage(String tt) {
+        final int TRAIN_DRAWABLE = R.drawable.ic_railway_green;
         final int PLANE_DRAWABLE = R.drawable.ic_flight_green;
         final int BUS_DRAWABLE = R.drawable.ic_bus_green;
         final int SUBURBAN_DRAWABLE = R.drawable.ic_train_green;
 
-        switch (tt)
-        {
+        switch (tt) {
             case TransportTypes.TRAIN:
                 return TRAIN_DRAWABLE;
 
@@ -177,15 +155,12 @@ public class Utils
     }
 
     /**
-     *
      * @param title, Москва (Ярославский вокзал)
      * @return newTitle, Москва + "/n" + (Ярославский вокзал)
      */
-    public static String splitTitle(String title)
-    {
+    public static String splitTitle(String title) {
         int endIndex = title.indexOf("(");
-        if (endIndex > 0)
-        {
+        if (endIndex > 0) {
             StringBuilder newString = new StringBuilder();
             newString.append(title.substring(0, endIndex).trim());
             newString.append("\n");

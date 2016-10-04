@@ -19,6 +19,8 @@ import com.postnov.android.yaschedule.schedule.ScheduleActivity;
 import com.postnov.android.yaschedule.search.SearchActivity;
 import com.postnov.android.yaschedule.utils.Utils;
 
+import butterknife.BindView;
+
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     public static final String EXTRA_DATE = "normDate";
     public static final String EXTRA_QUERY_DATE = "queryDate";
@@ -35,54 +37,59 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public static final String EXTRA_TO_CODE = "toCode";
     public static final String EXTRA_RECENT_ROUTE = "recentRoute";
 
-    private String mCityFromCode;
-    private String mCityToCode;
+    private String cityFromCode;
+    private String cityToCode;
 
-    private String mReversedDate;
-    private String mNormalDate;
+    private String reversedDate;
+    private String normalDate;
 
-    private TextInputEditText mFromView;
-    private TextInputEditText mToView;
-    private TextInputEditText mDateView;
+    @BindView(R.id.from)            TextInputEditText fromView;
+    @BindView(R.id.to)              TextInputEditText toView;
+    @BindView(R.id.when)            TextInputEditText dateView;
 
-    private TextInputLayout mFromInputLayout;
-    private TextInputLayout mToInputLayout;
-    private TextInputLayout mDateInputLayout;
+    @BindView(R.id.hintFrom)        TextInputLayout fromInputLayout;
+    @BindView(R.id.hintTo)          TextInputLayout toInputLayout;
+    @BindView(R.id.hintWhen)        TextInputLayout dateInputLayout;
+    @BindView(R.id.toolbar_main)    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setSupportActionBar(toolbar);
+
         if (savedInstanceState != null) {
-            mCityFromCode = savedInstanceState.getString(EXTRA_FROM_CODE);
-            mCityToCode = savedInstanceState.getString(EXTRA_TO_CODE);
-            mReversedDate = savedInstanceState.getString(EXTRA_QUERY_DATE);
+            cityFromCode = savedInstanceState.getString(EXTRA_FROM_CODE);
+            cityToCode = savedInstanceState.getString(EXTRA_TO_CODE);
+            reversedDate = savedInstanceState.getString(EXTRA_QUERY_DATE);
         }
-        initToolbar();
         initViews();
     }
 
     public void showSchedule(View view) {
-        if (mFromView.length() == 0) showHintError(true, mFromInputLayout);
-        else if (mToView.length() == 0) showHintError(true, mToInputLayout);
-        else if (mDateView.length() == 0) showHintError(true, mDateInputLayout);
-        else {
+        if (fromView.length() == 0) {
+            showHintError(true, fromInputLayout);
+        } else if (toView.length() == 0) {
+            showHintError(true, toInputLayout);
+        } else if (dateView.length() == 0) {
+            showHintError(true, dateInputLayout);
+        } else {
             Intent intent = new Intent(this, ScheduleActivity.class);
-            intent.putExtra(EXTRA_QUERY_DATE, mReversedDate);
-            intent.putExtra(EXTRA_DATE, mNormalDate);
-            intent.putExtra(EXTRA_FROM_CODE, mCityFromCode);
-            intent.putExtra(EXTRA_TO_CODE, mCityToCode);
+            intent.putExtra(EXTRA_QUERY_DATE, reversedDate);
+            intent.putExtra(EXTRA_DATE, normalDate);
+            intent.putExtra(EXTRA_FROM_CODE, cityFromCode);
+            intent.putExtra(EXTRA_TO_CODE, cityToCode);
 
-            showHintError(false, mFromInputLayout, mToInputLayout, mDateInputLayout);
+            showHintError(false, fromInputLayout, toInputLayout, dateInputLayout);
             startActivity(intent);
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(EXTRA_FROM_CODE, mCityFromCode);
-        outState.putString(EXTRA_TO_CODE, mCityToCode);
-        outState.putString(EXTRA_QUERY_DATE, mReversedDate);
+        outState.putString(EXTRA_FROM_CODE, cityFromCode);
+        outState.putString(EXTRA_TO_CODE, cityToCode);
+        outState.putString(EXTRA_QUERY_DATE, reversedDate);
         super.onSaveInstanceState(outState);
     }
 
@@ -110,21 +117,21 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
             switch (requestCode) {
                 case REQUEST_CODE_FROM:
-                    mFromView.setText(city);
-                    mCityFromCode = data.getStringExtra(EXTRA_CODE);
+                    fromView.setText(city);
+                    cityFromCode = data.getStringExtra(EXTRA_CODE);
                     break;
 
                 case REQUEST_CODE_TO:
-                    mToView.setText(city);
-                    mCityToCode = data.getStringExtra(EXTRA_CODE);
+                    toView.setText(city);
+                    cityToCode = data.getStringExtra(EXTRA_CODE);
                     break;
 
                 case REQUEST_RECENT_ROUTE:
                     RecentRoute route = data.getParcelableExtra(EXTRA_RECENT_ROUTE);
-                    mFromView.setText(route.getFrom());
-                    mToView.setText(route.getTo());
-                    mCityFromCode = route.getFromCode();
-                    mCityToCode = route.getToCode();
+                    fromView.setText(route.getFrom());
+                    toView.setText(route.getTo());
+                    cityFromCode = route.getFromCode();
+                    cityToCode = route.getToCode();
                     break;
             }
         }
@@ -143,48 +150,34 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 showDatePickerDialog();
                 break;
         }
-        showHintError(false, mFromInputLayout, mToInputLayout, mDateInputLayout);
+        showHintError(false, fromInputLayout, toInputLayout, dateInputLayout);
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        mReversedDate = Utils.formatDateReverse(dayOfMonth, monthOfYear + 1, year);
-        mNormalDate = Utils.toShortDate(dayOfMonth, monthOfYear);
-        mDateView.setText(mNormalDate);
+        reversedDate = Utils.formatDateReverse(dayOfMonth, monthOfYear + 1, year);
+        normalDate = Utils.toShortDate(dayOfMonth, monthOfYear);
+        dateView.setText(normalDate);
     }
 
     public void swapCities(MenuItem item) {
-        if (mFromView.length() != 0 && mToView.length() != 0) {
-            String fromTmp = mFromView.getText().toString();
-            String toTmp = mToView.getText().toString();
-            String codeFromTmp = mCityFromCode;
+        if (fromView.length() != 0 && toView.length() != 0) {
+            String fromTmp = fromView.getText().toString();
+            String toTmp = toView.getText().toString();
+            String codeFromTmp = cityFromCode;
 
-            mCityFromCode = mCityToCode;
-            mCityToCode = codeFromTmp;
+            cityFromCode = cityToCode;
+            cityToCode = codeFromTmp;
 
-            mFromView.setText(toTmp);
-            mToView.setText(fromTmp);
+            fromView.setText(toTmp);
+            toView.setText(fromTmp);
         }
     }
 
     private void initViews() {
-        mFromView = (TextInputEditText) findViewById(R.id.from);
-        mFromView.setOnClickListener(this);
-
-        mToView = (TextInputEditText) findViewById(R.id.to);
-        mToView.setOnClickListener(this);
-
-        mDateView = (TextInputEditText) findViewById(R.id.when);
-        mDateView.setOnClickListener(this);
-
-        mFromInputLayout = (TextInputLayout) findViewById(R.id.hintFrom);
-        mToInputLayout = (TextInputLayout) findViewById(R.id.hintTo);
-        mDateInputLayout = (TextInputLayout) findViewById(R.id.hintWhen);
-    }
-
-    private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
+        fromView.setOnClickListener(this);
+        toView.setOnClickListener(this);
+        dateView.setOnClickListener(this);
     }
 
     private void showDatePickerDialog() {
