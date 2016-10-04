@@ -95,14 +95,14 @@
             />
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button_find"
         android:onClick="showSchedule"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_search"
-        android:clickable="true" />
+        android:text="@string/btn_find"
+        style="@style/Widget.AppCompat.Button.Colored"/>
 </RelativeLayout>

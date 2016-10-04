@@ -72,7 +72,10 @@ public class SchedulePresenter implements ISchedulePresenter {
                 .subscribeOn(Schedulers.io())
                 .doOnNext(this::saveSearchRequest)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> scheduleView.showList(response), onError);
+                .subscribe(response -> {
+                        scheduleView.hideProgressDialog();
+                        scheduleView.showList(response);
+                }, onError);
     }
 
     private Action1<Throwable> onError = e -> {

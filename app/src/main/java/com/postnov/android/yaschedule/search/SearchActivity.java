@@ -45,7 +45,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchView, On
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         Timber.tag("SearchActivity");
-        presenter = new SearchPresenter(App.get(this).codesDataSource());
+        presenter = new SearchPresenter(App.get(this).codesDataSource(), networkManager);
 
         initViews();
         initToolbar();

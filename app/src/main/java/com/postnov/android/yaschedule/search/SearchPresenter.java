@@ -4,6 +4,7 @@ import com.postnov.android.yaschedule.data.source.codes.ICodesDataSource;
 import com.postnov.android.yaschedule.search.interfaces.ISearchPresenter;
 import com.postnov.android.yaschedule.search.interfaces.ISearchView;
 import com.postnov.android.yaschedule.utils.Const;
+import com.postnov.android.yaschedule.utils.INetworkManager;
 import com.postnov.android.yaschedule.utils.NetworkManager;
 import com.postnov.android.yaschedule.utils.exception.NetworkConnectionException;
 
@@ -19,9 +20,10 @@ public class SearchPresenter implements ISearchPresenter {
     private ISearchView searchView;
     private final CompositeSubscription subscription;
     private final ICodesDataSource codesDataSource;
-    private NetworkManager networkManager; //Todo init!!!
+    private final INetworkManager networkManager;
 
-    public SearchPresenter(ICodesDataSource codesDataSource) {
+    public SearchPresenter(ICodesDataSource codesDataSource, INetworkManager networkManager) {
+        this.networkManager = networkManager;
         subscription = new CompositeSubscription();
         this.codesDataSource = codesDataSource;
     }
@@ -34,7 +36,10 @@ public class SearchPresenter implements ISearchPresenter {
                     .getCities(city, limit)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(cities -> searchView.showCities(cities.getSuggests()), onError));
+                    .subscribe(cities -> {
+                        searchView.hideProgressView();
+                        searchView.showCities(cities.getSuggests());
+                    }, onError));
         } else {
             searchView.showError(new NetworkConnectionException(Const.ERROR_NO_CONNECTION));
         }

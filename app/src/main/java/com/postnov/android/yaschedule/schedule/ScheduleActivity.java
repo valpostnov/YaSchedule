@@ -149,9 +149,9 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
         if (response != null) {
             this.response = response;
             scheduleAdapter.swapList(response.getRoutes());
-            return;
+        }else {
+            scheduleAdapter.swapList(null);
         }
-        scheduleAdapter.swapList(null);
         emptyView.setVisibility(scheduleAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 

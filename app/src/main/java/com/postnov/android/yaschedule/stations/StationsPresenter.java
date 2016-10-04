@@ -29,7 +29,10 @@ public class StationsPresenter implements IStationsPresenter {
         subscription = stationsDataSource.getStops(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(thread -> stationsView.loadStations(thread.getStops()), onError);
+                .subscribe(thread -> {
+                    stationsView.hideProgressDialog();
+                    stationsView.loadStations(thread.getStops());
+                }, onError);
     }
 
     @Override
