@@ -10,7 +10,7 @@
 &nbsp;
 <img height = "400" src = "https://github.com/valpostnov/YaSchedule/blob/branch/schedule_v2/app/screens/schedule.png" />
 &nbsp;
-<img height = "400" src = "https://github.com/valpostnov/YaSchedule/blob/branch/schedule_v2/app/screens/stationss.png" />
+<img height = "400" src = "https://github.com/valpostnov/YaSchedule/blob/branch/schedule_v2/app/screens/stations.png" />
 
 #### Используемые библиотеки
 - Refrofit 2
